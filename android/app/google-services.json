@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "454965254705",
+    "firebase_url": "https://simrspushnotification.firebaseio.com",
+    "project_id": "simrspushnotification",
+    "storage_bucket": "simrspushnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454965254705:android:a13cff662944833dba5310",
+        "android_client_info": {
+          "package_name": "com.aril"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454965254705-ds92dgt0h6jfqghfjirjv1u915vtlk8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-hUoRIl9Gux_z5jbKdmC9N-IKK6pvAxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454965254705-ds92dgt0h6jfqghfjirjv1u915vtlk8j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

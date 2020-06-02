@@ -1,0 +1,63 @@
+{
+  "name": "aril",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.10.0",
+    "@react-native-community/datetimepicker": "^2.4.0",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/netinfo": "^5.8.1",
+    "@react-native-firebase/app": "^6.7.1",
+    "@react-native-firebase/messaging": "^6.7.1",
+    "@react-navigation/native": "^5.3.0",
+    "@react-navigation/stack": "^5.3.3",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
+    "react-native-calendars": "^1.265.0",
+    "react-native-camera": "^3.25.0",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-device-info": "^5.5.7",
+    "react-native-elements": "^2.0.0",
+    "react-native-geo-fencing": "^0.1.0",
+    "react-native-geolocation-service": "^4.0.1",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-maps": "0.27.1",
+    "react-native-material-ripple": "^0.9.1",
+    "react-native-progress": "^4.1.2",
+    "react-native-reanimated": "^1.8.0",
+    "react-native-safe-area-context": "^1.0.0",
+    "react-native-screens": "^2.7.0",
+    "react-native-skeleton-placeholder": "^2.0.7",
+    "react-native-snap-carousel": "^3.9.0",
+    "react-native-switch-selector": "^2.0.4",
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-webrtc": "^1.75.3",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "rn-placeholder": "^3.0.0",
+    "rn-sliding-up-panel": "^2.4.0",
+    "socket.io-client": "^2.3.0",
+    "toggle-switch-react-native": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.58.0",
+    "react-test-renderer": "16.11.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
