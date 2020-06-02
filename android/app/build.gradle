@@ -122,10 +122,14 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+googleServices {
+    disableVersionCheck = true
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    ndkVersion "21.0.6113669"
-    // ndkVersion "21.1.6352462"
+    // ndkVersion "21.0.6113669"
+    ndkVersion "21.1.6352462"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -206,7 +210,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.android.support:multidex:1.0.3'
     implementation(project(':react-native-maps')){
@@ -246,5 +249,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
