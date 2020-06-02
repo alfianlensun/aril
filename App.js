@@ -59,11 +59,13 @@ import ListUserChat from './src/scenes/moduls/chat/ListUserChat';
 import ChatDetail from './src/scenes/moduls/chat/ChatDetail';
 import { getData } from './src/services/LocalStorage';
 import io from 'socket.io-client'
+import codePush from 'react-native-code-push'
+
 
 const store = createStore(AllReducer)
 const Stack = createStackNavigator()
 // const sliderUpNetwork = useRef();
-export default class App extends Component {
+class App extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -215,6 +217,12 @@ export default class App extends Component {
 	}
 }
 
+
+const codePushOptions = {
+	checkFrequency: codePush.CheckFrequency.ON_APP_START
+}
+
+export default codePush(codePushOptions)(App)
 
 const config = {
   animation: 'spring',
