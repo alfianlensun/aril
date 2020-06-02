@@ -5,7 +5,8 @@ import {
     StyleSheet,
     StatusBar,
     ImageBackground,
-    FlatList
+    FlatList,
+    ScrollView
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../../../helpers/Layout'
 import {Icon} from 'react-native-elements'
@@ -17,6 +18,7 @@ import {Calendar} from 'react-native-calendars';
 import {getAbsensi,getAbsensiMobile, abortRequest} from '../../../services/ServiceSdm'
 import ListAbsenDetail from '../../../components/list/ListAbsenDetail'
 import LoaderListAbsenDetail from '../../../components/loader/LoaderListAbsenDetail'
+import ListAbsenDetailMobile from '../../../components/list/ListAbsenDetailMobile'
 
 
 export default class Absen extends Component{
@@ -197,7 +199,7 @@ export default class Absen extends Component{
                             /> : null
                         }
                         {listAbsensiDetailMobile !== null &&  listAbsensiDetailMobile.absen_masuk !== null ? 
-                            <ListAbsenDetail 
+                            <ListAbsenDetailMobile 
                                 masuk
                                 jam={listAbsensiDetailMobile.absen_masuk}
                             /> : null
@@ -208,7 +210,7 @@ export default class Absen extends Component{
                             /> : null
                         }
                         {listAbsensiDetailMobile !== null && listAbsensiDetailMobile.absen_keluar !== null ? 
-                            <ListAbsenDetail 
+                            <ListAbsenDetailMobile 
                                 jam={listAbsensiDetailMobile.absen_keluar}
                             /> : null
                         }
@@ -261,6 +263,7 @@ export default class Absen extends Component{
                     <View 
                         style={{
                             flexDirection: 'row',
+                            alignItems: 'center',
                             paddingHorizontal: 10
                         }}
                     >
@@ -290,103 +293,35 @@ export default class Absen extends Component{
                                 />
                             </Ripple>
                         </View>
-                    </View>
-                    <View
-                        style={{
-                            marginTop: 20,
-                            flexDirection: 'row',
-                            position: 'relative',
-                            paddingHorizontal: 20
-                        }}
-                    >
-                        <Icon 
-                            type={'ionicons'}
-                            name={'fingerprint'}
-                            color={'#444'}
-                            size={24}
-                        />
-                        <Text
-                            style={{
-                                fontSize: 20,
-                                marginLeft: 10,
-                                color: '#444'
-                            }}
-                        >Absensi</Text>
                         <View
                             style={{
-                                position: 'absolute',
-                                top: 0,
-                                zIndex: 2,
-                                right: 0,
-                                flexDirection: 'row', 
-                                alignItems: 'center',
-                                width: '40%',
-                                paddingRight: 20,
+                                flexDirection: 'row',
+                                alignItems:'center'
                             }}
                         >
-                            <View
+                            <Icon 
+                                type={'ionicons'}
+                                name={'fingerprint'}
+                                color={'#444'}
+                                size={24}
+                            />
+                            <Text
                                 style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
+                                    fontSize: 20,
+                                    marginLeft: 10,
+                                    color: '#444'
                                 }}
-                            >
-                                <Text
-                                    style={{
-                                        fontWeight: 'bold',
-                                        color: '#444',
-                                        fontSize: 12
-                                    }}
-                                >
-                                    Masuk
-                                </Text>
-                                <View
-                                    style={{
-                                        width: 8,
-                                        height: 8,
-                                        borderRadius: 50,
-                                        backgroundColor: '#34ebab',
-                                        marginLeft: 5
-                                    }}
-                                ></View>
-                            </View>
-                            <View
-                                style={{
-                                    marginLeft: 20,
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontWeight: 'bold',
-                                        color: '#444',
-                                        fontSize: 12
-                                    }}
-                                >
-                                    Pulang
-                                </Text>
-                                <View
-                                    style={{
-                                        width: 8,
-                                        height: 8,
-                                        borderRadius: 50,
-                                        backgroundColor: '#42afed',
-                                        marginLeft: 5
-                                    }}
-                                ></View>
-                            </View>
+                            >Absensi</Text>
                         </View>
                     </View>
-                    
                     <View 
                         style={[Styles.shadowTiny, {
-                            width: '100%',
-                            height: '100%',
+                            flex: 1,
+                            position: 'relative',
                             backgroundColor: '#fff',
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
+                            flexDirection: 'column',
                             overflow: 'hidden',
                             position: 'relative',
                             marginTop: 20,
@@ -412,8 +347,19 @@ export default class Absen extends Component{
                             
                         </View>
                         {this.state.loaderList ? <LoaderListAbsenDetail /> : (
-                                <View>
-                                    {this.renderListAbsenDetail()}
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        position: 'relative',
+                                    }}
+                                >
+                                    <ScrollView
+                                        style={{
+                                            flex: 1
+                                        }}
+                                    >
+                                        {this.renderListAbsenDetail()}
+                                    </ScrollView>
                                 </View>
                             )
                         }
@@ -436,7 +382,7 @@ const Styles = new StyleSheet.create({
     },
     header: {
         backgroundColor: '#e1f7fa',
-        height: screenHeightPercent(4)
+        height: screenHeightPercent(5)
     },
     headerBackground: {
         overflow: 'hidden',

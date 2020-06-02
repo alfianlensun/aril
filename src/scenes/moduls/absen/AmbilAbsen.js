@@ -16,7 +16,7 @@ import { abortRequest, createAbsensi } from '../../../services/ServiceSdm';
 import {icon_color_primary, text_color_gray_800, ripple_color_primary, icon_color_secondary } from '../../../themes/Default';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { getData } from '../../../services/LocalStorage';
+import { getData, removeData } from '../../../services/LocalStorage';
 
 const initialState = {
     realTimeLocation: null,
@@ -91,11 +91,11 @@ export default class AmbilAbsen extends Component{
                 this.checkAbsen()
             } else {
                 let permission = [...this.state.permissionRequest]
-                if (!parentdata.permission.camera) {
+                if (!this.props.userPermission.camera) {
                     permission.push('kamera')
                 }
 
-                if (!parentdata.permission.location){
+                if (!this.props.userPermission.location){
                     permission.push('lokasi')
                 }
                 this.setState({
@@ -131,7 +131,7 @@ export default class AmbilAbsen extends Component{
     checkAbsen = async () => {
         try {
             if (this.timeoutFaceRecog) clearTimeout(this.timeoutFaceRecog)   
-            if (this.state.detectedFace){
+            if (this.state.detectedFace && this.camera){
                 this.setState({
                     fetch: true,
                     scanFaceMessage: 'Memeriksa kecocokan wajah...'
@@ -362,11 +362,11 @@ export default class AmbilAbsen extends Component{
             <View style={Styles.containerSlider}>
                 <View
                     style={{
-                        width: '100%',
-                        height: '30%',
-                        justifyContent: 'center',
+                        flex: 1,
+                        paddingTop:'10%',
+                        paddingHorizontal: '10%',
+                        justifyContent: 'flex-start',
                         alignItems: 'center',
-                        paddingHorizontal: '10%'
                     }}
                 >
                     <Icon
@@ -380,6 +380,12 @@ export default class AmbilAbsen extends Component{
                             marginTop: 20
                         }}
                     >Anda belum mendaftar absen mobile</Text>
+                    <Text
+                        style={{
+                            textAlign: 'center',
+                            fontSize: 13,
+                        }}
+                    >Jika anda telah terdaftar dan sudah di verifikasi silahkan login kembali</Text>
                     <Ripple
                         onPress={() => this.props.navigation.navigate('ValidasiModul', {navigateTo: 'DaftarMobileAbsenIfExist'})}
                         rippleColor={'rgba(255,255,255,.4)'}
@@ -397,6 +403,28 @@ export default class AmbilAbsen extends Component{
                                 color: '#fff'
                             }}
                         >Daftar</Text>
+                    </Ripple>
+                    <Ripple
+                        onPress={() => {
+                            removeData('AuthUser').then(() => {
+                                this.props.navigation.replace('Login')
+                            })
+                        }}
+                        rippleColor={'rgba(255,255,255,.4)'}
+                        style={{
+                            width: '100%',
+                            marginTop: 20,
+                            paddingVertical: 15,
+                            borderRadius: 30,
+                            alignItems: 'center',
+                            backgroundColor: icon_color_secondary
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: '#fff'
+                            }}
+                        >Logout</Text>
                     </Ripple>
                 </View>
             </View>

@@ -179,7 +179,7 @@ export async function faceRecognitionAbsenRegister(photo, iduser)
         let response = new Promise( async (resolve, reject) => {
             setTimeout(() => {
                 reject()
-            }, config.wsOption.timeout);
+            }, 40000);
 
             abort = new AbortController()
             const signal = abort.signal;

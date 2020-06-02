@@ -164,14 +164,14 @@ export default class ListRequest extends Component{
                                                     color: '#444',
                                                     fontWeight: 'bold'
                                                 }}
-                                                >{item.userdetail.nama_lengkap}</Text>
+                                                >{item.userdetail.nama_pegawai}</Text>
                                             <Text
                                                 style={{
                                                     color: '#444',
                                                     fontSize: 12,
                                                     marginTop: 2
                                                 }}
-                                            >NIP / NRPK: {item.userdetail.nip}</Text>
+                                            >NIP / NRPK: {item.userdetail.nip_baru}</Text>
                                         </View>
                                         <View
                                             style={{

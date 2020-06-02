@@ -30,9 +30,11 @@ export default class DaftarMobileAbsen extends Component{
             detectedFace: false,
             realTimeFaceData: null,
             success: false,
+            uploadMessage: 'Uploading...',
             successPath: null,
             loaderUpload: false,
             uploaded: false,
+            errUpload: false,
             listFoto: []
         }
     }
@@ -102,9 +104,14 @@ export default class DaftarMobileAbsen extends Component{
             let successUpload = 0
             if (listFoto.length === 3){
                 this.setState({
-                    loaderUpload: true
+                    loaderUpload: true,
+                    uploadMessage: 'Uploading..'
                 })
+                let i = 1
                 for (const foto of listFoto){
+                    this.setState({
+                        uploadMessage: `Uploading image ${i}..`
+                    })
                     const {reqStat} = await faceRecognitionAbsenRegister(foto, this.state.userdata._id)
                     if (reqStat.code === 200){
                         successUpload=successUpload+1;
@@ -113,6 +120,7 @@ export default class DaftarMobileAbsen extends Component{
                             this.doUploadAndRegist()
                         },2000)
                     }
+                    i++
                 }
 
                 if (successUpload === 3){
@@ -120,9 +128,11 @@ export default class DaftarMobileAbsen extends Component{
                 }
             }
         } catch(err){
-            this.timeoutupload = setTimeout(() => {
-                this.doUploadAndRegist()
-            },3000)
+            this.setState({
+                errUpload: true,
+                loaderUpload: false,
+                uploadMessage: 'Connection Lost..try again?'
+            })
         }
     }
 
@@ -312,7 +322,7 @@ export default class DaftarMobileAbsen extends Component{
                                     alignItems: 'center'
 
                                 }}>
-                                    <Text style={{color: '#fff',marginRight: 10}}>{this.state.loaderUpload ? 'Uploading...' : 'Next'}</Text>
+                                    <Text style={{color: '#fff',marginRight: 10}}>{this.state.loaderUpload || this.state.errUpload ? this.state.uploadMessage : 'Next'}</Text>
                                     {this.state.loaderUpload && 
                                         <ActivityIndicator size="small" color="#fff" />
                                     }

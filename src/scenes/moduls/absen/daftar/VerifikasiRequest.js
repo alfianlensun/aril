@@ -160,7 +160,7 @@ export default class VerifikasiRequest extends Component{
                                         fontSize: 13,
                                         width: '60%',
                                     }}
-                                >: {this.state.dataRequest.userdetail.nama_lengkap}</Text>
+                                >: {this.state.dataRequest.userdetail.nama_pegawai}</Text>
                             </View>
                         }
                         {this.state.dataRequest !== null && 

@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:454965254705:android:a13cff662944833dba5310",
+        "mobilesdk_app_id": "1:454965254705:android:ef3b30735602f309ba5310",
         "android_client_info": {
-          "package_name": "com.aril"
+          "package_name": "com.simrskandou.aril"
         }
       },
       "oauth_client": [

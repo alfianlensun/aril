@@ -6,7 +6,8 @@ import {
     StatusBar,
     RefreshControl,
     ImageBackground,
-    FlatList
+    FlatList,
+    ScrollView
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../../../helpers/Layout'
 import {Icon} from 'react-native-elements'
@@ -56,7 +57,6 @@ export default class RekapAktivitasHarianPegawai extends Component{
     }
 
     getAktivitas(date){
-        const id_user = '';
         this.setState({
             loader: true
         })
@@ -119,7 +119,6 @@ export default class RekapAktivitasHarianPegawai extends Component{
                                 rippleColor={'rgba(0,0,0,.1)'}
                                 style={[{
                                     width: '100%',
-                                    height: 130,
                                     borderBottomWidth: 1,
                                     position: 'relative',
                                     marginTop: 20,
@@ -136,18 +135,6 @@ export default class RekapAktivitasHarianPegawai extends Component{
                                     }}
                                 >
                                     <View>
-                                        {/* <Text
-                                            style={{
-                                                fontSize: 12,
-                                                borderBottomLeftRadius: 10,
-                                                borderTopLeftRadius: 10,
-                                                alignSelf: 'flex-start',
-                                                backgroundColor: '#6ab1f7',
-                                                color: '#fff',
-                                                paddingVertical: 5,
-                                                paddingHorizontal: 10
-                                            }}
-                                        >Selesai</Text> */}
                                         <Text
                                             style={{
                                                 fontSize: 12,
@@ -315,8 +302,8 @@ export default class RekapAktivitasHarianPegawai extends Component{
                     </View>
                     <View 
                         style={[Styles.shadowTiny, {
-                            width: '100%',
-                            height: '100%',
+                            flex: 1,
+                            flexDirection: 'column',
                             backgroundColor: '#fff',
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
@@ -346,12 +333,18 @@ export default class RekapAktivitasHarianPegawai extends Component{
                         </View>
                         <View
                             style={{
-                                width: '100%',
-                                height: '33%',
+                                flex: 1,
                                 paddingHorizontal: 10,
+                                position: 'relative'
                             }}
                         >
-                            {this.state.loaderList ? <LoaderListAbsenDetail /> : this.renderListAktivitasDetail()}
+                            <ScrollView
+                                style={{
+                                    flex: 1,
+                                }}
+                            >
+                                {this.state.loaderList ? <LoaderListAbsenDetail /> : this.renderListAktivitasDetail()}
+                            </ScrollView>
                         </View>
                     </View>
                     

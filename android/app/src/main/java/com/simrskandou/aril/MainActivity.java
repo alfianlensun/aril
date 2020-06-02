@@ -1,4 +1,4 @@
-package com.aril;
+package com.simrskandou.aril;
 
 import com.facebook.react.ReactActivity;
 

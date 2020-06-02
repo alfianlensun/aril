@@ -482,7 +482,7 @@ export default class AktivitasHarianPegawai extends Component {
 
     render(){
         return(
-            <KeyboardAvoidingView style={{flex: 1}} behavior="height" enabled>
+            <KeyboardAvoidingView style={{flex: 1}} behavior="margin" enabled>
                 <View 
                     style={{
                         flex: 1,

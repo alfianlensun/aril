@@ -75,8 +75,9 @@ export default class Home extends Component{
     getKredensialDokter = async (IDPegawai) => {
         try {
             const {response} = await getKredensialDokterById(IDPegawai)
+        
             this.setState({
-                kredensial: response
+                kredensial: response !== undefined ? response : []
             })
         } catch(err){
             alert(err.message)
@@ -191,6 +192,7 @@ export default class Home extends Component{
                 userdata:this.state.userdetail
             })
         } catch(err){
+            console.log(err)
             alert(err) 
         }
     }
@@ -313,6 +315,7 @@ export default class Home extends Component{
                                     <Ripple 
                                         onPress={() => this.props.navigation.navigate('ListUserChat')}
                                         style={{
+                                            display: 'none',
                                             height: 50,
                                             width: 50,
                                             borderRadius: 50,

@@ -58,6 +58,31 @@ export async function cekUserRegister(NoHandphone)
     }
 }
 
+export async function asyncUserData(IdUser){
+    // /user/sync/:IdUser
+    try {
+        let response = new Promise(async (resolve, reject) => {
+            setTimeout(() => {
+                reject()
+            }, config.wsOption.timeout);
+            const fetchData =  await fetch(`${config.ws.nodeURL}/user/sync/${IdUser}`, {
+                method : 'GET',
+                headers: config.headers
+            }) 
+            let responseStatus = await fetchData.status
+            if (responseStatus === 200){
+                resolve(fetchData.json())
+            } else {
+                reject(fetchData.status)
+            }
+        }) 
+        
+        return response
+    } catch (err){
+        throw new Error(err);
+    }
+}
+
 export async function login(IDTelegram,Password, token)
 {
     try {
