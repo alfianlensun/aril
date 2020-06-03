@@ -639,10 +639,26 @@ export default class Login extends Component{
                                             onPress={() => this.props.navigation.navigate('SignUp')}
                                         >
                                             <View style={{}}>
-                                                <Text style={{color: '#ddd'}}>Belum pernah mendaftar ?</Text>
+                                                <Text style={{color: '#fff'}}>Belum pernah mendaftar ?</Text>
                                             </View>
                                         </TouchableOpacity>
                                     </View>
+                                </View>
+                                <View
+                                    style={{
+                                        width: '100%',
+                                        position: 'absolute',
+                                        paddingBottom: 10,
+                                        bottom: 0,
+                                        alignItems: 'center'
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 12,
+                                            color: '#fff'
+                                        }}
+                                    >Version 1.0.1</Text>
                                 </View>
                             </View>
                         </ImageBackground>
