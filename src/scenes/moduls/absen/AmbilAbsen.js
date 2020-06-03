@@ -110,22 +110,26 @@ export default class AmbilAbsen extends Component{
 
     onFacesDetected = (faceData) => {
         if (this.timeoutdetectFace) clearTimeout(this.timeoutdetectFace)
-        if (this.state.fetch === false){
-            this.setState({
-                detectedFace: true,
-                realTimeFaceData: faceData,
-                scanFaceMessage: 'Jaga wajah Anda tetap berada dalam jangkauan kamera'
-            })
-        }
-        
-        this.timeoutdetectFace = setTimeout(() => {
+
+        if (faceData.faces.length > 0){
             if (this.state.fetch === false){
                 this.setState({
-                    detectedFace: false,
-                    scanFaceMessage: 'Hadapkan wajah anda ke kamera'
+                    detectedFace: true,
+                    realTimeFaceData: faceData,
+                    scanFaceMessage: 'Jaga wajah Anda tetap berada dalam jangkauan kamera'
                 })
             }
-        },600)
+            
+            this.timeoutdetectFace = setTimeout(() => {
+                if (this.state.fetch === false){
+                    this.setState({
+                        detectedFace: false,
+                        scanFaceMessage: 'Hadapkan wajah anda ke kamera'
+                    })
+                }
+            },600)
+        }
+        
     }
 
     checkAbsen = async () => {
