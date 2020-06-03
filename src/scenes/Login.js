@@ -490,7 +490,7 @@ export default class Login extends Component{
                                             marginTop: screenHeightPercent(5)
                                         }}
                                     >
-                                        <Text style={{color: '#fff'}}>Silahkan login untuk melanjutkan</Text>
+                                        <Text style={{color: '#fff', fontWeight: 'bold'}}>Silahkan login untuk melanjutkan</Text>
                                     </View>
                                     <View
                                         style={{
