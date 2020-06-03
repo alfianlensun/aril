@@ -62,13 +62,15 @@ export default class DaftarMobileAbsen extends Component{
             if (this.timeoutFaceRecog) clearTimeout(this.timeoutFaceRecog)   
             if (this.state.detectedFace){
                 this.timeoutFaceRecog = setTimeout(async () => {
-                    const options = { quality: 0.5, base64: true };
-
                     if (!this.state.detectedFace){
                         throw new Error('Face not deteceted')
                     }
 
-                    const photo = await this.camera.takePictureAsync(options);
+                    const photo = await this.camera.takePictureAsync({
+                        quality: 0.5,
+                        base64: true,
+                        width: 100,
+                    });
                     if (this.state.listFoto.length < 3){
                         let listFoto = [...this.state.listFoto]
                         

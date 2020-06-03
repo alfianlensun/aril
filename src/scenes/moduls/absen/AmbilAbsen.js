@@ -98,6 +98,9 @@ export default class AmbilAbsen extends Component{
                 if (!this.props.userPermission.location){
                     permission.push('lokasi')
                 }
+                if (permission.length === 0){
+                    this.checkAbsen()
+                }
                 this.setState({
                     permissionRequest: permission
                 })
@@ -137,9 +140,13 @@ export default class AmbilAbsen extends Component{
                     scanFaceMessage: 'Memeriksa kecocokan wajah...'
                 })
 
-                const options = { quality: 0.5, base64: true }
+                const options = { quality: 0.2, base64: true }
 
-                const photo = await this.camera.takePictureAsync(options)
+                const photo = await this.camera.takePictureAsync({
+                    quality: 0.5,
+                    base64: true,
+                    width: 100,
+                })
                 const facelogin = await createAbsensi(photo, this.state.userid, this.state.absenType)
                 if (facelogin.reqStat.code === 200){
                     this.setState({

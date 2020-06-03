@@ -275,6 +275,7 @@ export async function createAbsensi(photo, iduser, absenType)
                     datetime: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
                 })
             }) 
+            
             let responseStatus = await fetchData.status
             if (responseStatus === 200){
                 abort = null
