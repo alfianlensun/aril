@@ -658,7 +658,7 @@ export default class Login extends Component{
                                             fontSize: 12,
                                             color: '#fff'
                                         }}
-                                    >Version 1.0.1</Text>
+                                    >Version 1.0.0</Text>
                                 </View>
                             </View>
                         </ImageBackground>
