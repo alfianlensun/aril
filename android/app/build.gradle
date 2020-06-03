@@ -139,7 +139,7 @@ android {
 
     defaultConfig {
         applicationId "com.simrskandou.aril"
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 28
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0.0"

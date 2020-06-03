@@ -131,7 +131,7 @@ export default class DaftarMobileAbsen extends Component{
             this.setState({
                 errUpload: true,
                 loaderUpload: false,
-                uploadMessage: 'Connection Lost..try again?'
+                uploadMessage: `Connection Lost..try again? (${err.message})`
             })
         }
     }

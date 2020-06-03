@@ -164,9 +164,8 @@ export default class AmbilAbsen extends Component{
             }
             
         } catch(err){
-            console.log(err)
             this.setState({
-                scanFaceMessage: 'Terjadi kesalahan saat proses scan wajah',
+                scanFaceMessage: `Terjadi kesalahan saat proses scan wajah ${err.message}`,
                 detectedFace: false
             })
         }   
