@@ -29,7 +29,7 @@ export async function checkUserGeofencing(props){
                     .catch((err) => {
                         console.log('out')
                         // props.setInRangeStatus(false)
-                        props.setInRangeStatus(true)
+                        props.setInRangeStatus(false)
                     })
     } catch(err){
         throw new Error(err.message)

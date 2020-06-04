@@ -227,13 +227,13 @@ const codePushOptions = {
 export default codePush(codePushOptions)(App)
 
 const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: false,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
+	animation: 'spring',
+	config: {
+		stiffness: 1000,
+		damping: 500,
+		mass: 3,
+		overshootClamping: false,
+		restDisplacementThreshold: 0.01,
+		restSpeedThreshold: 0.01,
+	},
 };

@@ -106,7 +106,7 @@ class MainMenu extends Component{
                     })
                     .catch((err) => {
                         // this.props.setInRangeStatus(false)
-                        this.props.setInRangeStatus(true)
+                        this.props.setInRangeStatus(false)
                     })
     }
 
