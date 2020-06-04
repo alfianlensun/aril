@@ -14,6 +14,7 @@ import Ripple from 'react-native-material-ripple'
 import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import { icon_color_primary, background_color } from '../themes/Default'
 export default class Profil extends Component{
     constructor(props){
         super(props)
@@ -71,11 +72,7 @@ export default class Profil extends Component{
                         paddingVertical: 20
                     }}
                 >
-                    <Text
-                        style={{
-                            fontSize: 20
-                        }}
-                    >Profil </Text>
+                    
                 </View>
                 <View 
                     style={{
@@ -104,28 +101,33 @@ export default class Profil extends Component{
                                 height: screenWidthPercent(25),
                                 justifyContent: 'center',
                                 overflow: 'hidden',
-                                borderWidth: 1,
-                                borderColor: '#eee',
+                                borderWidth: 3,
+                                borderColor: icon_color_primary,
                                 alignItems: 'center',
-                                backgroundColor: '#fff'
+                                backgroundColor: background_color
                             }}
                         >
-                            {/* {userdetail !== null ?
-                                <Image 
-                                    style={{
-                                        width: '100%', 
-                                        height: '100%'
-                                    }}
-                                    source={{uri: 'http://172.19.2.133/app/sirs/assets/img/foto_pegawai/'+userdetail.user_detail.foto_pegawai}}
-                                /> :  */}
-                                <Icon 
-                                    type={'ionicons'}
-                                    name={'person'}
-                                    color={'#6ab1f7'}
-                                    size={40} 
-                                />
-                            {/* } */}
-                            
+                            <View
+                                style={{
+                                    width: '93%',
+                                    height: '93%',
+                                    borderRadius: 50,
+                                    backgroundColor: '#fff',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                 {/* {userdetail !== null ?
+                                    <Image 
+                                        style={{
+                                            width: '100%', 
+                                            height: '100%'
+                                        }}
+                                        source={{uri: 'http://172.19.2.133/app/sirs/assets/img/foto_pegawai/'+userdetail.user_detail.foto_pegawai}}
+                                    /> :  */}
+                                    <Feather name="user" size={30} color={'#333'}/>
+                                {/* } */}
+                            </View>
                         </View>
                     </View>
                     <View

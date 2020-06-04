@@ -128,9 +128,9 @@ googleServices {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    ndkVersion "21.0.6113669"
+    // ndkVersion "21.0.6113669"
     // ndkVersion "21.1.6352462"
-    // ndkVersion "21.2.6472646"
+    ndkVersion "21.2.6472646"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -141,8 +141,8 @@ android {
         applicationId "com.simrskandou.kandouone"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 3
+        versionName "1.1.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'mlkit'
     }
