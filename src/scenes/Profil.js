@@ -11,6 +11,9 @@ import { getData, removeData } from '../services/LocalStorage'
 import {getProfilUser} from '../services/ServiceAuth'
 import {Icon} from 'react-native-elements'
 import Ripple from 'react-native-material-ripple'
+import Feather from 'react-native-vector-icons/Feather'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 export default class Profil extends Component{
     constructor(props){
         super(props)
@@ -194,11 +197,7 @@ export default class Profil extends Component{
                                         width: '10%'
                                     }}
                                 >
-                                    <Icon 
-                                        type={'font-awesome'}
-                                        name={'info-circle'}
-                                        size={18}
-                                    />
+                                    <SimpleLineIcons name={'user-following'} size={20}/>
                                 </View>
                                 <View>
                                     <Text
@@ -235,11 +234,7 @@ export default class Profil extends Component{
                                         width: '10%'
                                     }}
                                 >
-                                    <Icon 
-                                        type={'ionicons'}
-                                        name={'settings'}
-                                        size={18}
-                                    />
+                                    <AntDesign name="setting" size={20}/>
                                 </View>
                                 <View>
                                     <Text
@@ -254,6 +249,37 @@ export default class Profil extends Component{
                                             fontSize: 12
                                         }}
                                     >Pengaturan password, dll</Text>
+                                </View>
+                            </Ripple>
+                            <Ripple
+                                onPress={() => this.props.navigation.navigate('About')}
+                                rippleColor={'rgba(0,0,0,.4)'}
+                                style={{
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: '#eee',
+                                    paddingHorizontal: 20,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: 10,
+                                    height: 70,
+                                    position: 'relative'
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        alignItems: 'flex-start',
+                                        width: '10%'
+                                    }}
+                                >
+                                    <Feather name="info" size={20}/>
+                                </View>
+                                <View>
+                                    <Text
+                                        style={{
+                                            fontSize: 14,
+                                            fontWeight: 'bold'
+                                        }}
+                                    >Tentang Aplikasi</Text>
                                 </View>
                             </Ripple>
                             <Ripple
@@ -280,11 +306,7 @@ export default class Profil extends Component{
                                         width: '10%'
                                     }}
                                 >
-                                    <Icon 
-                                        type={'font-awesome'}
-                                        name={'sign-out'}
-                                        size={18}
-                                    />
+                                    <AntDesign name={'logout'} size={20} />
                                 </View>
                                 <View>
                                     <Text

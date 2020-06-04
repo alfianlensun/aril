@@ -210,7 +210,7 @@ export default class InfoPribadi extends Component{
                                             marginTop: 2,
                                             fontSize: 12
                                         }}
-                                        >{userinfo !== null ? (userinfo.jenis_kelamin === '2' ? 'Laki - laki' : 'Perempuan') : ''}</Text>
+                                        >{userinfo !== null ? (userinfo.jenis_kelamin == '2' ? 'Laki - laki' : 'Perempuan') : ''}</Text>
                                 </View>
                             </Ripple>
                             <Ripple

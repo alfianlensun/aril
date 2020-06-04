@@ -294,7 +294,7 @@ export default class AktivitasHarianPegawai extends Component {
                         alignItems: 'center',
                     }}
                 >
-                    {this.state.success === false ? <ActivityIndicator size="small" color="#00ff00" /> : null}
+                    {this.state.success === false ? <ActivityIndicator size="small" color="#fff" /> : null}
                     <View
                         style={{
                             marginTop: 20,

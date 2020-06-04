@@ -8,6 +8,7 @@ import {getData} from '../../services/LocalStorage'
 import {bottom_navigation_background, shadowxl, icon_color_primary, icon_color_secondary,icon_color_white,ripple_color_primary, shadow} from '../../themes/Default'
 import Ripple from 'react-native-material-ripple'
 import Feather from 'react-native-vector-icons/Feather'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default class NavigationBottom extends Component{
@@ -55,7 +56,7 @@ export default class NavigationBottom extends Component{
                                 backgroundColor: activeTab === 1 ? icon_color_secondary : 'transparent'
                             }}
                         >
-                            <MaterialIcons name="dashboard" color={activeTab === 1 ? icon_color_white : icon_color_primary} size={25}/>
+                            <AntDesign name="home" color={activeTab === 1 ? icon_color_white : icon_color_primary} size={25}/>
                         </View>
                     </Ripple>
                     <Ripple

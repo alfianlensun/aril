@@ -60,6 +60,7 @@ import ChatDetail from './src/scenes/moduls/chat/ChatDetail';
 import { getData } from './src/services/LocalStorage';
 import io from 'socket.io-client'
 import codePush from 'react-native-code-push'
+import About from './src/scenes/About';
 
 
 const store = createStore(AllReducer)
@@ -168,6 +169,7 @@ class App extends Component {
 						animation="fade"
 						initialRouteName={this.state.initialRoute}
 					>
+						<Stack.Screen name="About" component={About} />
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
 						<Stack.Screen name="VideoCall" component={VideoCall} />
 						<Stack.Screen name="ChatDetail" component={ChatDetail} />

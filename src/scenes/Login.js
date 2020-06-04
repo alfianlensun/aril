@@ -644,22 +644,6 @@ export default class Login extends Component{
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                <View
-                                    style={{
-                                        width: '100%',
-                                        position: 'absolute',
-                                        paddingBottom: 10,
-                                        bottom: 0,
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontSize: 12,
-                                            color: '#fff'
-                                        }}
-                                    >Version 1.0.0</Text>
-                                </View>
                             </View>
                         </ImageBackground>
                         <SlidingUpPanel 
