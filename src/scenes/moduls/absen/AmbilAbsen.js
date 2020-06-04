@@ -159,9 +159,6 @@ export default class AmbilAbsen extends Component{
                         errorCheck: true,
                         fetch: false
                     })
-                    this.timeoutFaceRecog = setTimeout(async () => {
-                        this.checkAbsen()
-                    },2000)
                 }
             } else {
                 this.timeoutFaceRecog = setTimeout(() => {
@@ -171,7 +168,7 @@ export default class AmbilAbsen extends Component{
             
         } catch(err){
             this.setState({
-                scanFaceMessage: `Terjadi kesalahan saat proses scan wajah ${err.message}`,
+                scanFaceMessage: `Terjadi kesalahan saat proses scan wajah ${err.message !== undefined ? err.message : err}`,
                 detectedFace: false
             })
         }   
@@ -190,14 +187,14 @@ export default class AmbilAbsen extends Component{
                     }}
                     type={RNCamera.Constants.Type.front}
                     captureAudio={false}
-                    onFacesDetected={this.onFacesDetected}
+                    onFacesDetected={this.state.errorCheck === false && this.onFacesDetected}
                     onFaceDetectionError={() => console.log('not detected')}
                     androidCameraPermissionOptions={{
                         title: 'Hallo',
                         message: 'Untuk melakukan absensi, aplikasi memerlukan izin penggunaan camera',
                         buttonPositive: 'Izinkan',
                         buttonNegative: 'Kembali',
-                    }} 
+                    }}
                 >
                 </RNCamera>
                 <View
@@ -259,13 +256,44 @@ export default class AmbilAbsen extends Component{
                                     fontSize: 16
                                 }}
                             >Scan wajah berhasil </Text> : 
-                            <Text
+                            <View
                                 style={{
-                                    marginTop: 20,
-                                    fontSize: 14,
-                                    textAlign: 'center'
+                                    width: '100%',
+                                    alignItems: 'center'
                                 }}
-                            >{this.state.scanFaceMessage}</Text>
+                            >
+                                <Text
+                                    style={{
+                                        marginTop: 20,
+                                        fontSize: 14,
+                                        textAlign: 'center'
+                                    }}
+                                >{this.state.scanFaceMessage}</Text>
+                                {this.state.errorCheck && 
+                                    <Ripple
+                                        onPress={() => {
+                                            this.setState({
+                                                errorCheck: false
+                                            })
+                                            this.checkAbsen()
+                                        }}
+                                        style={{
+                                            marginTop: 30,
+                                            paddingHorizontal: 10,
+                                            paddingVertical: 10,
+                                            backgroundColor: icon_color_secondary,
+                                            borderRadius: 20
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: 13,
+                                                color: '#fff'
+                                            }}
+                                        >Coba Lagi</Text>
+                                    </Ripple>
+                                }
+                            </View>
                         }
                         {this.state.status === 1 &&
                             <Ripple

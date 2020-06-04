@@ -65,7 +65,7 @@ export default class About extends Component{
                         fontSize: 12,
                         color: icon_color_primary
                     }}
-                >Version 1.0.0</Text>   
+                >Version 1.1.0</Text>   
             </View>
         )
     }
