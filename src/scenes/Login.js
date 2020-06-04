@@ -487,10 +487,11 @@ export default class Login extends Component{
                                     </View>
                                     <View
                                         style={{
-                                            marginTop: screenHeightPercent(5)
+                                            marginTop: screenHeightPercent(5),
+                                            alignItems: 'center'
                                         }}
                                     >
-                                        <Text style={{color: '#fff', fontWeight: 'bold'}}>Silahkan login untuk melanjutkan</Text>
+                                        <Text style={{color: '#eee'}}>Silahkan login untuk melanjutkan</Text>
                                     </View>
                                     <View
                                         style={{

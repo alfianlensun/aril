@@ -69,7 +69,7 @@ export default class DaftarMobileAbsen extends Component{
                     const photo = await this.camera.takePictureAsync({
                         quality: 0.5,
                         base64: true,
-                        width: 100,
+                        width: 200,
                     });
                     if (this.state.listFoto.length < 3){
                         let listFoto = [...this.state.listFoto]

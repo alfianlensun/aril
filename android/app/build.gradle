@@ -128,9 +128,9 @@ googleServices {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    // ndkVersion "21.0.6113669"
+    ndkVersion "21.0.6113669"
     // ndkVersion "21.1.6352462"
-    ndkVersion "21.2.6472646"
+    // ndkVersion "21.2.6472646"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -138,7 +138,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.simrskandou.aril"
+        applicationId "com.simrskandou.kandouone"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

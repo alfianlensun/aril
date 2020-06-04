@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "454965254705",
-    "firebase_url": "https://simrspushnotification.firebaseio.com",
-    "project_id": "simrspushnotification",
-    "storage_bucket": "simrspushnotification.appspot.com"
+    "project_number": "617329504431",
+    "firebase_url": "https://kandouone.firebaseio.com",
+    "project_id": "kandouone",
+    "storage_bucket": "kandouone.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:454965254705:android:ef3b30735602f309ba5310",
+        "mobilesdk_app_id": "1:617329504431:android:d3810cec02195d2458245a",
         "android_client_info": {
-          "package_name": "com.simrskandou.aril"
+          "package_name": "com.simrskandou.kandouone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "454965254705-ds92dgt0h6jfqghfjirjv1u915vtlk8j.apps.googleusercontent.com",
+          "client_id": "617329504431-6rk70jr8eqm8nsh4u3j011rsk6dp5hqp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-hUoRIl9Gux_z5jbKdmC9N-IKK6pvAxc"
+          "current_key": "AIzaSyAIuc65GYKHwar9XFPynbqNWsa1-mXTlnM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "454965254705-ds92dgt0h6jfqghfjirjv1u915vtlk8j.apps.googleusercontent.com",
+              "client_id": "617329504431-6rk70jr8eqm8nsh4u3j011rsk6dp5hqp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

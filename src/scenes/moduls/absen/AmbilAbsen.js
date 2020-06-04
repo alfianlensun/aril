@@ -144,7 +144,7 @@ export default class AmbilAbsen extends Component{
                 const photo = await this.camera.takePictureAsync({
                     quality: 0.5,
                     base64: true,
-                    width: 100,
+                    width: 200,
                 })
                 const facelogin = await createAbsensi(photo, this.state.userid, this.state.absenType)
                 if (facelogin.reqStat.code === 200){
@@ -544,7 +544,7 @@ export default class AmbilAbsen extends Component{
                                     this.setState({
                                         permissionStatus: true
                                     })
-                                    this.AmbilAbsen()
+                                    this.checkAbsen()
                                 } else {
                                     this.sliderUp.hide()
                                 }
