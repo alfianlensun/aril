@@ -505,7 +505,7 @@ export default class Login extends Component{
                                     >
                                         <TextInput
                                             onSubmitEditing={() => {
-                                                this.onSubmitIDtelegram()
+                                                this.Password.focus()
                                             }}
                                             onChangeText={(IDTelegram) => {
                                                 this.setState({IDTelegram, IDTelegramValid: null})
@@ -524,7 +524,6 @@ export default class Login extends Component{
                                             marginTop: 10,
                                             borderRadius: 20,
                                             overflow:'hidden',
-
                                             height: 50,
                                             position: 'relative'
                                         }}

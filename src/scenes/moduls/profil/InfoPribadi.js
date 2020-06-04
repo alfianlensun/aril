@@ -10,26 +10,47 @@ import { getData, clearData } from '../../../services/LocalStorage'
 import {Icon} from 'react-native-elements'
 import Ripple from 'react-native-material-ripple'
 import moment from 'moment'
+import { getProfilUser } from '../../../services/ServiceAuth'
 
 export default class InfoPribadi extends Component{
     constructor(props){
         super(props)
         this.state = {
-            userdetail: null
+            userdetail: null,
+            userinfo: null
         }
     }
 
     componentDidMount(){
+        this.mounted = true
         getData('AuthUser').then(data => {
             this.setState({
                 userdetail: data
             })
+            this.getUserDetail(data.user_detail.id_sdm_trx_kepegawaian)
         })        
+    }
+
+    componentWillUnmount(){
+        this.mounted = false
+    }
+
+    getUserDetail = async (id_sdm_trx_kepegawaian) => {
+        try {
+            const {response} = await getProfilUser(id_sdm_trx_kepegawaian)
+            if (this.mounted){
+                this.setState({
+                    userinfo: response
+                })
+            }
+        } catch(err){
+            alert(err.message)
+        }
     }
 
 
     render(){
-        const {userdetail} = this.state
+        const {userdetail, userinfo} = this.state
         return(
             <View 
                 style={{
@@ -112,7 +133,7 @@ export default class InfoPribadi extends Component{
                                     fontSize: 16,
                                     fontWeight: 'bold'
                                 }}
-                            >{userdetail !== null ? userdetail.user_detail.nama_lengkap : null}</Text>   
+                            >{userdetail !== null ? userdetail.user_detail.nama_pegawai : null}</Text>    
                             <View
                                 style={{
                                     marginTop: 5,
@@ -128,12 +149,12 @@ export default class InfoPribadi extends Component{
                                         marginRight: 5,
                                         fontSize: 10
                                     }}
-                                > {userdetail !== null ? (userdetail.user_detail.id_sdm_mst_status_pegawai === 5 ? 'NIP' : 'NRPK') : null} </Text>
+                                > {userdetail !== null ? (userdetail.user_detail.id_sdm_mst_status_pegawai == '5' ? 'NIP' : 'NRPK') : null} </Text>
                                 <Text
                                     style={{
                                         fontSize: 10
                                     }}
-                                > {userdetail !== null ? userdetail.user_detail.nip : null} </Text>
+                                > {userdetail !== null ? userdetail.user_detail.nip_baru : null} </Text>
                             </View>
                         </View>
                         <View
@@ -162,8 +183,8 @@ export default class InfoPribadi extends Component{
                                     }}
                                 >
                                     {
-                                        userdetail === null ? null : 
-                                        userdetail.user_detail.jenis_kelamin === 2 ? 
+                                        userinfo !== null &&
+                                        (userinfo.jenis_kelamin === '2' ? 
                                         <Icon 
                                             type={'font-awesome'}
                                             name={'male'}
@@ -173,7 +194,7 @@ export default class InfoPribadi extends Component{
                                             type={'font-awesome'}
                                             name={'female'}
                                             size={18}
-                                        />
+                                        />)
                                     }
                                 </View>
                                 <View>
@@ -189,7 +210,7 @@ export default class InfoPribadi extends Component{
                                             marginTop: 2,
                                             fontSize: 12
                                         }}
-                                        >{userdetail !== null ? (userdetail.user_detail.jenis_kelamin === 2 ? 'Laki - laki' : 'Perempuan') : ''}</Text>
+                                        >{userinfo !== null ? (userinfo.jenis_kelamin === '2' ? 'Laki - laki' : 'Perempuan') : ''}</Text>
                                 </View>
                             </Ripple>
                             <Ripple
@@ -230,7 +251,7 @@ export default class InfoPribadi extends Component{
                                             marginTop: 2,
                                             fontSize: 12
                                         }}
-                                    >{userdetail !== null ? userdetail.user_detail.no_telp : null}</Text>
+                                    >{userinfo !== null ? userinfo.no_telp : null}</Text>
                                 </View>
                             </Ripple>
                             <Ripple
@@ -271,7 +292,7 @@ export default class InfoPribadi extends Component{
                                             marginTop: 2,
                                             fontSize: 12
                                         }}
-                                    >{userdetail !== null ? userdetail.user_detail.tempat_lahir : null}</Text>
+                                    >{userinfo !== null ? userinfo.tempat_lahir : null}</Text>
                                 </View>
                             </Ripple>
                             <Ripple
@@ -312,7 +333,7 @@ export default class InfoPribadi extends Component{
                                             marginTop: 2,
                                             fontSize: 12
                                         }}
-                                    >{userdetail !== null ? moment(userdetail.user_detail.tanggal_lahir).format('DD MMMM YYYY') : null}</Text>
+                                    >{userinfo !== null && userinfo !== '0000-00-00' ? moment(userinfo.tanggal_lahir).format('DD MMMM YYYY') : null}</Text>
                                 </View>
                             </Ripple>
                         </View>

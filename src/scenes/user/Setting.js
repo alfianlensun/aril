@@ -173,7 +173,7 @@ export default class Setting extends Component{
                                 >Ganti password anda dengan password yang baru</Text>
                             </View>
                         </Ripple>
-                        <Ripple
+                        {/* <Ripple
                             onPress={async () => {
                                 try {
                                     const auth = await getData('AuthUser')
@@ -228,7 +228,7 @@ export default class Setting extends Component{
                                     }}
                                 >Aktifkan Login Dengan Pengenalan Wajah</Text>
                             </View>
-                        </Ripple>
+                        </Ripple> */}
                         <Ripple
                             onPress={() => this.props.navigation.navigate('ValidasiModul', {navigateTo: 'DaftarMobileAbsenIfExist'})}
                             rippleColor={'rgba(0,0,0,.4)'}
