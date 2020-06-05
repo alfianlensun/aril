@@ -474,16 +474,14 @@ export default class AmbilAbsen extends Component{
                         alignItems: 'center'
                     }}
                 >
-                    <Icon
-                        name={'fingerprint'}
-                        type={'ionicons'}
+                    <MaterialCIcons
+                        name={'face-recognition'}
                         size={50}
                         color={'#333'}
                     />
                     <Text
                         style={{
-                            fontSize: 14,
-                            fontWeight: 'bold',
+                            fontSize: 15,
                             color: '#333',
                             marginTop: 20
                         }}

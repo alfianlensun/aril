@@ -22,7 +22,7 @@ export default class ListAbsenDetailMobile extends Component{
                 style={{
                     width: '100%',
                     marginVertical: 4,
-                    backgroundColor: '#77baf7',
+                    backgroundColor: this.props.masuk ? '#34ebab': '#77baf7',
                     flexDirection: 'column',
                     flexWrap: 'wrap',
                     borderRadius: 10,
@@ -79,7 +79,7 @@ export default class ListAbsenDetailMobile extends Component{
                                 fontSize: 12,
                                 color: '#fff',
                             }}
-                        >Telah melakukan absen masuk dari mobile app </Text>
+                        >Telah melakukan absen {this.props.masuk ? 'Masuk' : 'Pulang'} dari mobile app </Text>
                     </View>
                     <View
                         style={{
