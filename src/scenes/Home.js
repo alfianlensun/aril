@@ -28,6 +28,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import LoaderMenuUtama from '../components/loader/LoaderMenuUtama'
 import LinearGradient from 'react-native-linear-gradient';
 import { getKredensialDokterById } from '../services/ServiceSdm'
@@ -61,7 +62,7 @@ export default class Home extends Component{
             if (this.mounted){
                 this.setState({
                     loaderMenu: false,
-                    userdetail: data,
+                    userdetail: data
                 })
             }
             if (data == null){
@@ -109,6 +110,9 @@ export default class Home extends Component{
                                     break;
                                 case "ionicons":
                                     icon = <Ionicons name={item.icon} size={25} color={'#fff'} />
+                                    break;
+                                case "materialcommunityicons":
+                                    icon = <MaterialCommunityIcons name={item.icon} size={25} color={'#fff'} />
                                     break;
                                 
                                 default:

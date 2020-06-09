@@ -143,12 +143,18 @@ export default class ChatDetail extends Component{
                         >   
                             <Ripple
                                 onPress={() => {
-                                    this.socket.emit('call', {
-                                        senderSocketID: this.socket.id,
-                                        sender: this.state.userdetail._id,
-                                        receiver: '5eafa3a31f69736ca1997767'
-                                    })
-                                    this.props.navigation.navigate('VideoCall')
+                                    try {
+                                        let data = {
+                                            senderSocketID: this.socket.id,
+                                            sender: this.state.userdetail._id,
+                                            receiver: '5eafa3a31f69736ca1997767'
+                                        } 
+                                        this.socket.emit('call', data)
+                                        this.props.navigation.navigate('VideoCall')
+                                    } catch(err){
+                                        alert(err.message)
+                                    }
+                                    
                                 }}
                                 style={{
                                     height: 40,

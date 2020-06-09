@@ -297,6 +297,36 @@ export async function changePassword(IDTelegram,Password,PasswordLama)
    
 }
 
+export async function getAllMenu()
+{
+    let headers = {...config.headers}
+    const token = await getToken()
+    headers.Authorization = 'Bearer '+token
+    try {
+        let response = new Promise( async (resolve, reject) => {
+            setTimeout(() => {
+                reject()
+            }, config.wsOption.timeout);
+            const fetchData =  await fetch(config.ws.nodeURL+'/auth/allmenu', {
+                method : 'POST',
+                headers, 
+                body: JSON.stringify({
+                    IDTelegram
+                })
+            })  
+            let responseStatus = await fetchData.status
+            if (responseStatus === 200){
+                resolve(fetchData.json())
+            } else {
+                reject(responseStatus)
+            }
+        }) 
+        return response
+    } catch (err){
+        throw new Error(err);
+    }
+}
+
 export async function getUserMenu(IDTelegram)
 {
     console.log(config.ws.nodeURL+'/auth/user-menu')

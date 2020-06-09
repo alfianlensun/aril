@@ -48,90 +48,95 @@ export default class VideoCall extends Component{
     }
 
     async componentDidMount(){
-        const userdetail = await getData('AuthUser')
-        this.setState({
-            userdetail
-        })
-        const configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-        // initial peer connection
-        this.pc = new RTCPeerConnection(configuration);
-
-        // initial socket 
-        this.socket = io("http://172.31.64.112:4001/webrtcPeer",{
-            query: {}
-        });
-        await this.openMediaDevices()
-
-        this.socket.on('connection-success', success => {
-            
-        })
-
-        this.socket.on('link-video-call', data => {
-			this.addCandidate()
-		})
-
-        this.socket.on('call-rejected', (data) => {
-            if (userdetail._id === data.sender){
-                this.setState({
-                    callStatus: 3
-                })
-            }
-        })
-
-        this.socket.on('call-accepted', (data) => {
-            if (userdetail._id === data.sender){
-                this.createOffer()
-                this.setState({
-                    callStatus: 2
-                })
-            }
-        })
-
-        this.socket.on('offerOrAnswer', async (sdp) => {
+        try {
+            const userdetail = await getData('AuthUser')
             this.setState({
-                remoteSdp: sdp
+                userdetail
             })
-            if (sdp.type === 'answer'){
-                await this.createRemoteDesc()
-                this.setState({
-                    calling: false,
+            const configuration = {"iceServers": [{"url": "stun:43.245.184.160:3478"}]};
+            // initial peer connection
+            this.pc = new RTCPeerConnection(configuration);
 
-                })
+            // initial socket 
+            this.socket = io("http://172.31.64.112:4001/webrtcPeer",{
+                query: {}
+            })
+
+            await this.openMediaDevices()
+
+            this.socket.on('connection-success', success => {
+                
+            })
+
+            this.socket.on('link-video-call', data => {
+                this.addCandidate()
+            })
+
+            this.socket.on('call-rejected', (data) => {
+                if (userdetail._id === data.sender){
+                    this.setState({
+                        callStatus: 3
+                    })
+                }
+            })
+
+            this.socket.on('call-accepted', (data) => {
+                if (userdetail._id === data.sender){
+                    this.createOffer()
+                    this.setState({
+                        callStatus: 2
+                    })
+                }
+            })
+
+            this.socket.on('offerOrAnswer', async (sdp) => {
                 this.setState({
-                    streamFront: false
+                    remoteSdp: sdp
                 })
-                this.socket.emit('link-video-call', {
-                    senderSocketID: this.socket.id,
-                    sender: userdetail._id,
-                    receiver: '5eafa3a31f69736ca1997767'
+                if (sdp.type === 'answer'){
+                    await this.createRemoteDesc()
+                    this.setState({
+                        calling: false,
+
+                    })
+                    this.setState({
+                        streamFront: false
+                    })
+                    this.socket.emit('link-video-call', {
+                        senderSocketID: this.socket.id,
+                        sender: userdetail._id,
+                        receiver: '5eafa3a31f69736ca1997767'
+                    })
+                }
+                if (sdp.type === 'offer'){
+                    await this.createRemoteDesc()
+                    await this.createAnswer()
+                }
+            })
+
+            this.socket.on('candidate', (candidate) => {
+                this.setState({
+                    candidates: [...this.state.candidates, candidate]
+                })
+            })
+
+            this.pc.onicecandidate = (e) => {
+                if (e.candidate) {
+                    this.sendToPeer('candidate', e.candidate)
+                }
+            }
+
+            this.pc.oniceconnectionstatechange = (e) => {
+                console.log(e)
+            }
+
+            this.pc.onaddstream = (e) => {
+                this.setState({
+                    remoteStream: e.stream
                 })
             }
-			if (sdp.type === 'offer'){
-				await this.createRemoteDesc()
-				await this.createAnswer()
-			}
-        })
-
-        this.socket.on('candidate', (candidate) => {
-            this.setState({
-                candidates: [...this.state.candidates, candidate]
-            })
-        })
-
-        this.pc.onicecandidate = (e) => {
-            if (e.candidate) {
-                this.sendToPeer('candidate', e.candidate)
-            }
-        }
-
-        this.pc.oniceconnectionstatechange = (e) => {
-			console.log(e)
-		}
-
-		this.pc.onaddstream = (e) => {
-            this.setState({
-                remoteStream: e.stream
-            })
+        }catch(err){
+            alert(err.message)
         }
     }
 
@@ -429,7 +434,7 @@ export default class VideoCall extends Component{
                                     if (this.state.callStatus === 1){
                                         this.socket.emit('cancel-call', {
                                             senderSocketID: this.socket.id,
-                                            sender: this.state.userdetail._id,
+                                            sender: this.state.userdetail !== null ? this.state.userdetail._id : null,
                                             receiver: '5eafa3a31f69736ca1997767'
                                         })
                                     }

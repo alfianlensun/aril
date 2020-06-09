@@ -25,7 +25,7 @@ export default class CardMenu extends Component{
                 <LinearGradient 
                     start={{x: 0, y: 0}} 
                     end={{x: 2, y: 0}} 
-                    colors={['#667eea', '#4c51bf', '#434190']} 
+                    colors={['#667eea', '#63b3ed', '#434190']} 
                     style={{
                         width: 50, 
                         height: 50,

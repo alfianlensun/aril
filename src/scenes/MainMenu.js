@@ -8,7 +8,9 @@ import {
     DeviceEventEmitter,
     Text,
     ScrollView,
-    RefreshControl
+    RefreshControl,
+    BackHandler,
+    ToastAndroid
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../helpers/Layout'
 import Home from './Home'
@@ -28,6 +30,7 @@ import {setUserLocation, setLocationSetting, setInRangeStatus, setFeatureEnabled
 import { bindActionCreators } from 'redux'
 import GeoFencing from 'react-native-geo-fencing';
 import { setUserPermission } from '../actions/redux/General'
+import RNMockLocationDetector from 'react-native-mock-location-detector';
 
 
 class MainMenu extends Component{
@@ -38,14 +41,23 @@ class MainMenu extends Component{
             activeTab: 1,
             refresh: false,
             notification: '',
-            messageNotRead: 0
+            messageNotRead: 0,
+            back: false
         }
         this.homeRef = createRef()
     }
-  
+
     componentDidMount(){
         this.mounted = true
+        RNMockLocationDetector.checkMockLocationProvider(
+            "Penyalahgunaan Aplikasi",
+            "Anda terdeteksi melakukan penyalahgunaan aplikasi, aktivitas anda telah tercatat di database bagian sdm silahkan hubungi bagian SDM",
+            "Saya Mengerti"
+        )
+        console.log('ok')
         this.watchMyPosition()
+        DeviceEventEmitter.removeAllListeners('hardwareBackPress')
+        DeviceEventEmitter.addListener('hardwareBackPress',this.onBackPress)
         getData('AuthUser').then(async (data) => {
             if (data == null){
                 this.props.navigation.replace('login')
@@ -54,15 +66,42 @@ class MainMenu extends Component{
                     detailuser: data
                 })
             }
-        }) 
+        })
+
         
     }
 
     componentWillUnmount(){
         this.mounted = false
+
         if (this.watchPosition){
             Geolocation.clearWatch(this.watchPosition)
         }   
+    }
+
+    onBackPress = async () => {
+        if (this.state.back){
+            BackHandler.exitApp()
+        } 
+        if (this.timeoutquit) clearTimeout(this.timeoutquit)
+
+        if (this.props.navigation.canGoBack()){
+            this.props.navigation.goBack()
+        } else {
+            ToastAndroid.show('Tap 2x untuk keluar aplikasi', 600)
+            this.setState({
+                back: true
+            })
+            
+            this.timeoutquit = setTimeout(() => {
+                this.setState({
+                    back: false
+                })
+            }, 200);
+
+            
+        }
+        return true
     }
 
     watchMyPosition = () => {
@@ -108,10 +147,6 @@ class MainMenu extends Component{
                         // this.props.setInRangeStatus(false)
                         this.props.setInRangeStatus(false)
                     })
-    }
-
-    componentDidUpdate(prevProps){
-
     }
 
     changeActiveTab = (activeTab) => {

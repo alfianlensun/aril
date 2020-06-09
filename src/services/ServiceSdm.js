@@ -251,7 +251,7 @@ export async function validasiRequestAbsensi(id, iduser, validType)
 }
 
 
-export async function createAbsensi(photo, iduser, absenType)
+export async function createAbsensi(photo, iduser, absenType, location)
 {
     let headers = {...config.headers}
     const token = await getToken()
@@ -272,7 +272,8 @@ export async function createAbsensi(photo, iduser, absenType)
                     face: photo.base64,
                     iduser,
                     absenType,
-                    datetime: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+                    datetime: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+                    location
                 })
             }) 
             

@@ -5,7 +5,8 @@ import {
 } from 'react-native'
 import {Icon} from 'react-native-elements'
 import Ripple from 'react-native-material-ripple'
-
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 export default class ListAbsenDetail extends Component{
     constructor(props){
         super(props)
@@ -19,62 +20,87 @@ export default class ListAbsenDetail extends Component{
                 style={{
                     width: '100%',
                     marginVertical: 4,
-                    backgroundColor: '#77baf7',
-                    paddingVertical: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    backgroundColor: this.props.masuk ? '#38a169': '#77baf7',
+                    flexDirection: 'column',
+                    flexWrap: 'wrap',
                     borderRadius: 10,
                     position:'relative',
-                    height: 55
                 }}
             >
                 <View
                     style={{
-                        paddingHorizontal: 20,
-                        height: '100%',
-                        width: '20%',
-                        justifyContent: 'center'
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        flexWrap: 'wrap',
                     }}
                 >
-                    <Icon 
-                        type={'font-awesome'}
-                        name={this.props.masuk ? 'sign-in' : 'sign-out'}
-                        color={'#fff'}
-                        size={14} 
-                    />
+                    <View
+                        style={{
+                            minWidth: 50,
+                            flexBasis: 50,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <View
+                            style={{
+                                height: 40,
+                                width: 40,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderTopRightRadius: 10,
+                                borderBottomLeftRadius: 10,
+                            }}
+                        >
+                            <Ionicons name={'md-finger-print'} size={20} color={'#fff'}/>
+                        </View>
+                    </View>
+                    <View
+                        style={{
+                            paddingVertical: 10,
+                            minWidth: 100,
+                            flexBasis: 100,
+                            flex: 3,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 13,
+                                color: '#fff',
+                                fontWeight: 'bold'
+                            }}
+                        >{this.props.masuk ? 'Masuk' : 'Pulang'}</Text>
+                        <Text
+                            style={{
+                                marginTop: 5,
+                                fontSize: 12,
+                                color: '#fff',
+                            }}
+                        >Telah melakukan absen {this.props.masuk ? 'Masuk' : 'Pulang'} dari alat fingerprint </Text>
+                    </View>
+                    <View
+                        style={{
+                            minWidth: 100,
+                            flexBasis: 100,
+                            paddingVertical: 10,
+                            justifyContent:'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <FontAwesome name={this.props.masuk ? 'sign-in' : 'sign-out'} size={20} color={'#fff'}/>
+                        <Text
+                            style={{
+                                marginTop: 5,
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                                color: "#fff"
+                            }}
+                        >
+                            {this.props.jam}
+                        </Text>
+                    </View>
                 </View>
-                <View
-                    style={{
-                        width: '60%',
-                        height: '100%',
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontWeight: 'bold',
-                            color: '#fff'
-                        }}
-                    >{this.props.masuk ? 'Masuk' : 'Pulang'}</Text>
-                       
-                </View> 
-                <View
-                    style={{
-                        width: '20%',
-                        height: '100%',
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontWeight: 'bold',
-                            color: '#fff'
-                        }}
-                    >{this.props.jam}</Text>
-                       
-                </View> 
             </Ripple>
         )
     }

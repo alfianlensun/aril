@@ -12,6 +12,7 @@ import {Icon} from 'react-native-elements'
 import Ripple from 'react-native-material-ripple'   
 import {getSubInstalasi, getRuangan, getKamar, getAllBed} from '../../../services/ServiceMonitoring'
 import LoaderListBed from '../../../components/loader/LoaderListBed'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default class Bed extends Component{
     constructor(props){
@@ -115,15 +116,11 @@ export default class Bed extends Component{
                             </View>
                             <View
                                 style={{
-                                    width: '20%'
+                                    width: '20%',
+                                    alignItems: 'flex-end'
                                 }}
                             >
-                                <Icon 
-                                    type={'font-awesome'}
-                                    name={'home'}
-                                    color={'#444'}
-                                    size={18} 
-                                />
+                                <MaterialIcons name="chevron-right" size={30} color={'#333'}/>
                             </View>
                         </View>
                     </Ripple>

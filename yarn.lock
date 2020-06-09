@@ -5672,6 +5672,11 @@ react-native-material-ripple@^0.9.1:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-mock-location-detector@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-mock-location-detector/-/react-native-mock-location-detector-1.0.5.tgz#90493708dbea88a95fad9bf794880c70b46b0a69"
+  integrity sha512-/B8mrJlJA2yMMUjATxpDmanL75BVz2gZfUO+47o59gWkZUtwqtqN+fsWwQR21quZxiMrm2sZ7NHHd33s4hMo7Q==
+
 react-native-progress@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-4.1.2.tgz#ffb2264ddfeba409c730e36a9791bb7bbe07a00d"

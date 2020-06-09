@@ -245,7 +245,7 @@ export default class Login extends Component{
     }
 
     onSubmitLogin = async () => {
-        try{
+        try {
             const {IDTelegram, Password} = this.state
             if (IDTelegram.length > 0){
                 if (Password.length > 0){
@@ -256,22 +256,14 @@ export default class Login extends Component{
                     })
 
                     const token = await getPushNotificationToken()
+
                     login(IDTelegram, Password, token).then(async (resp) => {
-                        
                         if (resp.reqStat.code === 200){
                             resp.response.jwtToken = resp.reqStat.token
                             await storeData('AuthUser', resp.response)
                             await storeData('LastLogin', Date.now())
-                            // const {inRange} = await this.checkLocation()
 
                             this.props.navigation.replace('MainMenu')
-                            // if (inRange === false){
-                            // } else {
-                            //     this.props.navigation.replace('MainMenu')
-                            //     this.setState({
-                            //         loader: false
-                            //     })
-                            // }
                             
                         } else {
                             this.setState({

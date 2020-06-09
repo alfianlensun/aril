@@ -211,7 +211,7 @@ export default class SettingUserDetail extends Component{
                             marginLeft: 10,
                             fontSize: 16
                         }}
-                    > {this.state.params.userdata.user_detail.nama_lengkap}</Text>
+                    > {this.state.params.userdata.user_detail.nama_pegawai}</Text>
                 </View>
                 <View 
                     style={{
@@ -341,6 +341,47 @@ export default class SettingUserDetail extends Component{
                                 </View>
                             </View>
                         </View>
+                        <Ripple
+                            onPress={() => this.props.navigation.navigate('SettingUserMenu', {userdata: this.state.params.userdata})}
+                            rippleColor={'rgba(0,0,0,.3)'}
+                            style={{
+                                width: '100%',
+                                height: 60,
+                                marginTop: 10,
+                                position: 'relative'
+                            }}
+                        >
+                            <View
+                                style={{
+                                    flex: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: '#ccc',
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        flex: 1
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            color: '#444',
+                                            fontWeight: 'bold'
+                                        }}
+                                        >Daftar Menu</Text>
+                                    <Text
+                                        style={{
+                                            color: '#444',
+                                            fontSize: 12,
+                                            marginTop: 2
+                                        }}
+                                    >Daftar menu yang dapat di akses</Text>
+                                </View>
+                            </View>
+                        </Ripple>
                         <View
                             style={{
                                 width: '100%',

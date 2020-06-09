@@ -22,7 +22,7 @@ export default class ListAbsenDetailMobile extends Component{
                 style={{
                     width: '100%',
                     marginVertical: 4,
-                    backgroundColor: this.props.masuk ? '#34ebab': '#77baf7',
+                    backgroundColor: this.props.masuk ? '#38a169': '#77baf7',
                     flexDirection: 'column',
                     flexWrap: 'wrap',
                     borderRadius: 10,

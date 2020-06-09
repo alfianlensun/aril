@@ -16,7 +16,7 @@
         android:value="ocr, face" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA-hUoRIl9Gux_z5jbKdmC9N-IKK6pvAxc"/>
+            android:value="AIzaSyBe7fDOg1dv5-D_3jwV3KllhPpM-K4lmXQ"/>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

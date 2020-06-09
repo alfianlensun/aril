@@ -4,7 +4,7 @@ export const container_background = '#fff'
 
 export const ripple_color_primary = 'rgba(0,0,0,.2)'
 // icon color 
-export const icon_color_primary = '#434190'
+export const icon_color_primary = '#667eea'
 export const icon_color_secondary = '#7f9cf5'
 export const icon_color_white = '#fff'
 export const text_color_default = '#222'

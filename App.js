@@ -61,6 +61,9 @@ import { getData } from './src/services/LocalStorage';
 import io from 'socket.io-client'
 import codePush from 'react-native-code-push'
 import About from './src/scenes/About';
+import ListUnitKerja from './src/scenes/moduls/absen/monitoring/ListUnitKerja';
+import { BackHandler } from 'react-native';
+import MonitoringAbsen from './src/scenes/moduls/absen/monitoring/MonitoringAbsen';
 
 
 const store = createStore(AllReducer)
@@ -94,6 +97,7 @@ class App extends Component {
 		messaging()
 			.getInitialNotification()
 			.then(remoteMessage => {
+				console.log(remoteMessage)
 				if (remoteMessage) {
 					console.log(
 						'Notification caused app to open from quit state:',
@@ -114,19 +118,20 @@ class App extends Component {
 			})
 
 			this.socket.on('receive-call', (data) => {
-				if (data.sender !== this.state.userdata._id){
-					this.setState({
-						callerData: data,
-						receiveCall: true
-					})
-				}
+				console.log(data)
+				// if (data.sender !== this.state.userdata._id){
+				// 	this.setState({
+				// 		callerData: data,
+				// 		receiveCall: true
+				// 	})
+				// }
 			})
 		}
 
 		
 		
 		this.unsubscribe = messaging().onMessage(async remoteMessage => {
-			Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+			
 		});
 
 		this.netinfo = NetInfo.addEventListener(state => {
@@ -147,6 +152,7 @@ class App extends Component {
 	componentWillUnmount(){
 		this.unsubscribe
 		this.netinfo
+
 		messaging().onTokenRefresh(token => {
 			
 		});
@@ -169,8 +175,10 @@ class App extends Component {
 						animation="fade"
 						initialRouteName={this.state.initialRoute}
 					>
-						<Stack.Screen name="About" component={About} />
+						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen} />
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
+						<Stack.Screen name="About" component={About} />
+						<Stack.Screen name="ListUnitKerja" component={ListUnitKerja} />
 						<Stack.Screen name="VideoCall" component={VideoCall} />
 						<Stack.Screen name="ChatDetail" component={ChatDetail} />
 						<Stack.Screen name="RiwayatKredensial" component={RiwayatKredensial} />
@@ -206,8 +214,8 @@ class App extends Component {
 						<Stack.Screen name="Visite" component={Visite} />
 						<Stack.Screen name="Tindakan" component={Tindakan} />
 						<Stack.Screen name="TindakanDetail" component={TindakanDetail} />
-						<Stack.Screen name="SettingAplikasi" component={SettingAplikasi} />
-						<Stack.Screen name="SettingAplikasiGeofence" component={SettingAplikasiGeofence} />
+						{/* <Stack.Screen name="SettingAplikasi" component={SettingAplikasi} /> */}
+						{/* <Stack.Screen name="SettingAplikasiGeofence" component={SettingAplikasiGeofence} /> */}
 						<Stack.Screen name="Setting" component={Setting} />
 						<Stack.Screen name="FacialRecognitionIfExist" component={FacialRecognitionIfExist} />
 						<Stack.Screen name="FacialRecognitionIfNotExist" component={FacialRecognitionIfNotExist} />
@@ -219,12 +227,13 @@ class App extends Component {
 	}
 }
 
+export default App
 
-const codePushOptions = {
-	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
-}
+// const codePushOptions = {
+// 	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
+// }
 
-export default codePush(codePushOptions)(App)
+// export default codePush(codePushOptions)(App)
 
 const config = {
 	animation: 'spring',

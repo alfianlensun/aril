@@ -44,7 +44,7 @@ export default class SettingUser extends Component{
         })
         getListUser().then(resp => {
             const listuser = resp.response.map(item => {
-                item.value = item.user_detail.nama_lengkap
+                item.value = item.user_detail.nama_pegawai
                 return item
             })
             this.setState({
@@ -72,6 +72,7 @@ export default class SettingUser extends Component{
                 style={{
                     flex: 1,
                     overflow: 'hidden',
+                    flexDirection: 'column',
                     position: 'relative',
                     backgroundColor: '#e1f7fa',
                 }}
@@ -115,8 +116,7 @@ export default class SettingUser extends Component{
                 </View>
                 <View 
                     style={{
-                        width: '100%',
-                        height: '100%',
+                        flex: 1,
                         marginTop: 20,
                         paddingVertical: 10,
                         paddingHorizontal: 20,
@@ -154,8 +154,7 @@ export default class SettingUser extends Component{
                     </View>
                     <View
                         style={{
-                            width: '100%',
-                            height: '100%',
+                            flex: 1,
                             paddingHorizontal: 10,
                         }}
                     >
@@ -181,8 +180,7 @@ export default class SettingUser extends Component{
                                 >
                                     <View
                                         style={{
-                                            width: '100%',
-                                            height: '100%',
+                                            flex: 1,
                                             flexDirection: 'row',
                                             justifyContent: 'center',
                                             alignItems: 'center',
@@ -192,7 +190,7 @@ export default class SettingUser extends Component{
                                     >
                                         <View
                                             style={{
-                                                width: '80%'
+                                                flex: 1
                                             }}
                                         >
                                             <Text
@@ -200,7 +198,7 @@ export default class SettingUser extends Component{
                                                     color: '#444',
                                                     fontWeight: 'bold'
                                                 }}
-                                                >{item.user_detail.nama_lengkap}</Text>
+                                                >{item.user_detail.nama_pegawai}</Text>
                                             <Text
                                                 style={{
                                                     color: '#444',

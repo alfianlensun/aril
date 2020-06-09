@@ -17,6 +17,7 @@ import {icon_color_primary, text_color_gray_800, ripple_color_primary, icon_colo
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { getData, removeData } from '../../../services/LocalStorage';
+import moment from 'moment'
 
 const initialState = {
     realTimeLocation: null,
@@ -129,7 +130,6 @@ export default class AmbilAbsen extends Component{
                 }
             },600)
         }
-        
     }
 
     checkAbsen = async () => {
@@ -146,7 +146,7 @@ export default class AmbilAbsen extends Component{
                     base64: true,
                     width: 200,
                 })
-                const facelogin = await createAbsensi(photo, this.state.userid, this.state.absenType)
+                const facelogin = await createAbsensi(photo, this.state.userid, this.state.absenType, this.props.userLocation)
                 if (facelogin.reqStat.code === 200){
                     this.setState({
                         fetch: false,
@@ -474,40 +474,66 @@ export default class AmbilAbsen extends Component{
                         alignItems: 'center'
                     }}
                 >
-                    <MaterialCIcons
-                        name={'face-recognition'}
-                        size={50}
-                        color={'#333'}
-                    />
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 80,
+                            width: 80,
+                            backgroundColor: icon_color_secondary,
+                            borderRadius: 30
+                        }}
+                    >
+                        <MaterialCIcons
+                            name={'face-recognition'}
+                            size={50}
+                            color={'#fff'}
+                        />
+                    </View>
                     <Text
                         style={{
-                            fontSize: 15,
+                            fontSize: 13,
                             color: '#333',
                             marginTop: 20
                         }}
-                    >Absen {this.state.successdata !== null ? (this.state.successdata.absenType === 1 ? 'masuk' : 'pulang') : ''} anda berhasil</Text>
-                    <Text
+                    >Anda telah berhasil absen {this.state.successdata !== null ? (this.state.successdata.absenType === 1 ? 'masuk' : 'pulang') : 'Masuk'} pada pukul</Text>
+                    <View
                         style={{
-                            fontSize: 13,
-                            backgroundColor: '#6ab1f7',
-                            paddingVertical: 10,
-                            paddingHorizontal: 20,
-                            borderRadius: 30,
-                            color: '#fff',
-                            marginTop: 20
+                            width: '100%',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            paddingHorizontal: '20%',
                         }}
-                    >Waktu server : {this.state.successdata !== null ? this.state.successdata.serverTime : ''}</Text>
-                    <Text
-                        style={{
-                            fontSize: 13,
-                            backgroundColor: '#6ab1f7',
-                            paddingVertical: 10,
-                            paddingHorizontal: 20,
-                            borderRadius: 30,
-                            color: '#fff',
-                            marginTop: 10
-                        }}
-                    >Waktu lokal : {this.state.successdata !== null ? this.state.successdata.clientTime : ''}</Text>
+                    >
+                        <Text
+                            style={{
+                                width: '100%',
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                backgroundColor: '#6ab1f7',
+                                paddingVertical: 10,
+                                paddingHorizontal: 20,
+                                borderRadius: 30,
+                                color: '#fff',
+                                textAlign: 'center',
+                                marginTop: 20
+                            }}
+                        >{this.state.successdata !== null ? moment(this.state.successdata.serverTime).format('DD MMMM YYYY') : ''}</Text>
+                        <Text
+                            style={{
+                                width: '100%',
+                                fontWeight: 'bold',
+                                backgroundColor: '#6ab1f7',
+                                paddingVertical: 10,
+                                paddingHorizontal: 20,
+                                textAlign: 'center',
+                                borderRadius: 30,
+                                fontSize: 14,
+                                color: '#fff',
+                                marginTop: 10
+                            }}
+                        >{this.state.successdata !== null ? moment(this.state.successdata.serverTime).format('HH:mm:ss') : ''}</Text>
+                    </View>
                 </View>
             </View>
         )

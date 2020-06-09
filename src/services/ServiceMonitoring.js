@@ -21,7 +21,6 @@ export async function getSubInstalasi()
                 reject(fetchData.status)
             }
         }) 
-        
         return response
     } catch (err){
         throw new Error(err);
