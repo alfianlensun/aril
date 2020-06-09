@@ -227,7 +227,6 @@ class App extends Component {
 	}
 }
 
-export default App
 
 const codePushOptions = {
 	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
