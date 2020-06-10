@@ -54,7 +54,6 @@ class MainMenu extends Component{
             "Anda terdeteksi melakukan penyalahgunaan aplikasi, aktivitas anda telah tercatat di database bagian sdm silahkan hubungi bagian SDM",
             "Saya Mengerti"
         )
-        console.log('ok')
         this.watchMyPosition()
         DeviceEventEmitter.removeAllListeners('hardwareBackPress')
         DeviceEventEmitter.addListener('hardwareBackPress',this.onBackPress)
@@ -88,7 +87,7 @@ class MainMenu extends Component{
         if (this.props.navigation.canGoBack()){
             this.props.navigation.goBack()
         } else {
-            ToastAndroid.show('Tap 2x untuk keluar aplikasi', 600)
+            ToastAndroid.show('Tekan lagi untuk keluar aplikasi', 600)
             this.setState({
                 back: true
             })

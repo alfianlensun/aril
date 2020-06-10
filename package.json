@@ -1,10 +1,11 @@
 {
-  "name": "KandouOne",
+  "name": "kandouone",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "build-android": "cd android && ./gradlew bundleRelease",
     "android": "react-native run-android",
+    "android-release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",

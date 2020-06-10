@@ -433,6 +433,40 @@ export async function getKredensialDokterById(IDPegawai)
    
 }
 
+export async function getListAbsensiPegawai(IdUnitKerja, tanggalAwal, TanggalAkhir)
+{
+    let headers = {...config.headers}
+    const token = await getToken()
+    headers.Authorization = 'Bearer '+token
+    try {
+        let response = new Promise( async (resolve, reject) => {
+            setTimeout(() => {
+                reject()
+            }, config.wsOption.timeout);
+
+            abort = new AbortController()
+            const signal = abort.signal;
+            const fetchData =  await fetch(config.ws.nodeURL+`/sdm/absensi/monitoring/${IdUnitKerja}/${tanggalAwal}/${TanggalAkhir}`, {
+                method : 'GET',
+                signal: signal,
+                headers: headers
+            }) 
+            let responseStatus = await fetchData.status
+            if (responseStatus === 200){
+                abort = null
+                resolve(fetchData.json())
+            } else {
+                abort = null
+                reject(responseStatus)
+            }
+        }) 
+        return response
+    } catch (err){
+        throw new Error(err);
+    }
+   
+}
+
 
 export async function abortRequest()
 {

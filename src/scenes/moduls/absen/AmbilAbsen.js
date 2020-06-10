@@ -18,6 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { getData, removeData } from '../../../services/LocalStorage';
 import moment from 'moment'
+import RNMockLocationDetector from 'react-native-mock-location-detector';
 
 const initialState = {
     realTimeLocation: null,
@@ -73,6 +74,12 @@ export default class AmbilAbsen extends Component{
 
     show = async (parentdata) => {
         try{ 
+            this.sliderUp.show()
+            RNMockLocationDetector.checkMockLocationProvider(
+                "Penyalahgunaan Aplikasi",
+                "Anda terdeteksi melakukan penyalahgunaan aplikasi, aktivitas anda telah tercatat di database bagian sdm silahkan hubungi bagian SDM",
+                "Saya Mengerti"
+            )
             this.setState(initialState)
             this.setState({
                 absenType: parentdata.type,
@@ -83,7 +90,7 @@ export default class AmbilAbsen extends Component{
                 featureEnabled: this.state.userData.feature.absensi_mobile  
             })
             
-            this.sliderUp.show()
+            
 
             if (this.props.userPermission.camera && this.props.userPermission.location){
                 this.setState({

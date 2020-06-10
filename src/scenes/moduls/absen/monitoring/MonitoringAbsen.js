@@ -11,33 +11,58 @@ import {
 import { screenHeightPercent } from '../../../../helpers/Layout'
 import Ripple from 'react-native-material-ripple'
 import {Icon} from 'react-native-elements'
+import DateTimePicker from '@react-native-community/datetimepicker';
 import ListCardUnitKerja from '../../../../components/list/ListCardUnitKerja'
 import { getListUnitKerjaSdm } from '../../../../services/ServiceMaster'
-import { icon_color_primary, shadow } from '../../../../themes/Default'
+import { icon_color_primary, shadow, icon_color_secondary } from '../../../../themes/Default'
 import { TextInput } from 'react-native-gesture-handler'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-
+import { getListAbsensiPegawai } from '../../../../services/ServiceSdm'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import moment from 'moment'
+import ListPegawaiAbsen from '../../../../components/list/ListPegawaiAbsen'
+import { search } from '../../../../helpers/General'
 export default class MonitoringAbsen extends Component{
     constructor(props){
         super(props)
         const params = props.route.params
         this.state = {
-            listunitkerja: [],
+            listpegawai: [],
+            renderlistpegawai: [],
             loader: false,
             params,
-            searchUser: ''
+            searchUser: '',
+            tanggaldipilih: new Date(),
+            showDatePicker: false
         }
     }
 
     async componentDidMount(){
-        await this.getListPegawai()
+        try {
+            await this.getListPegawai()
+        } catch(err){
+            alert(err.message)
+        }
     }
 
     getListPegawai = async () => {
-        console.log(params)
+        try {
+            const {response} = await getListAbsensiPegawai(this.state.params.unitKerja.id_unit_kerja, moment(this.state.tanggaldipilih).format('YYYY-MM-DD'), moment(this.state.tanggaldipilih).format('YYYY-MM-DD') )
+            const list = response.map(item => {
+                item.value = item.nama_pegawai
+                return item
+            })
+            this.setState({
+                listpegawai: list,
+                renderlistpegawai: list
+            })
+        }catch(err){
+            throw new Error(err.message)
+        }
     }
 
     render(){
+        
         return (
             <View
                 style={{
@@ -54,6 +79,7 @@ export default class MonitoringAbsen extends Component{
                 >
                     <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
                     <View style={Styles.header}></View>
+                    
                     <View 
                         style={{
                             flexDirection: 'row',
@@ -96,6 +122,37 @@ export default class MonitoringAbsen extends Component{
                             }}
                         >{this.state.params.unitKerja.nama_unit_kerja}</Text>
                     </View>
+                    <View
+                        style={{
+                            width: '100%',
+                            paddingHorizontal: 20,
+                            paddingTop: 20,
+                            alignItems: 'flex-end'
+                        }}
+                    >
+                        <Ripple
+                            onPress={() => this.setState({showDatePicker: true})}
+                            style={[{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                paddingVertical: 10,
+                                paddingHorizontal: 20,
+                                borderRadius: 20,
+                                backgroundColor: icon_color_secondary
+                            }, shadow]} 
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 13,
+                                    color:"#fff",
+                                    paddingRight: 10
+                                }}
+                            >{moment(this.state.tanggaldipilih).format('DDMMYYYY') === moment(new Date()).format('DDMMYYYY') ? 'Hari Ini': moment(this.state.tanggaldipilih).format('DD MMMM YYYY')}</Text>
+                            <Ionicons name="md-calendar" size={14} color={'#fff'}/>
+                        </Ripple>
+                    </View>
                     <View 
                         style={{
                             flex: 1,
@@ -119,7 +176,7 @@ export default class MonitoringAbsen extends Component{
                              <View
                                 style={[{
                                     width: '100%',
-                                    height: 60,
+                                    height: 50,
                                     borderTopLeftRadius: 25,
                                     borderTopRightRadius: 25,
                                     borderBottomLeftRadius: 25,
@@ -133,12 +190,15 @@ export default class MonitoringAbsen extends Component{
                                 <TextInput
                                     onSubmitEditing={() => console.log('ok')}
                                     onChangeText={(searchUser) => {
-                                        // if (searchUser.length > 0){
-                                        //     const cari = search(this.state.listunitkerja , searchUser)
-                                        //     this.setState({renderlistunitkerja: cari})
-                                        // } else {
-                                        //     this.setState({renderlistunitkerja: this.state.listunitkerja})
-                                        // }
+                                        this.setState({
+                                            searchUser
+                                        })
+                                        if (searchUser.length > 0){
+                                            const cari = search(this.state.listpegawai , searchUser)
+                                            this.setState({renderlistpegawai: cari})
+                                        } else {
+                                            this.setState({renderlistpegawai: this.state.listunitkerja})
+                                        }
                                     }}
                                     ref={(input) => { this.searchUser = input }}
                                     style={{flex: 1, color: '#fff'}}
@@ -160,31 +220,54 @@ export default class MonitoringAbsen extends Component{
                             <View
                                 style={{
                                     flex: 1,
-                                    paddingHorizontal: 10,
-                                    paddingTop: 20,
+                                    paddingTop: 10,
                                 }}
                             >
-                                {/* <FlatList
+                                <FlatList
                                     refreshControl={
                                         <RefreshControl
                                             refreshing={this.state.loader}
-                                            onRefresh={() => this.getUnitKerja()}
+                                            onRefresh={() => this.getListPegawai()}
                                         />
                                     }
+                                    
                                     showsVerticalScrollIndicator={false}
-                                    data={this.state.renderlistunitkerja}
+                                    data={this.state.renderlistpegawai}
                                     renderItem={({ item }) => {
-                                        return <ListCardUnitKerja 
+                                        return <ListPegawaiAbsen 
                                             {...this.props}
                                             items={item}
                                         />
                                     }}
-                                    keyExtractor={item => item.id_unit_kerja.toString()}
-                                /> */}
+                                    keyExtractor={item => item.id_sdm_trx_kepegawaian.toString()}
+                                />
                             </View>
                         </View>
                     </View>
-                </View>   
+                </View> 
+                {this.state.showDatePicker &&
+                    <DateTimePicker
+                        value={this.state.tanggaldipilih}
+                        mode="datetime"
+                        mode={'date'}
+                        is24Hour={true}
+                        display="default"
+                        onChange={(event, value) => {
+                            if (value !== undefined){
+                                this.setState({
+                                    showDatePicker: false,
+                                    tanggaldipilih: value
+                                })
+                            } else {
+                                this.setState({
+                                    showDatePicker: false
+                                })
+                            }
+                            this.getListPegawai()
+                            
+                        }}
+                    />
+                }  
             </View>
         )
     }

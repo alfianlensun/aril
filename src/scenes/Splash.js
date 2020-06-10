@@ -46,10 +46,11 @@ class Splash extends Component{
             
             const {reqStat} = await getVersionApp(appversion)
 
-            // if (reqStat.code === 202){
-            //     this.props.navigation.replace('UpdateApp')
-            //     return false
-            // }
+            // getVersion
+            if (getVersion() !== '1.1.1'){
+                this.props.navigation.replace('UpdateApp')
+                return false
+            }
             
             let navigateTo = ''
             if (auth !== null){

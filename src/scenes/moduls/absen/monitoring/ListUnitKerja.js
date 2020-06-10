@@ -17,13 +17,14 @@ import ListCardUnitKerja from '../../../../components/list/ListCardUnitKerja'
 import { getListUnitKerjaSdm } from '../../../../services/ServiceMaster'
 import { shadow, icon_color_secondary, container_background, icon_color_primary } from '../../../../themes/Default'
 import { search } from '../../../../helpers/General'
+import LoaderListBed from '../../../../components/loader/LoaderListBed'
 
 export default class ListUnitKerja extends Component{
     constructor(props){
         super(props)
         this.state = {
             listunitkerja: [],
-            loader: false
+            loader: true
         }
     }
 
@@ -37,10 +38,11 @@ export default class ListUnitKerja extends Component{
 
     getUnitKerja = async () => {
         try {
-            const {response} = await getListUnitKerjaSdm()
             this.setState({
-                loader: false
+                loader: true
             })
+            const {response} = await getListUnitKerjaSdm()
+            
 
             const list = response.map(item => {
                 item.value = item.nama_unit_kerja
@@ -48,9 +50,13 @@ export default class ListUnitKerja extends Component{
             })
             this.setState({
                 listunitkerja: list,
-                renderlistunitkerja: list
+                renderlistunitkerja: list,
+                loader: false
             })
         } catch(err){
+            this.setState({
+                loader: false
+            })
             alert(err.message)
         }
     }
@@ -138,7 +144,7 @@ export default class ListUnitKerja extends Component{
                              <View
                                 style={[{
                                     width: '100%',
-                                    height: 60,
+                                    height: 50,
                                     borderTopLeftRadius: 25,
                                     borderTopRightRadius: 25,
                                     borderBottomLeftRadius: 25,
@@ -183,23 +189,27 @@ export default class ListUnitKerja extends Component{
                                     paddingTop: 20,
                                 }}
                             >
-                                <FlatList
-                                    refreshControl={
-                                        <RefreshControl
-                                            refreshing={this.state.loader}
-                                            onRefresh={() => this.getUnitKerja()}
-                                        />
-                                    }
-                                    showsVerticalScrollIndicator={false}
-                                    data={this.state.renderlistunitkerja}
-                                    renderItem={({ item }) => {
-                                        return <ListCardUnitKerja 
-                                            {...this.props}
-                                            items={item}
-                                        />
-                                    }}
-                                    keyExtractor={item => item.id_unit_kerja.toString()}
-                                />
+                                {this.state.loader ?
+                                    <LoaderListBed /> :
+                                    <FlatList
+                                        refreshControl={
+                                            <RefreshControl
+                                                refreshing={this.state.loader}
+                                                onRefresh={() => this.getUnitKerja()}
+                                            />
+                                        }
+                                        showsVerticalScrollIndicator={false}
+                                        data={this.state.renderlistunitkerja}
+                                        renderItem={({ item }) => {
+                                            return <ListCardUnitKerja 
+                                                {...this.props}
+                                                items={item}
+                                            />
+                                        }}
+                                        keyExtractor={item => item.id_unit_kerja.toString()}
+                                    />
+                                }
+                                
                             </View>
                         </View>
                     </View>

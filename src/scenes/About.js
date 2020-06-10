@@ -7,6 +7,7 @@ import {
 import Logo from '../../assets/icon/icon.png'
 import { icon_color_primary } from '../themes/Default'
 import { screenHeightPercent } from '../helpers/Layout'
+import {getVersion} from 'react-native-device-info'
 import Ripple from 'react-native-material-ripple'
 import {Icon} from 'react-native-elements'
 export default class About extends Component{
@@ -65,7 +66,7 @@ export default class About extends Component{
                         fontSize: 12,
                         color: icon_color_primary
                     }}
-                >Version 1.1.0</Text>   
+                >Version ${getVersion()}</Text>   
             </View>
         )
     }
