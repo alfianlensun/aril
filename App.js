@@ -78,33 +78,37 @@ class App extends Component {
 			allowDragging: false,
 			showErrorConnection: false,
 			messageErrorConnection: '',
-			userdata: null
+			userdata: null,
+			initialParams: null
 		}
 	}
 
 	async componentDidMount(){
 		await messaging().registerDeviceForRemoteMessages()
 		const userdata = await getData('AuthUser')
-		
 		messaging().onNotificationOpenedApp(remoteMessage => {
-			console.log(
-				'Notification caused app to open from background state:',
-				remoteMessage.notification,
-			);
-			this.props.navigation.navigate(remoteMessage.data.auto_load_menu.navigateTo !== '' ? data.auto_load_menu.navigateTo : 'Splash');
-		});
+			if (remoteMessage.data.route !== undefined && remoteMessage.data.route !== ''){
+				const params = remoteMessage.data.params !== undefined ? JSON.parse(remoteMessage.data.params) : {}
+				this.navigator.navigate(remoteMessage.data.route, {
+					[Object.keys(params)]: params[Object.keys(params)]
+				})
+			}
+		})
 	  
 		messaging()
 			.getInitialNotification()
 			.then(remoteMessage => {
-				console.log(remoteMessage)
-				if (remoteMessage) {
-					console.log(
-						'Notification caused app to open from quit state:',
-						remoteMessage.notification,
-					);
-					this.setState({initialRoute: remoteMessage.data.auto_load_menu.navigateTo !== '' ? data.auto_load_menu.navigateTo : 'Splash'});
-				}
+				// if (remoteMessage) {
+				// 	if (remoteMessage.data.route !== undefined && remoteMessage.data.route !== ''){
+				// 		const params = remoteMessage.data.params !== undefined ? JSON.parse(remoteMessage.data.params) : {}
+				// 		this.props.navigation.navigate(remoteMessage.data.route, {
+				// 			
+				// 		});
+				// 	} else {
+				// 		// this.props.navigation.navigate('Splash');
+				// 	}
+				// 	// this.setState({initialRoute: remoteMessage.data.auto_load_menu.navigateTo !== '' ? data.auto_load_menu.navigateTo : 'Splash'});
+				// }
 			});
 
 		this.socket = io("http://172.31.64.112:4001/webrtcPeer",{
@@ -161,7 +165,9 @@ class App extends Component {
 	render(){
 		return (
 			<Provider store={store}>
-				<NavigationContainer>
+				<NavigationContainer
+					ref={nav => this.navigator = nav}
+				>
 					<Stack.Navigator
 						headerMode="none"
 						screenOptions={{
@@ -175,7 +181,7 @@ class App extends Component {
 						animation="fade"
 						initialRouteName={this.state.initialRoute}
 					>
-						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen} />
+						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen} initialParams={this.state.initialParams}/>
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
 						<Stack.Screen name="About" component={About} />
 						<Stack.Screen name="ListUnitKerja" component={ListUnitKerja} />
@@ -226,7 +232,6 @@ class App extends Component {
 		);
 	}
 }
-
 
 const codePushOptions = {
 	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME

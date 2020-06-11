@@ -179,7 +179,6 @@ export default class Notifikasi extends Component {
                         }
                         
                     </View>
-                    
                 </View>
             </View>
         )

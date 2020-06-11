@@ -48,6 +48,7 @@ export default class MonitoringAbsen extends Component{
     getListPegawai = async () => {
         try {
             const {response} = await getListAbsensiPegawai(this.state.params.unitKerja.id_unit_kerja, moment(this.state.tanggaldipilih).format('YYYY-MM-DD'), moment(this.state.tanggaldipilih).format('YYYY-MM-DD') )
+            console.log(response)
             const list = response.map(item => {
                 item.value = item.nama_pegawai
                 return item
@@ -194,10 +195,12 @@ export default class MonitoringAbsen extends Component{
                                             searchUser
                                         })
                                         if (searchUser.length > 0){
+                                            console.log('1')
                                             const cari = search(this.state.listpegawai , searchUser)
                                             this.setState({renderlistpegawai: cari})
                                         } else {
-                                            this.setState({renderlistpegawai: this.state.listunitkerja})
+                                            console.log(0)
+                                            this.setState({renderlistpegawai: this.state.listpegawai})
                                         }
                                     }}
                                     ref={(input) => { this.searchUser = input }}
@@ -205,7 +208,7 @@ export default class MonitoringAbsen extends Component{
                                     placeholderTextColor={'#fff'}
                                     value={this.state.searchUser}
                                     placeholder="Cari Pegawai..."
-                                />   
+                                /> 
                                 <Ripple
                                     style={{
                                         width: '20%',
