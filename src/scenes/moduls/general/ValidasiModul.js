@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     StatusBar,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../../../helpers/Layout'
 import { getData, clearData } from '../../../services/LocalStorage'
@@ -169,19 +170,26 @@ export default class ValidasiModul extends Component{
                                 }}
                                 onPress={async () => {
                                     try {
+                                        this.setState({
+                                            loader: true
+                                        })
                                         const validasi = await validasiPassword(userdetail._id, this.state.Password);
                                         if (validasi.reqStat.code === 200){
                                             this.setState({
+                                                loader: false,
                                                 error: false
                                             })   
                                             if (this.state.params.navigateTo !== undefined) this.props.navigation.replace(this.state.params.navigateTo)
                                         } else {
                                             this.setState({
-                                                error: true
+                                                error: true,
+                                                loader: false
                                             })   
                                         }
                                     }catch(err){
-                                        console.log(err)
+                                        this.setState({
+                                            loader: false
+                                        })
                                     }
                                     
                                 }}
@@ -192,14 +200,19 @@ export default class ValidasiModul extends Component{
                                     width: '100%',
                                     paddingVertical: 15,
                                     borderRadius: 50,
+                                    flexDirection: 'row',
                                     position: 'relative',
                                     justifyContent: 'center',
                                     alignItems: 'center'
 
                                 }}>
                                     <Text style={{
-                                        color: '#fff'
+                                        color: '#fff',
+                                        paddingRight: 10
                                     }}>Lanjutkan</Text>
+                                    {this.state.loader &&
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    }
                                 </View>
                             </Ripple> 
                         </View>

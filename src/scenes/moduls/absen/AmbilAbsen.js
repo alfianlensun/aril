@@ -151,6 +151,8 @@ export default class AmbilAbsen extends Component{
                 const photo = await this.camera.takePictureAsync({
                     quality: 0.5,
                     base64: true,
+                    orientation: 'portrait',
+                    fixOrientation: true,
                     width: 200,
                 })
                 const facelogin = await createAbsensi(photo, this.state.userid, this.state.absenType, this.props.userLocation)
@@ -416,14 +418,15 @@ export default class AmbilAbsen extends Component{
                         color={icon_color_primary} />
                     <Text
                         style={{
-                            fontSize: 13,
+                            fontSize: 16,
                             marginTop: 20
                         }}
                     >Anda belum mendaftar absen mobile</Text>
                     <Text
                         style={{
+                            marginTop: 10,
                             textAlign: 'center',
-                            fontSize: 13,
+                            fontSize: 12,
                         }}
                     >Jika anda telah terdaftar dan sudah di verifikasi silahkan login kembali</Text>
                     <Ripple

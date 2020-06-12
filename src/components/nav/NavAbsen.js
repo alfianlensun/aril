@@ -8,7 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import { screenWidthPercent } from '../../helpers/Layout'
 import { shadow, icon_color_primary, text_color_default } from '../../themes/Default'
-
+import LinearGradient from 'react-native-linear-gradient';
 export default class NavAbsen extends Component{
     constructor(props){
         super(props)
@@ -26,64 +26,73 @@ export default class NavAbsen extends Component{
                     borderRadius: 15
                 }, shadow]}
             >
-                <View
+                <LinearGradient 
+                    start={{x: 0, y: 0}} 
+                    end={{x: 2, y: 0}} 
+                    colors={['#667eea', '#63b3ed', '#434190']} 
                     style={{
                         flex: 1,
-                        flexDirection: 'row'  
-                    }}
-                >
-                    <Ripple
-                        onPress={this.props.onPressAbsenMasuk}
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <FontAwesome name="sign-in" size={25} color={icon_color_primary}/>
-                        <Text
+                        flexDirection: 'row',
+                    }}>
+                        <View
                             style={{
-                                marginTop: 10,
-                                fontSize: 12,
-                                color: text_color_default
+                                flex: 1,
+                                flexDirection: 'row'  
                             }}
-                        >Absen Masuk</Text>
-                    </Ripple>
-                    <Ripple
-                        onPress={this.props.onPressAbsenPulang}
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <FontAwesome name="sign-out" size={25} color={icon_color_primary}/>
-                        <Text
-                            style={{
-                                marginTop: 10,
-                                fontSize: 12,
-                                color: text_color_default
-                            }}
-                        >Absen Pulang</Text>
-                    </Ripple>
-                    <Ripple
-                        onPress={() => this.props.navigation.navigate('Absen')}
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Feather name="calendar" size={25} color={icon_color_primary}/>
-                        <Text
-                            style={{
-                                marginTop: 10,
-                                fontSize: 12,
-                                color: text_color_default
-                            }}
-                        >Riwayat Absen</Text>
-                    </Ripple>
-                </View>
+                        >
+                            <Ripple
+                                onPress={this.props.onPressAbsenMasuk}
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <FontAwesome name="sign-in" size={25} color={'#fff'}/>
+                                <Text
+                                    style={{
+                                        marginTop: 10,
+                                        fontSize: 12,
+                                        color: '#fff'
+                                    }}
+                                >Absen Masuk</Text>
+                            </Ripple>
+                            <Ripple
+                                onPress={this.props.onPressAbsenPulang}
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <FontAwesome name="sign-out" size={25} color={'#fff'}/>
+                                <Text
+                                    style={{
+                                        marginTop: 10,
+                                        fontSize: 12,
+                                        color: '#fff'
+                                    }}
+                                >Absen Pulang</Text>
+                            </Ripple>
+                            <Ripple
+                                onPress={() => this.props.navigation.navigate('Absen')}
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Feather name="calendar" size={25} color={'#fff'}/>
+                                <Text
+                                    style={{
+                                        marginTop: 10,
+                                        fontSize: 12,
+                                        color: '#fff'
+                                    }}
+                                >Riwayat Absen</Text>
+                            </Ripple>
+                        </View>
+                </LinearGradient>
             </View>
         )
     }

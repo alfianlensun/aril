@@ -66,7 +66,7 @@ export default class About extends Component{
                         fontSize: 12,
                         color: icon_color_primary
                     }}
-                >Version ${getVersion()}</Text>   
+                >Version ${getVersion()}.01</Text>   
             </View>
         )
     }

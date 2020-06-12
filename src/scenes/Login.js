@@ -11,7 +11,8 @@ import {
     KeyboardAvoidingView,
     Image,
     ActivityIndicator,
-    PermissionsAndroid
+    PermissionsAndroid,
+    ToastAndroid
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../helpers/Layout'
 import Ripple from 'react-native-material-ripple';
@@ -631,7 +632,17 @@ export default class Login extends Component{
                                             onPress={() => this.props.navigation.navigate('SignUp')}
                                         >
                                             <View style={{}}>
-                                                <Text style={{color: '#fff'}}>Belum pernah mendaftar ?</Text>
+                                                <Text style={{color: '#fff', fontSize: 13}}>Belum pernah mendaftar ?</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity 
+                                            style={{
+                                                marginTop: 20
+                                            }}
+                                            onPress={() => ToastAndroid.show('Fitur sedang dalam proses pengembangan', 1000)}
+                                        >
+                                            <View style={{}}>
+                                                <Text style={{color: '#fff', fontSize: 13}}>Lupa Password ?</Text>
                                             </View>
                                         </TouchableOpacity>
                                     </View>

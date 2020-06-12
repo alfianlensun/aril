@@ -7,6 +7,7 @@ import {
     AsyncStorage,
     ImageBackground,
     Animated,
+    Text,
     ActivityIndicator,
     PermissionsAndroid
 } from 'react-native'
@@ -22,6 +23,9 @@ import { setUserLocation, setLocationSetting } from '../actions/redux/Location'
 class Splash extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            repeat: 0
+        }
     }
 
     async componentDidMount(){
@@ -36,7 +40,6 @@ class Splash extends Component{
     loader = async () => {
         try{
             console.log('load')
-            
             const auth =  await getData('AuthUser')
             const appversion = getVersion()
             const checkPermissionLocation = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
@@ -52,17 +55,18 @@ class Splash extends Component{
             } else {
                 navigateTo = 'Login'
             }
-
             if (checkPermissionLocation){
                 this.props.navigation.replace(navigateTo)
             } else {
                 this.props.navigation.replace('PermissionRequest', {navigateTo})
             }
         } catch (err){
-            console.log(err)
             setTimeout(() => {
+                this.setState({
+                    repeat: this.state.repeat+1
+                })
                 this.loader()
-            }, 2000)
+            }, 1200)
         }
     }
 
@@ -91,7 +95,28 @@ class Splash extends Component{
                             marginTop: 30
                         }}
                     >
-                        <ActivityIndicator size={25} color="#fff"/>
+                        <View
+                            style={{
+                                backgroundColor: this.state.repeat >= 2 ? '#f56565' : 'transparent',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingHorizontal: 10,
+                                borderRadius: 30,
+                                paddingVertical: 5
+                            }}
+                        >
+                            {this.state.repeat >= 2 &&
+                                <Text 
+                                    style={{
+                                        paddingRight: 10,
+                                        color: "#fff",
+                                    }}
+                                >Koneksi Sedang Tidak Baik</Text>
+                            }
+                            <ActivityIndicator size={25} color="#fff"/>
+                        </View>
+                        
                     </View>
                 </ImageBackground>
             </View>

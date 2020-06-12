@@ -5,14 +5,15 @@ export async function getSettingAllSetting(idMstPegawai, tanggal = null)
 {
     let headers = {...config.headers}
     try {
-        let response = new Promise( async (resolve, reject) => {
+        return new Promise( async (resolve, reject) => {
             setTimeout(() => {
                 reject()
             }, config.wsOption.timeout);
             const fetchData =  await fetch(config.ws.nodeURL+'/app/setting', {
                 method : 'GET',
                 headers
-            })
+            }).catch(err => reject(err))
+            
             let responseStatus = await fetchData.status
             if (responseStatus === 200){
                 resolve(fetchData.json())
@@ -20,7 +21,6 @@ export async function getSettingAllSetting(idMstPegawai, tanggal = null)
                 reject(responseStatus)
             }
         }) 
-        return response
     } catch (err){
         throw new Error(err);
     }

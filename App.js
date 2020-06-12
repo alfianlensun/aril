@@ -232,12 +232,12 @@ class App extends Component {
 		);
 	}
 }
+export default App
+// const codePushOptions = {
+// 	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
+// }
 
-const codePushOptions = {
-	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
-}
-
-export default codePush(codePushOptions)(App)
+// export default codePush(codePushOptions)(App)
 
 const config = {
 	animation: 'spring',

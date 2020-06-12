@@ -69,6 +69,8 @@ export default class DaftarMobileAbsen extends Component{
                     const photo = await this.camera.takePictureAsync({
                         quality: 0.5,
                         base64: true,
+                        orientation: 'portrait',
+                        fixOrientation: true,
                         width: 200,
                     });
                     if (this.state.listFoto.length < 3){
@@ -140,25 +142,28 @@ export default class DaftarMobileAbsen extends Component{
 
     onFacesDetected = (faceData) => {
         if (this.timeoutdetectFace) clearTimeout(this.timeoutdetectFace)
-        this.setState({
-            detectedFace: true,
-            message: 'Keep your face inside the frame',
-            realTimeFaceData: faceData
-        })
-        this.timeoutdetectFace = setTimeout(() => {
-            // potensi bug **** cleartimeout timeoutFaceRecog
+        if (faceData.faces.length > 0){
             this.setState({
-                message: 'Place your face inside the frame',
-                detectedFace: false
+                detectedFace: true,
+                message: 'Keep your face inside the frame',
+                realTimeFaceData: faceData
             })
-        },600)
+            this.timeoutdetectFace = setTimeout(() => {
+                // potensi bug **** cleartimeout timeoutFaceRecog
+                this.setState({
+                    message: 'Place your face inside the frame',
+                    detectedFace: false
+                })
+            },600)
+        }
+        
     }
 
     renderListImageTaken = () => {
         return this.state.listFoto.map(item => {
             return <CardImage
                 width={'30%'}
-                uri={item.uri}              
+                uri={item.uri}           
             />
         })
     }

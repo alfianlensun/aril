@@ -22,6 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import moment from 'moment'
 import ListPegawaiAbsen from '../../../../components/list/ListPegawaiAbsen'
 import { search } from '../../../../helpers/General'
+import LoaderListBed from '../../../../components/loader/LoaderListBed'
 export default class MonitoringAbsen extends Component{
     constructor(props){
         super(props)
@@ -47,13 +48,16 @@ export default class MonitoringAbsen extends Component{
 
     getListPegawai = async () => {
         try {
+            this.setState({
+                loader: true
+            })
             const {response} = await getListAbsensiPegawai(this.state.params.unitKerja.id_unit_kerja, moment(this.state.tanggaldipilih).format('YYYY-MM-DD'), moment(this.state.tanggaldipilih).format('YYYY-MM-DD') )
-            console.log(response)
             const list = response.map(item => {
                 item.value = item.nama_pegawai
                 return item
             })
             this.setState({
+                loader: false,
                 listpegawai: list,
                 renderlistpegawai: list
             })
@@ -226,24 +230,28 @@ export default class MonitoringAbsen extends Component{
                                     paddingTop: 10,
                                 }}
                             >
-                                <FlatList
-                                    refreshControl={
-                                        <RefreshControl
-                                            refreshing={this.state.loader}
-                                            onRefresh={() => this.getListPegawai()}
-                                        />
-                                    }
-                                    
-                                    showsVerticalScrollIndicator={false}
-                                    data={this.state.renderlistpegawai}
-                                    renderItem={({ item }) => {
-                                        return <ListPegawaiAbsen 
-                                            {...this.props}
-                                            items={item}
-                                        />
-                                    }}
-                                    keyExtractor={item => item.id_sdm_trx_kepegawaian.toString()}
-                                />
+                                {this.state.loader ? 
+                                    <LoaderListBed />:
+                                    <FlatList
+                                        refreshControl={
+                                            <RefreshControl
+                                                refreshing={this.state.loader}
+                                                onRefresh={() => this.getListPegawai()}
+                                            />
+                                        }
+                                        
+                                        showsVerticalScrollIndicator={false}
+                                        data={this.state.renderlistpegawai}
+                                        renderItem={({ item }) => {
+                                            return <ListPegawaiAbsen 
+                                                {...this.props}
+                                                items={item}
+                                            />
+                                        }}
+                                        keyExtractor={item => item.id_sdm_trx_kepegawaian.toString()}
+                                    />
+                                }
+                                
                             </View>
                         </View>
                     </View>
@@ -267,7 +275,6 @@ export default class MonitoringAbsen extends Component{
                                 })
                             }
                             this.getListPegawai()
-                            
                         }}
                     />
                 }  
