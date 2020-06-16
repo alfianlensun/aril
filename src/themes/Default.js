@@ -1,4 +1,5 @@
 export const background_color = '#e1f7fa'
+export const background_color_gradient = ['#667eea', '#63b3ed', '#434190']
 export const bottom_navigation_background = '#fff'
 export const container_background = '#fff'
 

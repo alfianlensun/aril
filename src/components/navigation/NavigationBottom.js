@@ -35,7 +35,7 @@ export default class NavigationBottom extends Component{
                         backgroundColor: bottom_navigation_background,
                         height:60,
                         flexDirection: 'row'
-                    }, shadowxl]}
+                    }, shadow]}
                 >
                     <Ripple
                         onPress={() => this.onChange(1)}
@@ -53,10 +53,9 @@ export default class NavigationBottom extends Component{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 borderRadius: 50,
-                                backgroundColor: activeTab === 1 ? icon_color_secondary : 'transparent'
                             }}
                         >
-                            <AntDesign name="home" color={activeTab === 1 ? icon_color_white : icon_color_primary} size={25}/>
+                            <AntDesign name="home" color={icon_color_primary} size={activeTab === 1 ? 30 : 25}/>
                         </View>
                     </Ripple>
                     <Ripple
@@ -75,10 +74,9 @@ export default class NavigationBottom extends Component{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 borderRadius: 50,
-                                backgroundColor: activeTab === 2 ? icon_color_secondary : 'transparent'
                             }}
                         >
-                            <Feather name="bell" color={activeTab === 2 ? icon_color_white : icon_color_primary} size={25}/>
+                            <Feather name="bell" color={icon_color_primary} size={activeTab === 2 ? 30 : 25}/>
                         </View>
                     </Ripple>
                     <Ripple
@@ -97,10 +95,9 @@ export default class NavigationBottom extends Component{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 borderRadius: 50,
-                                backgroundColor: activeTab === 3 ? icon_color_secondary : 'transparent'
                             }}
                         >
-                            <Feather name="user" color={activeTab === 3 ? icon_color_white : icon_color_primary} size={25}/>
+                            <Feather name="user" color={icon_color_primary} size={activeTab === 3 ? 30 : 25}/>
                         </View>
                     </Ripple>
                 </View>

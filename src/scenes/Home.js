@@ -363,21 +363,20 @@ export default class Home extends Component{
                                         style={{
                                             marginTop:10,
                                             width: '100%',
-                                            paddingLeft: '5%',
                                             flexDirection: 'column',
                                         }}
                                     >
                                         <View
                                             style={{
-                                                flexDirection: 'row'
+                                                width: '100%',
                                             }}
                                         >
                                             <LoaderMenuUtama />
                                         </View>
                                         <View
                                             style={{
-                                                marginTop: 20,
-                                                flexDirection: 'row'
+                                                width: '100%',
+                                                marginTop: 20
                                             }}
                                         >
                                             <LoaderMenuUtama />

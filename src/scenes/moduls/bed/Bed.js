@@ -13,6 +13,8 @@ import Ripple from 'react-native-material-ripple'
 import {getSubInstalasi, getRuangan, getKamar, getAllBed} from '../../../services/ServiceMonitoring'
 import LoaderListBed from '../../../components/loader/LoaderListBed'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../../../themes/Default'
 
 export default class Bed extends Component{
     constructor(props){
@@ -140,19 +142,21 @@ export default class Bed extends Component{
 
     render(){
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#e1f7fa'
-                }}
-            >
+                    position: 'relative',
+                }}>
                 <View 
                     style={{
                         flex: 1,
                         flexDirection: 'column'
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     <View 
                         style={{
@@ -183,7 +187,7 @@ export default class Bed extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -192,7 +196,7 @@ export default class Bed extends Component{
                             style={{
                                 fontSize: 18,
                                 marginLeft: 10,
-                                color: '#444'
+                                color: '#fff'
                             }}
                         >Bed Monitoring</Text>
                     </View>
@@ -212,7 +216,7 @@ export default class Bed extends Component{
                         
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }

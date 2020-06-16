@@ -43,12 +43,9 @@ class Splash extends Component{
             const auth =  await getData('AuthUser')
             const appversion = getVersion()
             const checkPermissionLocation = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
-            const {response} = await getSettingAllSetting()  
-        
+            const {response} = await getSettingAllSetting() 
+    
             if (response !== undefined) this.props.setLocationSetting(response)
-            
-            const {reqStat} = await getVersionApp(appversion)
-
             let navigateTo = ''
             if (auth !== null){
                 navigateTo = 'MainMenu'
@@ -61,6 +58,7 @@ class Splash extends Component{
                 this.props.navigation.replace('PermissionRequest', {navigateTo})
             }
         } catch (err){
+            console.log(err)
             setTimeout(() => {
                 this.setState({
                     repeat: this.state.repeat+1
@@ -97,7 +95,6 @@ class Splash extends Component{
                     >
                         <View
                             style={{
-                                backgroundColor: this.state.repeat >= 2 ? '#f56565' : 'transparent',
                                 flexDirection: 'row',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -106,15 +103,7 @@ class Splash extends Component{
                                 paddingVertical: 5
                             }}
                         >
-                            {this.state.repeat >= 2 &&
-                                <Text 
-                                    style={{
-                                        paddingRight: 10,
-                                        color: "#fff",
-                                    }}
-                                >Koneksi Sedang Tidak Baik</Text>
-                            }
-                            <ActivityIndicator size={25} color="#fff"/>
+                            <ActivityIndicator size={25} color={'#fff'}/>
                         </View>
                         
                     </View>

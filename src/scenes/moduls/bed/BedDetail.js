@@ -13,6 +13,8 @@ import Ripple from 'react-native-material-ripple'
 import {getKamar} from '../../../services/ServiceMonitoring'
 import Carousel from 'react-native-snap-carousel'
 import LoaderListBed from '../../../components/loader/LoaderListBed'
+import { background_color_gradient } from '../../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 
 export default class BedDetail extends Component{
     constructor(props){
@@ -150,18 +152,20 @@ export default class BedDetail extends Component{
 
     render(){
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#e1f7fa'
-                }}
-            >
+                    position: 'relative',
+                }}>
                 <View 
                     style={{
                         flex: 1
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     <View 
                         style={{
@@ -191,7 +195,7 @@ export default class BedDetail extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -200,7 +204,7 @@ export default class BedDetail extends Component{
                             style={{
                                 fontSize: 18,
                                 marginLeft: 10,
-                                color: '#444'
+                                color: '#fff'
                             }}
                         >{this.state.nama_ruangan}</Text>
                     </View>
@@ -213,7 +217,8 @@ export default class BedDetail extends Component{
                     >
                         <Text
                             style={{
-                                fontSize: 14,
+                                fontSize: 13,
+                                color:'#fff',
                                 width: '30%'
                             }}
                         >Terisi</Text>
@@ -223,7 +228,7 @@ export default class BedDetail extends Component{
                                 paddingHorizontal: 20,
                                 paddingVertical: 2,
                                 borderRadius: 10,
-                                color: '#fff',
+                                color:'#fff',
                                 backgroundColor: '#6ab1f7',
                                 alignSelf: 'flex-start'
                             }}
@@ -240,8 +245,9 @@ export default class BedDetail extends Component{
                     >
                         <Text
                             style={{
-                                fontSize: 14,
-                                width: '30%'
+                                fontSize: 13,
+                                width: '30%',
+                                color:'#fff',
                             }}
                         >Kosong</Text>
                         <Text
@@ -275,7 +281,7 @@ export default class BedDetail extends Component{
                         {this.renderKamar()}
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }

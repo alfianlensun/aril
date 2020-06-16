@@ -1,6 +1,7 @@
 
 import config from '../Config'
 import {getToken} from '../middlewares/Middleware'
+import { POST_TOKEN_OFF, GET } from './GeneralService';
 let abort = null
 
 export async function validateRegister(Kode, IDTelegram)
@@ -56,6 +57,32 @@ export async function cekUserRegister(NoHandphone)
     } catch (err){
         throw new Error(err);
     }
+}
+
+export async function cekLupaPassword(NoHandphone)
+{
+    return POST_TOKEN_OFF(config.ws.nodeURL+'/auth/cek-lupa-password', {
+        NoHandphone
+    })
+}
+
+export async function cekValidateLupaPassword(IDTelegram, Kode)
+{
+    return POST_TOKEN_OFF(config.ws.nodeURL+'/auth/validate-lupa-password', {
+        IDTelegram, Kode
+    })
+}
+
+export async function resetPassword(IDTelegram, Password)
+{
+    return POST_TOKEN_OFF(config.ws.nodeURL+'/auth/reset-password', {
+        IDTelegram,Password
+    })
+}
+
+export async function checkActiveFeatureAbsen(IDUser)
+{
+    return await GET(`${config.ws.nodeURL}/auth/user/feature/absen/active-status`, IDUser)
 }
 
 export async function asyncUserData(IdUser){

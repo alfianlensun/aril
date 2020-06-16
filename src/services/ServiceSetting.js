@@ -1,29 +1,10 @@
 import config from '../Config'
+import {GET_TOKEN_OFF} from '../services/GeneralService'
 import {getToken} from '../middlewares/Middleware'
 
 export async function getSettingAllSetting(idMstPegawai, tanggal = null)
 {
-    let headers = {...config.headers}
-    try {
-        return new Promise( async (resolve, reject) => {
-            setTimeout(() => {
-                reject()
-            }, config.wsOption.timeout);
-            const fetchData =  await fetch(config.ws.nodeURL+'/app/setting', {
-                method : 'GET',
-                headers
-            }).catch(err => reject(err))
-            
-            let responseStatus = await fetchData.status
-            if (responseStatus === 200){
-                resolve(fetchData.json())
-            } else {
-                reject(responseStatus)
-            }
-        }) 
-    } catch (err){
-        throw new Error(err);
-    }
+    return GET_TOKEN_OFF(config.ws.nodeURL+'/app/setting')
 }
 
 export async function getVersionApp(version){

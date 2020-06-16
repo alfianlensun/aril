@@ -14,20 +14,22 @@ import {
 import {screenHeightPercent, screenWidthPercent} from '../../helpers/Layout'
 import Ripple from 'react-native-material-ripple';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { cekUserRegister, userRegister } from '../../services/ServiceAuth'
+import { userRegister, resetPassword } from '../../services/ServiceAuth'
 import {storeData} from '../../services/LocalStorage'
 import {Icon} from 'react-native-elements'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Logo from '../../../assets/icon/icon.png'
 import { getPushNotificationToken} from "../../services/PushNotification";
 import config from '../../Config'
 
-export default class SignUp extends Component{
+export default class PasswordBaru extends Component{
     constructor(props){
         super(props)
+        const params = props.route.params
         this.state = {
-            NoHandphone: '',
-            NoHandphoneExist: false,
-            NoHandphoneValid: null,
+            timeout: 0,
+            params: params,
+            valid: true,
             notValidMessage: '',
             loader: false,
             password: '',
@@ -40,55 +42,34 @@ export default class SignUp extends Component{
         
     }
 
-    onSubmitNoHandphone = async () => {
+
+    onSubmitPassword = async () => {
         try {
-            if (this.state.NoHandphone.length > 0){
-                this.setState({
-                    notValidMessage: '',
-                    NoHandphoneExist: false,
-                    loader: true
-                })
-    
-                const {reqStat, response} = await cekUserRegister(this.state.NoHandphone)
-                if (reqStat.code == 200){
-                    this.setState({
-                        NoHandphoneExist: false,
-                        NoHandphoneValid: true,
-                        loader: false
-                    })
-                    this.props.navigation.navigate('SignUpStep2', {
-                        datapegawai: response.datapegawai
-                    })
-                } else {
-                    this.setState({
-                        NoHandphoneExist: true,
-                        NoHandphoneValid: false,
-                        loader: false,
-                        notValidMessage: reqStat.message
-                    })
-                }
-            } else {
-                this.setState({
-                    NoHandphoneExist: true,
-                    NoHandphoneValid: false,
-                    notValidMessage: 'No Handphone tidak boleh kosong'
-                })
-            }
+            if (this.state.password.length === 0) throw new Error('Password tidak boleh kosong')
+            if (this.state.confirmPassword.length === 0) throw new Error('Anda belum konfirmasi password')
+            if (this.state.password !== this.state.confirmPassword ) throw new Error('Password tidak cocok')
+
+            this.setState({
+                loader: true
+            })
+            const resp = await resetPassword(this.state.params.datapegawai.IDTelegram,this.state.password)
+            this.props.navigation.replace('Login', {
+                no_telp: this.state.params.datapegawai.no_telp
+            })
         } catch(err){
             this.setState({
                 loader: false,
-                NoHandphoneExist: true,
-                NoHandphoneValid: false,
+                valid: false,
                 notValidMessage: err.message
             })
-        }
+        } 
     }
 
     renderWarning(){
         return (
             <View
                 style={{
-                    width: '90%',
+                    width: '70%',
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginTop: 10
@@ -107,36 +88,6 @@ export default class SignUp extends Component{
                     type={'font-awesome'}
                     name={'exclamation-circle'}
                     color={'#ddd'}
-                    size={13} 
-                />   
-            </View>
-        )
-    }
-
-    renderWarningPassword(){
-        return(
-            <View
-                style={{
-                    width: '70%',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginTop: 5
-                }}
-            >
-                <Text
-                    style={{
-                        height: 20,
-                        paddingRight: 5,
-                        fontSize: 12,
-                        color: '#ff776e'
-                    }}
-                >
-                    {this.state.passwordValid}
-                </Text> 
-                <Icon 
-                    type={'font-awesome'}
-                    name={'exclamation-circle'}
-                    color={'#ff776e'}
                     size={13} 
                 />   
             </View>
@@ -181,33 +132,51 @@ export default class SignUp extends Component{
                                             marginTop: screenHeightPercent(5)
                                         }}
                                     >
-                                        <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>Create Account</Text>
-                                        <Text style={{color: '#fff', fontSize: 12,lineHeight: 22,marginTop: 5}}>Pastikan no handphone anda telah terdaftar di NABILA RSUP Prof R. D. Kandou Manado</Text>
+                                        <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>Password</Text>
+                                        <Text style={{color: '#fff', fontSize: 12,lineHeight: 22,marginTop: 10}}>Masukan password untuk baru anda </Text>
                                     </View>
                                     <View
                                         style={{
                                             marginTop: 25,
                                             width: '100%',
                                             position: 'relative',
+                                            flexDirection: 'row',
                                             height: 50,
                                         }}
                                     >
                                         <TextInput
-                                            onSubmitEditing={() => {
-                                                this.onSubmitNoHandphone()
+                                            onChangeText={(password) => {
+                                                this.setState({password})
                                             }}
-                                            onChangeText={(NoHandphone) => {
-                                                this.setState({NoHandphone, NoHandphoneExist: false,NoHandphoneValid: null})
-                                            }}
-                                            keyboardType={'numeric'}
+                                            secureTextEntry={true}
                                             style={Styles.formTextInput}
-                                            value={this.state.NoHandphone}
-                                            placeholder="No Handphone"
+                                            value={this.state.password}
+                                            placeholder="Password"
                                             placeholderTextColor="#aaa"
-                                        />                         
+                                        />
+                                    </View>
+                                    <View
+                                        style={{
+                                            marginTop: 10,
+                                            width: '100%',
+                                            position: 'relative',
+                                            flexDirection: 'row',
+                                            height: 50,
+                                        }}
+                                    >
+                                        <TextInput
+                                            onChangeText={(confirmPassword) => {
+                                                this.setState({confirmPassword})
+                                            }}
+                                            style={Styles.formTextInput}
+                                            secureTextEntry={true}
+                                            value={this.state.confirmPassword}
+                                            placeholder="Konfirmasi Password"
+                                            placeholderTextColor="#aaa"
+                                        />
                                     </View>
                                     <View>
-                                        {this.state.NoHandphoneExist ? this.renderWarning() : null}
+                                        {this.state.valid === false ? this.renderWarning() : null}
                                     </View>
                                     <View
                                         style={{
@@ -227,18 +196,18 @@ export default class SignUp extends Component{
                                             source={require('../../../assets/background/background3.png')}
                                         >
                                             <Ripple
-                                                onPress={() => this.onSubmitNoHandphone()}
+                                                onPress={() => this.onSubmitPassword()}
                                                 rippleColor={'rgba(255,255,255,.5)'}
                                             >
                                                 <View style={Styles.buttonLogin}>
-                                                    <Text style={[Styles.buttonLoginText, {marginRight: 15}]}> Lanjutkan</Text>
-                                                    {!this.state.loader && 
-                                                        <Icon type={'ionicons'} name={'arrow-forward'} size={20} color={'#fff'}/>
+                                                    <Text style={[Styles.buttonLoginText, {marginRight: 15}]}> Konfirmasi</Text>
+                                                    {this.state.loader === false && 
+                                                        <MaterialCommunityIcons name={'check'} size={20} color={'#fff'}/>
                                                     }
                                                     <View
                                                         style={{
                                                             position: 'absolute',
-                                                            right: 20,
+                                                            right: 10,
                                                             opacity: this.state.loader ? 1 : 0
                                                         }}
                                                     >
@@ -247,21 +216,6 @@ export default class SignUp extends Component{
                                                 </View>
                                             </Ripple>
                                         </ImageBackground>
-                                    </View>
-                                    <View
-                                        style={{
-                                            alignItems: 'center',
-                                            width: '100%',
-                                            marginTop: 20,
-                                        }}
-                                    >
-                                        <TouchableOpacity 
-                                            onPress={() => this.props.navigation.navigate('Login')}
-                                        >
-                                            <View style={{}}>
-                                                <Text style={{color: '#ddd'}}>Sudah punya akun ?</Text>
-                                            </View>
-                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
@@ -323,11 +277,12 @@ const Styles = new StyleSheet.create({
         alignItems: 'center'
     },
     buttonLoginText: {
-        color: '#fff'
+        color: '#fff',
     },
     formTextInput: {
         paddingHorizontal: 20,
         borderRadius: 20,
+        width: '100%',
         backgroundColor: 'rgba(0,0,0,.4)',
         height: '100%',
         color: '#fff'

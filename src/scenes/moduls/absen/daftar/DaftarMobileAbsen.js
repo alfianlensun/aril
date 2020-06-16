@@ -9,7 +9,8 @@ import {
     FlatList,
     RefreshControl,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    ToastAndroid
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../../../../helpers/Layout'
 import { getData, storeData } from '../../../../services/LocalStorage'
@@ -40,14 +41,18 @@ export default class DaftarMobileAbsen extends Component{
     }
 
     async componentDidMount(){
-        this.mounted = true
-        let userdata = await getData('AuthUser')
-        if (this.mounted){
-            this.setState({
-                userdata 
-            })
-            this.registerWajah()
-        } 
+        try {
+            this.mounted = true
+            let userdata = await getData('AuthUser')
+            if (this.mounted){
+                this.setState({
+                    userdata 
+                })
+                this.registerWajah()
+            } 
+        }catch(err){
+            ToastAndroid.show('Err on start activity'+err.message, 1000)
+        }
     }
 
     componentWillUnmount(){
@@ -141,20 +146,24 @@ export default class DaftarMobileAbsen extends Component{
     }
 
     onFacesDetected = (faceData) => {
-        if (this.timeoutdetectFace) clearTimeout(this.timeoutdetectFace)
-        if (faceData.faces.length > 0){
-            this.setState({
-                detectedFace: true,
-                message: 'Keep your face inside the frame',
-                realTimeFaceData: faceData
-            })
-            this.timeoutdetectFace = setTimeout(() => {
-                // potensi bug **** cleartimeout timeoutFaceRecog
+        try {
+            if (this.timeoutdetectFace) clearTimeout(this.timeoutdetectFace)
+            if (faceData.faces.length > 0){
                 this.setState({
-                    message: 'Place your face inside the frame',
-                    detectedFace: false
+                    detectedFace: true,
+                    message: 'Keep your face inside the frame',
+                    realTimeFaceData: faceData
                 })
-            },600)
+                this.timeoutdetectFace = setTimeout(() => {
+                    // potensi bug **** cleartimeout timeoutFaceRecog
+                    this.setState({
+                        message: 'Place your face inside the frame',
+                        detectedFace: false
+                    })
+                },600)
+            }
+        } catch(err){
+            ToastAndroid.show(err.message, 1000)
         }
         
     }
@@ -250,6 +259,7 @@ export default class DaftarMobileAbsen extends Component{
                             style={{
                                 flex: 1
                             }}  
+                            faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
                             type={RNCamera.Constants.Type.front}
                             captureAudio={false}
                             onFacesDetected={this.onFacesDetected}

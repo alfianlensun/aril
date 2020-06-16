@@ -18,6 +18,8 @@ import Ripple from 'react-native-material-ripple'
 import CardImage from '../../../../components/cards/CardImage'
 import Config from '../../../../Config'
 import moment from 'moment'
+import { background_color_gradient, icon_color_primary } from '../../../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 export default class VerifikasiRequest extends Component{
     constructor(props){
         super(props)
@@ -52,7 +54,7 @@ export default class VerifikasiRequest extends Component{
         try {
             const {reqStat} = await validasiRequestAbsensi(this.state.dataRequest._id,this.state.params.user_id, validType)
             if (reqStat.code === 200){
-                this.props.navigation.replace('ListRequest')
+                this.props.navigation.goBack(null)
             }
         } catch(err){
             console.log(err)
@@ -75,15 +77,14 @@ export default class VerifikasiRequest extends Component{
     render(){
         const {userdetail} = this.state
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -109,14 +110,15 @@ export default class VerifikasiRequest extends Component{
                         <Icon 
                             type={'ionicons'}
                             name={'arrow-back'}
-                            color={'#444'}
+                            color={'#fff'}
                             size={24}
                         />
                     </Ripple>
                     <Text
                         style={{
                             marginLeft: 10,
-                            fontSize: 16
+                            fontSize: 16,
+                            color: '#fff'
                         }}
                     >Detail Permintaan </Text>
                 </View>
@@ -211,7 +213,7 @@ export default class VerifikasiRequest extends Component{
                                     rippleColor={'rgba(255,255,255,.5)'}
                                 >
                                     <View style={{
-                                        backgroundColor: '#6ab1f7',
+                                        backgroundColor: icon_color_primary,
                                         width: '100%',
                                         paddingVertical: 15,
                                         borderRadius: 50,
@@ -233,7 +235,7 @@ export default class VerifikasiRequest extends Component{
                                     rippleColor={'rgba(255,255,255,.5)'}
                                 >
                                     <View style={{
-                                        backgroundColor: '#9ec7f0',
+                                        backgroundColor: '#6ab1f7',
                                         width: '100%',
                                         paddingVertical: 15,
                                         borderRadius: 50,
@@ -250,7 +252,7 @@ export default class VerifikasiRequest extends Component{
                         }
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -265,7 +267,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(5)
     },
     headerBackground: {

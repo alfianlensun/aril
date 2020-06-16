@@ -12,7 +12,7 @@ import {screenHeightPercent, screenWidthPercent} from '../helpers/Layout'
 import {getData} from '../services/LocalStorage'
 import {getNotifikasi} from '../services/ServiceNotifikasi'
 import ListNotification from '../components/list/ListNotification'
-
+import LinearGradient from 'react-native-linear-gradient';
 export default class Notifikasi extends Component {
     constructor(props){
         super(props)
@@ -81,15 +81,14 @@ export default class Notifikasi extends Component {
 
     render(){
         return(
-            <View 
+            <LinearGradient 
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={['#667eea', '#63b3ed', '#434190']} 
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -99,7 +98,8 @@ export default class Notifikasi extends Component {
                 >
                     <Text
                         style={{
-                            fontSize: 20
+                            color: '#fff',
+                            fontSize: 18
                         }}
                     >Notifikasi </Text>
                     <View
@@ -180,7 +180,7 @@ export default class Notifikasi extends Component {
                         
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -195,7 +195,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(6)
     },
     headerBackground: {

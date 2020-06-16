@@ -12,6 +12,8 @@ import {Icon} from 'react-native-elements'
 import Ripple from 'react-native-material-ripple'
 import {changePassword} from '../../../services/ServiceAuth'
 import {getData} from '../../../services/LocalStorage'
+import { background_color_gradient, icon_color_primary } from '../../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 
 export default class GantiPassword extends Component{
     constructor(props){
@@ -117,23 +119,25 @@ export default class GantiPassword extends Component{
 
     render(){
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#e1f7fa'
-                }}
-            >
+                }}>
                 <View 
                     style={{
                         flex: 1
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                    <KeyboardAvoidingView style={Styles.container} behavior="padding" enabled>
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+                    <KeyboardAvoidingView style={Styles.container} behavior="margin" enabled>
                         <View style={Styles.header}></View>
                         <View 
                             style={{
                                 flexDirection: 'row',
+                                alignItems: 'center',
                                 paddingHorizontal: 10
                             }}
                         >
@@ -158,31 +162,16 @@ export default class GantiPassword extends Component{
                                     <Icon 
                                         type={'ionicons'}
                                         name={'arrow-back'}
-                                        color={'#444'}
+                                        color={'#fff'}
                                         size={24}
                                     />
                                 </Ripple>
                             </View>
-                        </View>
-                        <View
-                            style={{
-                                paddingHorizontal: 20,
-                                paddingVertical: 20,
-                                flexDirection: 'row',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Icon 
-                                type={'font-awesome'}
-                                name={'lock'}
-                                color={'#111'}
-                                size={20}
-                            />
                             <Text
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     marginLeft: 10,
-                                    color: '#111'
+                                    color: '#fff'
                                 }}
                             >Ganti Password</Text>
                         </View>
@@ -282,10 +271,10 @@ export default class GantiPassword extends Component{
                                     onPress={() => this.submitGantiPassword()}
                                     rippleColor={'rgba(0,0,0,.3)'}
                                     style={{
-                                        borderRadius: 10,
-                                        paddingVertical: 10,
+                                        borderRadius: 30,
+                                        paddingVertical: 15,
                                         width: '100%',
-                                        backgroundColor: '#6ab1f7',
+                                        backgroundColor: icon_color_primary,
                                         alignItems: 'center'
                                     }}
                                 >
@@ -293,15 +282,14 @@ export default class GantiPassword extends Component{
                                         style={{
                                             color: '#fff',
                                             fontSize: 16,
-                                            fontWeight: 'bold'
                                         }}
-                                    >Ganti</Text>
+                                    >Simpan</Text>
                                 </Ripple> 
                             </View>
                         </View>
                     </KeyboardAvoidingView>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -315,7 +303,7 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        height: screenHeightPercent(4)
+        height: screenHeightPercent(6)
     },
     headerBackground: {
         overflow: 'hidden',

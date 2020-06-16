@@ -13,6 +13,8 @@ import Ripple from 'react-native-material-ripple'
 import {getBed} from '../../../services/ServiceMonitoring'
 import LoaderListBed from '../../../components/loader/LoaderListBed'
 import SlidingUpPanel from 'rn-sliding-up-panel'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../../../themes/Default'
 export default class BedList extends Component{
     constructor(props){
         super(props)
@@ -446,18 +448,20 @@ export default class BedList extends Component{
 
     render(){
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#e1f7fa'
-                }}
-            >
+                    position: 'relative',
+                }}>
                 <View 
                     style={{
                         flex: 1
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     <View 
                         style={{
@@ -487,7 +491,7 @@ export default class BedList extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -497,7 +501,7 @@ export default class BedList extends Component{
                             style={{
                                 fontSize: 18,
                                 marginLeft: 10,
-                                color: '#444'
+                                color: '#fff'
                             }}
                         >{this.state.namaKamar}</Text>
                         <Text
@@ -548,7 +552,7 @@ export default class BedList extends Component{
                     ref={c => this.sliderUp = c}>
                     {this.state.slideType == 0 ? this.renderOpsiSliderBedKosong() : this.renderOpsiSliderBedTerisi()}
                 </SlidingUpPanel>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -576,7 +580,7 @@ const Styles = new StyleSheet.create({
         backgroundColor: '#fff'
     },
     header: {
-        height: screenHeightPercent(4)
+        height: screenHeightPercent(6)
     },
     headerBackground: {
         overflow: 'hidden',

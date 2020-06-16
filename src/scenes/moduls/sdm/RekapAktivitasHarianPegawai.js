@@ -19,6 +19,8 @@ import {Calendar} from 'react-native-calendars';
 import {getAktivitasByDate, abortRequest} from '../../../services/ServiceSdm'
 import ListAbsenDetail from '../../../components/list/ListAbsenDetail'
 import LoaderListAbsenDetail from '../../../components/loader/LoaderListAbsenDetail'
+import { background_color_gradient } from '../../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 
 
 export default class RekapAktivitasHarianPegawai extends Component{
@@ -244,19 +246,19 @@ export default class RekapAktivitasHarianPegawai extends Component{
 
     render(){
         return (
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#fff'
-                }}
-            >
+                }}>
                 <View 
                     style={{
                         flex: 1,
-                        backgroundColor: '#e1f7fa',
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     <View 
                         style={{
@@ -287,7 +289,7 @@ export default class RekapAktivitasHarianPegawai extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -296,7 +298,7 @@ export default class RekapAktivitasHarianPegawai extends Component{
                             style={{
                                 fontSize: 16,
                                 marginLeft: 10,
-                                color: '#444'
+                                color: '#fff'
                             }}
                         >Rekap Aktivitas Harian</Text>
                     </View>
@@ -349,7 +351,7 @@ export default class RekapAktivitasHarianPegawai extends Component{
                     </View>
                     
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -363,7 +365,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(4)
     },
     headerBackground: {

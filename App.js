@@ -62,13 +62,17 @@ import io from 'socket.io-client'
 import codePush from 'react-native-code-push'
 import About from './src/scenes/About';
 import ListUnitKerja from './src/scenes/moduls/absen/monitoring/ListUnitKerja';
-import { BackHandler } from 'react-native';
 import MonitoringAbsen from './src/scenes/moduls/absen/monitoring/MonitoringAbsen';
+import AbsenDetail from './src/scenes/moduls/absen/AbsenDetail';
+import MonitoringAbsenMap from './src/scenes/moduls/absen/monitoring/MonitoringAbsenMap';
+import { BackHandler } from 'react-native';
+import LupaPassword from './src/scenes/user/LupaPassword';
+import ValidateKodeLupaPassword from './src/scenes/user/ValidateKodeLupaPassword';
+import PasswordBaru from './src/scenes/user/PasswordBaru';
 
 
 const store = createStore(AllReducer)
 const Stack = createStackNavigator()
-// const sliderUpNetwork = useRef();
 class App extends Component {
 	constructor(props){
 		super(props)
@@ -181,7 +185,9 @@ class App extends Component {
 						animation="fade"
 						initialRouteName={this.state.initialRoute}
 					>
-						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen} initialParams={this.state.initialParams}/>
+						<Stack.Screen name="MonitoringAbsenMap" component={MonitoringAbsenMap}/>
+						<Stack.Screen name="AbsenDetail" component={AbsenDetail}/>
+						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen}/>
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
 						<Stack.Screen name="About" component={About} />
 						<Stack.Screen name="ListUnitKerja" component={ListUnitKerja} />
@@ -222,22 +228,25 @@ class App extends Component {
 						<Stack.Screen name="TindakanDetail" component={TindakanDetail} />
 						{/* <Stack.Screen name="SettingAplikasi" component={SettingAplikasi} /> */}
 						{/* <Stack.Screen name="SettingAplikasiGeofence" component={SettingAplikasiGeofence} /> */}
+						<Stack.Screen name="LupaPassword" component={LupaPassword} />
+						<Stack.Screen name="PasswordBaru" component={PasswordBaru} />
+						<Stack.Screen name="ValidateKodeLupaPassword" component={ValidateKodeLupaPassword} />
 						<Stack.Screen name="Setting" component={Setting} />
 						<Stack.Screen name="FacialRecognitionIfExist" component={FacialRecognitionIfExist} />
 						<Stack.Screen name="FacialRecognitionIfNotExist" component={FacialRecognitionIfNotExist} />
 						<Stack.Screen name="FacialRecognitionDaftar" component={FacialRecognitionDaftar} />
-					</Stack.Navigator>				
+					</Stack.Navigator>
 				</NavigationContainer>
 			</Provider>
 		);
 	}
 }
-export default App
-// const codePushOptions = {
-// 	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
-// }
 
-// export default codePush(codePushOptions)(App)
+const codePushOptions = {
+	checkFrequency: codePush.CheckFrequency.ON_APP_RESUME
+}
+
+export default codePush(codePushOptions)(App)
 
 const config = {
 	animation: 'spring',

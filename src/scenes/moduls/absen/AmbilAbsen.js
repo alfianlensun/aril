@@ -13,10 +13,11 @@ import { RNCamera } from 'react-native-camera';
 import Ripple from 'react-native-material-ripple';
 import { Icon } from 'react-native-elements';
 import { abortRequest, createAbsensi } from '../../../services/ServiceSdm';
+import { checkActiveFeatureAbsen } from '../../../services/ServiceAuth';
 import {icon_color_primary, text_color_gray_800, ripple_color_primary, icon_color_secondary } from '../../../themes/Default';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { getData, removeData } from '../../../services/LocalStorage';
+import { getData, removeData, storeData } from '../../../services/LocalStorage';
 import moment from 'moment'
 import RNMockLocationDetector from 'react-native-mock-location-detector';
 
@@ -59,6 +60,7 @@ export default class AmbilAbsen extends Component{
 
         if (this.state.absenType === 0){
             this.sliderUp.hide()
+            this.sliderUp.hide()
         }
     }
 
@@ -70,6 +72,7 @@ export default class AmbilAbsen extends Component{
             absenType: 0
         })
         this.sliderUp.hide()
+        this.sliderUp.hide()
     }
 
     show = async (parentdata) => {
@@ -77,10 +80,11 @@ export default class AmbilAbsen extends Component{
             this.sliderUp.show()
             RNMockLocationDetector.checkMockLocationProvider(
                 "Penyalahgunaan Aplikasi",
-                "Anda terdeteksi melakukan penyalahgunaan aplikasi, aktivitas anda telah tercatat di database bagian sdm silahkan hubungi bagian SDM",
+                "Anda terdeteksi melakukan penyalahgunaan aplikasi",
                 "Saya Mengerti"
             )
             this.setState(initialState)
+
             this.setState({
                 absenType: parentdata.type,
                 userid: parentdata.userdata._id
@@ -89,8 +93,20 @@ export default class AmbilAbsen extends Component{
             this.setState({
                 featureEnabled: this.state.userData.feature.absensi_mobile  
             })
-            
-            
+
+            if (this.state.userData.feature.absensi_mobile === false){
+                const {response} = await checkActiveFeatureAbsen(this.state.userData._id)
+                if (response !== undefined){
+                    let data = await getData('AuthUser')
+                    if (response){
+                        data.feature.absensi_mobile = true
+                        await storeData('AuthUser', data)
+                        this.setState({
+                            featureEnabled: true
+                        })
+                    }
+                }
+            }
 
             if (this.props.userPermission.camera && this.props.userPermission.location){
                 this.setState({
@@ -111,6 +127,7 @@ export default class AmbilAbsen extends Component{
                 })
             }
         } catch(err){
+            console.log(user)
             alert(err.message)
         }
         
@@ -194,6 +211,8 @@ export default class AmbilAbsen extends Component{
                     style={{
                         flex: 1,
                     }}
+                    playSoundOnCapture={false}
+                    faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
                     type={RNCamera.Constants.Type.front}
                     captureAudio={false}
                     onFacesDetected={this.state.errorCheck === false && this.onFacesDetected}
@@ -424,9 +443,9 @@ export default class AmbilAbsen extends Component{
                     >Anda belum mendaftar absen mobile</Text>
                     <Text
                         style={{
-                            marginTop: 10,
+                            marginTop: 5,
                             textAlign: 'center',
-                            fontSize: 12,
+                            fontSize: 13,
                         }}
                     >Jika anda telah terdaftar dan sudah di verifikasi silahkan login kembali</Text>
                     <Ripple
@@ -664,6 +683,7 @@ export default class AmbilAbsen extends Component{
                 }}
                 draggableRange={{ top: this.state.sliderUpContentHeight, bottom: 0 }}
                 onBackButtonPress={() => {
+                    this.sliderUp.hide() 
                     this.sliderUp.hide() 
                     return true
                 }}

@@ -15,6 +15,8 @@ import {Icon} from 'react-native-elements'
 import { search } from '../../helpers/General'
 import {getListUser} from '../../services/ServiceAuth'
 import Ripple from 'react-native-material-ripple'
+import {background_color_gradient} from '../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 export default class Setting extends Component{
     constructor(props){
         super(props)
@@ -68,15 +70,14 @@ export default class Setting extends Component{
     render(){
         const {userdetail} = this.state
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -102,14 +103,15 @@ export default class Setting extends Component{
                         <Icon 
                             type={'ionicons'}
                             name={'arrow-back'}
-                            color={'#444'}
+                            color={'#fff'}
                             size={24}
                         />
                     </Ripple>
                     <Text
                         style={{
                             marginLeft: 10,
-                            fontSize: 16
+                            fontSize: 16,
+                            color: '#fff'
                         }}
                     >Pengaturan </Text>
                 </View>
@@ -272,7 +274,7 @@ export default class Setting extends Component{
                         </Ripple>
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -287,7 +289,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(5)
     },
     headerBackground: {

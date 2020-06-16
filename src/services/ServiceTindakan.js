@@ -67,7 +67,7 @@ export async function getDetailTindakanDokter(idTrxTindakan)
             setTimeout(() => {
                 reject()
             }, config.wsOption.timeout);
-            const fetchData =  await fetch(config.ws.url+'/tindakan/tindakan-detail/dokter', {
+            const fetchData =  await fetch(config.ws.nodeURL+'/tindakan/tindakan-detail/dokter', {
                 method : 'POST',
                 headers, 
                 body: JSON.stringify({

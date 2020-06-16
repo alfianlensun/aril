@@ -14,7 +14,7 @@ import {
 import {screenHeightPercent, screenWidthPercent} from '../../helpers/Layout'
 import Ripple from 'react-native-material-ripple';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { validateRegister, cekUserRegister } from '../../services/ServiceAuth'
+import { validateRegister, cekValidateLupaPassword, cekLupaPassword } from '../../services/ServiceAuth'
 import {storeData} from '../../services/LocalStorage'
 import {Icon} from 'react-native-elements'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -22,7 +22,7 @@ import Logo from '../../../assets/icon/icon.png'
 import { getPushNotificationToken} from "../../services/PushNotification";
 import config from '../../Config'
 
-export default class SignUpStep2 extends Component{
+export default class ValidateKodeLupaPassword extends Component{
     constructor(props){
         super(props)
         const params = props.route.params
@@ -62,18 +62,18 @@ export default class SignUpStep2 extends Component{
             let kode = `${kode1}${kode2}${kode3}${kode4}`
     
             if (kode.length >= 3){
-                const validate = await validateRegister(kode, params.datapegawai.id_telegram)
+                const validate = await cekValidateLupaPassword(params.datapegawai.IDTelegram, kode)
                 if (validate.reqStat.code === 200){
                     this.setState({
                         valid: true,
                     })
-                    this.props.navigation.replace('SignUpStep3', {
+                    this.props.navigation.replace('PasswordBaru', {
                         datapegawai: this.state.params.datapegawai
                     })
                 } else {
                     this.setState({
                         valid: false,
-                        loader: true,
+                        loader: false,
                         notValidMessage: 'Kode verifikasi tidak cocok'
                     })
                 }
@@ -91,14 +91,14 @@ export default class SignUpStep2 extends Component{
     sendValidate = async () => {
         try {
             this.setTimer()
-            const userregister = await cekUserRegister(this.state.params.datapegawai.no_telp)
+            const userregister = await cekLupaPassword(this.state.params.datapegawai.no_telp)    
         } catch (error) {
             console.log(error)
         }
     }
 
     setTimer(){
-        let timeout = 30
+        let timeout = 10
         setInterval(() => {
             if (timeout > 0){
                 timeout = timeout-1
@@ -113,7 +113,7 @@ export default class SignUpStep2 extends Component{
         return (
             <View
                 style={{
-                    width: '70%',
+                    width: '90%',
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginTop: 10

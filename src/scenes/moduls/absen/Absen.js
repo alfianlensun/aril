@@ -19,6 +19,8 @@ import {getAbsensi,getAbsensiMobile, abortRequest} from '../../../services/Servi
 import ListAbsenDetail from '../../../components/list/ListAbsenDetail'
 import LoaderListAbsenDetail from '../../../components/loader/LoaderListAbsenDetail'
 import ListAbsenDetailMobile from '../../../components/list/ListAbsenDetailMobile'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../../../themes/Default'
 
 
 export default class Absen extends Component{
@@ -112,6 +114,8 @@ export default class Absen extends Component{
             })
 
             const absenMobile = {
+                absen_detail_masuk: selectedDayMobileMasuk.length > 0 ? selectedDayMobileMasuk[0] : null,
+                absen_detail_pulang: selectedDayMobilePulang.length > 0 ? selectedDayMobilePulang[0]:null,
                 absen_masuk: selectedDayMobileMasuk.length > 0 ? moment(selectedDayMobileMasuk[0].server_datetime).format('HH:mm:ss') : null,
                 absen_keluar: selectedDayMobilePulang.length > 0 ? moment(selectedDayMobilePulang[0].server_datetime).format('HH:mm:ss') : null
             }
@@ -145,8 +149,6 @@ export default class Absen extends Component{
                     return item.tanggal_absen === day.dateString
                 })
 
-                // {"absen_keluar": null, "absen_masuk": "07:05:21", "lama_jam_kerja": {"detik": 0, "jam": 0, "menit": 0}, "tanggal_absen": "2020-05-11"}
-
                 const selectedDayMobileMasuk = rawListAbsenMobile.filter(item => {
                     return moment(item.server_datetime).format('YYYY-MM-DD') === day.dateString && item.absen_type === 1
                 })
@@ -155,11 +157,12 @@ export default class Absen extends Component{
                 })
 
                 const absenMobile = {
+                    absen_detail_masuk: selectedDayMobileMasuk.length > 0 ? selectedDayMobileMasuk[0] : null,
+                    absen_detail_pulang: selectedDayMobilePulang.length > 0 ? selectedDayMobilePulang[0]:null,
                     absen_masuk: selectedDayMobileMasuk.length > 0 ? moment(selectedDayMobileMasuk[0].server_datetime).format('HH:mm:ss') : null,
                     absen_keluar: selectedDayMobilePulang.length > 0 ? moment(selectedDayMobilePulang[0].server_datetime).format('HH:mm:ss') : null
                 }
                 
-
                 this.setState({
                     listAbsensiDetail: selectedDay[0] !== undefined ? selectedDay[0] : null,
                     listAbsensiDetailMobile: absenMobile,
@@ -201,7 +204,9 @@ export default class Absen extends Component{
                         {listAbsensiDetailMobile !== null &&  listAbsensiDetailMobile.absen_masuk !== null ? 
                             <ListAbsenDetailMobile 
                                 masuk
+                                detail={listAbsensiDetailMobile.absen_detail_masuk}
                                 jam={listAbsensiDetailMobile.absen_masuk}
+                                {...this.props}
                             /> : null
                         }
                         {listAbsensiDetail !== null && listAbsensiDetail.absen_keluar !== null ? 
@@ -211,7 +216,9 @@ export default class Absen extends Component{
                         }
                         {listAbsensiDetailMobile !== null && listAbsensiDetailMobile.absen_keluar !== null ? 
                             <ListAbsenDetailMobile 
+                                detail={listAbsensiDetailMobile.absen_detail_pulang}
                                 jam={listAbsensiDetailMobile.absen_keluar}
+                                {...this.props}
                             /> : null
                         }
                         {listAbsensiDetail !== null && listAbsensiDetail.absen_masuk === null && listAbsensiDetail.absen_keluar === null ? 
@@ -246,19 +253,19 @@ export default class Absen extends Component{
 
     render(){
         return (
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    backgroundColor: '#fff'
-                }}
-            >
+                }}>
                 <View 
                     style={{
                         flex: 1,
-                        backgroundColor: '#e1f7fa',
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     <View 
                         style={{
@@ -288,7 +295,7 @@ export default class Absen extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -302,14 +309,14 @@ export default class Absen extends Component{
                             <Icon 
                                 type={'ionicons'}
                                 name={'fingerprint'}
-                                color={'#444'}
+                                color={'#fff'}
                                 size={24}
                             />
                             <Text
                                 style={{
                                     fontSize: 20,
                                     marginLeft: 10,
-                                    color: '#444'
+                                    color: '#fff'
                                 }}
                             >Absensi</Text>
                         </View>
@@ -367,7 +374,7 @@ export default class Absen extends Component{
                     </View>
                     
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -381,7 +388,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(5)
     },
     headerBackground: {

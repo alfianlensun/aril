@@ -15,6 +15,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { icon_color_primary, background_color } from '../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 export default class Profil extends Component{
     constructor(props){
         super(props)
@@ -41,7 +42,6 @@ export default class Profil extends Component{
     getUserDetail = async (id_sdm_trx_kepegawaian) => {
         try {
             const {response} = await getProfilUser(id_sdm_trx_kepegawaian)
-            console.log(response)
             if (this.mounted){
                 this.setState({
                     userprofil: response
@@ -55,15 +55,16 @@ export default class Profil extends Component{
     render(){
         const {userdetail, userprofil} = this.state
         return(
-            <View 
+            <LinearGradient 
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={['#667eea', '#63b3ed', '#434190']} 
                 style={{
                     flex: 1,
                     overflow: 'hidden',
                     position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -328,7 +329,7 @@ export default class Profil extends Component{
                         </View>
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -343,7 +344,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(6)
     },
     headerBackground: {

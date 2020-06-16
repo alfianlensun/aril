@@ -14,14 +14,14 @@ import {
 import {screenHeightPercent, screenWidthPercent} from '../../helpers/Layout'
 import Ripple from 'react-native-material-ripple';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { cekUserRegister, userRegister } from '../../services/ServiceAuth'
+import { cekUserRegister, userRegister, cekLupaPassword } from '../../services/ServiceAuth'
 import {storeData} from '../../services/LocalStorage'
 import {Icon} from 'react-native-elements'
 import Logo from '../../../assets/icon/icon.png'
 import { getPushNotificationToken} from "../../services/PushNotification";
 import config from '../../Config'
 
-export default class SignUp extends Component{
+export default class LupaPassword extends Component{
     constructor(props){
         super(props)
         this.state = {
@@ -49,15 +49,16 @@ export default class SignUp extends Component{
                     loader: true
                 })
     
-                const {reqStat, response} = await cekUserRegister(this.state.NoHandphone)
+                const {reqStat, response} = await cekLupaPassword(this.state.NoHandphone)
+
                 if (reqStat.code == 200){
                     this.setState({
                         NoHandphoneExist: false,
                         NoHandphoneValid: true,
                         loader: false
                     })
-                    this.props.navigation.navigate('SignUpStep2', {
-                        datapegawai: response.datapegawai
+                    this.props.navigation.navigate('ValidateKodeLupaPassword', {
+                        datapegawai: response
                     })
                 } else {
                     this.setState({
@@ -75,6 +76,7 @@ export default class SignUp extends Component{
                 })
             }
         } catch(err){
+            console.log(err)
             this.setState({
                 loader: false,
                 NoHandphoneExist: true,
@@ -181,8 +183,8 @@ export default class SignUp extends Component{
                                             marginTop: screenHeightPercent(5)
                                         }}
                                     >
-                                        <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>Create Account</Text>
-                                        <Text style={{color: '#fff', fontSize: 12,lineHeight: 22,marginTop: 5}}>Pastikan no handphone anda telah terdaftar di NABILA RSUP Prof R. D. Kandou Manado</Text>
+                                        <Text style={{color: '#fff', fontSize: 25, fontWeight: 'bold'}}>Lupa Password ?</Text>
+                                        <Text style={{color: '#fff', fontSize: 12,lineHeight: 22,marginTop: 5}}>Masukan no telp anda yang terdaftar di KandouOne</Text>
                                     </View>
                                     <View
                                         style={{
@@ -259,7 +261,7 @@ export default class SignUp extends Component{
                                             onPress={() => this.props.navigation.navigate('Login')}
                                         >
                                             <View style={{}}>
-                                                <Text style={{color: '#ddd'}}>Sudah punya akun ?</Text>
+                                                <Text style={{color: '#ddd'}}>Kembali ke login</Text>
                                             </View>
                                         </TouchableOpacity>
                                     </View>

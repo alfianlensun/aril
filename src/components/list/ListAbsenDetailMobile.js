@@ -17,7 +17,9 @@ export default class ListAbsenDetailMobile extends Component{
     render(){
         return (
             <Ripple
-                onPress={() => console.log('ok')}
+                onPress={() => this.props.navigation.navigate('AbsenDetail', {
+                    params: this.props.detail
+                })}
                 rippleColor={'rgba(255,255,255,.3)'}
                 style={{
                     width: '100%',

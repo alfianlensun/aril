@@ -14,7 +14,7 @@ import {Icon} from 'react-native-elements'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ListCardUnitKerja from '../../../../components/list/ListCardUnitKerja'
 import { getListUnitKerjaSdm } from '../../../../services/ServiceMaster'
-import { icon_color_primary, shadow, icon_color_secondary } from '../../../../themes/Default'
+import { icon_color_primary, shadow, icon_color_secondary, background_color_gradient } from '../../../../themes/Default'
 import { TextInput } from 'react-native-gesture-handler'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { getListAbsensiPegawai } from '../../../../services/ServiceSdm'
@@ -23,6 +23,8 @@ import moment from 'moment'
 import ListPegawaiAbsen from '../../../../components/list/ListPegawaiAbsen'
 import { search } from '../../../../helpers/General'
 import LoaderListBed from '../../../../components/loader/LoaderListBed'
+import LinearGradient from 'react-native-linear-gradient'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 export default class MonitoringAbsen extends Component{
     constructor(props){
         super(props)
@@ -69,20 +71,19 @@ export default class MonitoringAbsen extends Component{
     render(){
         
         return (
-            <View
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
-                    flex: 1
-                }}
-            >
+                    flex: 1,
+                }}>
                 <View 
                     style={{
                         flex: 1,
-                        overflow: 'hidden',
-                        position: 'relative',
-                        backgroundColor: '#e1f7fa',
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                    <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                     <View style={Styles.header}></View>
                     
                     <View 
@@ -114,7 +115,7 @@ export default class MonitoringAbsen extends Component{
                                 <Icon 
                                     type={'ionicons'}
                                     name={'arrow-back'}
-                                    color={'#444'}
+                                    color={'#fff'}
                                     size={24}
                                 />
                             </Ripple>
@@ -123,7 +124,7 @@ export default class MonitoringAbsen extends Component{
                             style={{
                                 fontSize: 16,
                                 marginLeft: 10,
-                                color: '#444'
+                                color: '#fff'
                             }}
                         >{this.state.params.unitKerja.nama_unit_kerja}</Text>
                     </View>
@@ -132,9 +133,31 @@ export default class MonitoringAbsen extends Component{
                             width: '100%',
                             paddingHorizontal: 20,
                             paddingTop: 20,
-                            alignItems: 'flex-end'
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end'
                         }}
                     >
+                        <Ripple
+                            onPress={() => this.props.navigation.navigate('MonitoringAbsenMap', {
+                                dataunitkerja: {
+                                    tanggaldipilih: this.state.tanggaldipilih,
+                                    ...this.state.params
+                                }
+                            })}
+                            style={[{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                paddingVertical: 10,
+                                paddingHorizontal: 15,
+                                borderRadius: 20,
+                                marginRight: 5,
+                                backgroundColor: '#fff'
+                            }, shadow]} 
+                        >
+                            <MaterialIcons name="person-pin-circle" size={18} color={icon_color_primary}/>
+                        </Ripple>
                         <Ripple
                             onPress={() => this.setState({showDatePicker: true})}
                             style={[{
@@ -145,17 +168,17 @@ export default class MonitoringAbsen extends Component{
                                 paddingVertical: 10,
                                 paddingHorizontal: 20,
                                 borderRadius: 20,
-                                backgroundColor: icon_color_secondary
+                                backgroundColor: '#fff'
                             }, shadow]} 
                         >
                             <Text
                                 style={{
                                     fontSize: 13,
-                                    color:"#fff",
-                                    paddingRight: 10
+                                    color: icon_color_primary,
+                                    paddingRight: 10,
                                 }}
                             >{moment(this.state.tanggaldipilih).format('DDMMYYYY') === moment(new Date()).format('DDMMYYYY') ? 'Hari Ini': moment(this.state.tanggaldipilih).format('DD MMMM YYYY')}</Text>
-                            <Ionicons name="md-calendar" size={14} color={'#fff'}/>
+                            <Ionicons name="md-calendar" size={14} color={icon_color_primary}/>
                         </Ripple>
                     </View>
                     <View 
@@ -278,7 +301,7 @@ export default class MonitoringAbsen extends Component{
                         }}
                     />
                 }  
-            </View>
+            </LinearGradient>
         )
     }
 }

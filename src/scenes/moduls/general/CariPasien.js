@@ -14,6 +14,8 @@ import Ripple from 'react-native-material-ripple'
 import {cariPasien, abortRequest} from '../../../services/ServicePencarian'
 import ListPencarianPasien from '../../../components/list/ListPencarianPasien'
 import LoaderListTindakan from '../../../components/loader/LoaderListTindakan'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../../../themes/Default'
 
 export default class CariPasien extends Component {
     constructor(props){
@@ -96,15 +98,15 @@ export default class CariPasien extends Component {
 
     render(){
         return(
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
                     position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -133,22 +135,24 @@ export default class CariPasien extends Component {
                             <Icon 
                                 type={'ionicons'}
                                 name={'arrow-back'}
-                                color={'#444'}
+                                color={'#fff'}
                                 size={24}
                             />
                         </Ripple>
                         <Text
                             style={{
-                                fontSize: 16,
+                                fontSize: 18,
                                 marginLeft: 10,
-                                fontWeight: 'bold'
+                                color:"#fff",
                             }}
                         >Cari Pasien </Text>
                     </View>
                     <Text
                         style={{
                             marginTop: 20,
-                            fontSize: 12
+                            fontSize: 13,
+                            color: "#fff",
+                            lineHeight: 20
                         }}
                     >Untuk mencari data pasien, silahkan gunakan form pencarian di bawah</Text>
                 </View>
@@ -246,7 +250,7 @@ export default class CariPasien extends Component {
                         </View>
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -261,8 +265,7 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
-        height: screenHeightPercent(6)
+        height: screenHeightPercent(4)
     },
     headerBackground: {
         overflow: 'hidden',

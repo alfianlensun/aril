@@ -5,7 +5,7 @@ import {
     StyleSheet,
     ImageBackground
 } from 'react-native'
-import { text_color_default, icon_color_primary } from '../../themes/Default';
+import { text_color_default, icon_color_primary, background_color_gradient } from '../../themes/Default';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default class CardMenu extends Component{
@@ -25,7 +25,7 @@ export default class CardMenu extends Component{
                 <LinearGradient 
                     start={{x: 0, y: 0}} 
                     end={{x: 2, y: 0}} 
-                    colors={['#667eea', '#63b3ed', '#434190']} 
+                    colors={background_color_gradient}
                     style={{
                         width: 50, 
                         height: 50,

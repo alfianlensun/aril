@@ -96,8 +96,7 @@ class MainMenu extends Component{
                 this.setState({
                     back: false
                 })
-            }, 200);
-
+            }, 600);
             
         }
         return true

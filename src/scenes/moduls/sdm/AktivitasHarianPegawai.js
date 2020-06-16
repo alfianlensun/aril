@@ -24,7 +24,8 @@ import {createAktivitasPegawai} from '../../../services/ServiceSdm'
 import moment from 'moment'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
-import { shadowxl, shadow, background_color } from '../../../themes/Default'
+import { shadowxl, shadow, background_color, background_color_gradient } from '../../../themes/Default'
+import LinearGradient from 'react-native-linear-gradient'
 
 export default class AktivitasHarianPegawai extends Component {
     constructor(props){
@@ -482,567 +483,556 @@ export default class AktivitasHarianPegawai extends Component {
 
     render(){
         return(
-            
-                <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
+                style={{
+                    flex: 1,
+                    position: 'relative',
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+                <View style={Styles.header}></View> 
+                <View
                     style={{
-                        flex: 1,
-                        overflow: 'hidden',
-                        position: 'relative',
-                        backgroundColor: '#e1f7fa',
+                        paddingHorizontal: 20,
+                        paddingVertical: 10,
                     }}
                 >
-                    <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                    <View style={Styles.header}></View> 
                     <View
                         style={{
-                            paddingHorizontal: 20,
-                            paddingVertical: 10,
+                            width: '100%',
+                            position: 'relative',
+                            flexDirection: 'row',
+                            alignItems: 'center'
                         }}
                     >
-                        <View
+                        <Ripple
+                            onPress={() => this.props.navigation.goBack(null)}
                             style={{
-                                width: '100%',
-                                position: 'relative',
-                                flexDirection: 'row',
+                                height: 30,
+                                width: 30,
+                                borderRadius: 50,
+                                justifyContent: 'center',
                                 alignItems: 'center'
                             }}
+                            rippleColor={'rgba(0,0,0,.5)'}
                         >
-                            <Ripple
-                                onPress={() => this.props.navigation.goBack(null)}
-                                style={{
-                                    height: 30,
-                                    width: 30,
-                                    borderRadius: 50,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}
-                                rippleColor={'rgba(0,0,0,.5)'}
-                            >
-                                <Icon 
-                                    type={'ionicons'}
-                                    name={'arrow-back'}
-                                    color={'#444'}
-                                    size={24}
-                                />
-                            </Ripple>
-                            <Text
-                                style={{
-                                    fontSize: 16,
-                                    marginLeft: 10,
-                                    color: '#333',
-                                    fontWeight: 'bold'
-                                }}
-                            >Aktivitas Harian</Text>
-                            <Ripple
-                                onPress={() => this.props.navigation.navigate('RekapAktivitasHarianPegawai')}
-                                rippleColor={'rgba(0,0,0,.4)'}
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    borderRadius: 50,
-                                    overflow: 'hidden',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position: 'absolute',
-                                    right: 0
-                                }}
-                            >
-                                <Icon 
-                                    type={'font-awesome'}
-                                    name={'history'}
-                                    size={16}
-                                    color={'#333'}
-                                />
-                            </Ripple>
-                        </View>
-                        <View>
-                            <Text
-                                style={{
-                                    color: '#333',
-                                    marginTop: 20,
-                                    fontSize: 13
-                                }}
-                            >Total Aktivitas Kemarin</Text>
-                        </View>
+                            <Icon 
+                                type={'ionicons'}
+                                name={'arrow-back'}
+                                color={'#fff'}
+                                size={24}
+                            />
+                        </Ripple>
+                        <Text
+                            style={{
+                                fontSize: 18,
+                                marginLeft: 10,
+                                color: '#fff',
+                            }}
+                        >Aktivitas Harian</Text>
+                        <Ripple
+                            onPress={() => this.props.navigation.navigate('RekapAktivitasHarianPegawai')}
+                            rippleColor={'rgba(0,0,0,.4)'}
+                            style={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: 50,
+                                overflow: 'hidden',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                position: 'absolute',
+                                right: 0
+                            }}
+                        >
+                            <Icon 
+                                type={'font-awesome'}
+                                name={'history'}
+                                size={16}
+                                color={'#fff'}
+                            />
+                        </Ripple>
                     </View>
-                    <View 
-                        style={{
-                            width: '100%',
-                            height: '90%',
-                            marginTop: 20,
-                            borderTopLeftRadius: 30,
-                            borderTopRightRadius: 30,
-                            paddingHorizontal: 10,
-                            backgroundColor: '#fff'
-                        }}
-                    >
-                        <KeyboardAvoidingView style={{flex: 1}} behavior="margin" enabled >
-                            <ScrollView
+                </View>
+                <View 
+                    style={{
+                        width: '100%',
+                        height: '90%',
+                        marginTop: 20,
+                        borderTopLeftRadius: 30,
+                        borderTopRightRadius: 30,
+                        paddingHorizontal: 10,
+                        backgroundColor: '#fff'
+                    }}
+                >
+                    <KeyboardAvoidingView style={{flex: 1}} behavior="margin" enabled >
+                        <ScrollView
+                            style={{
+                                flex: 1,
+                                flexDirection: 'column'
+                            }}
+                        >
+                            <View
                                 style={{
                                     flex: 1,
-                                    flexDirection: 'column'
+                                    flexDirection: 'column',
+                                    overflow: 'hidden'
                                 }}
                             >
                                 <View
                                     style={{
                                         flex: 1,
-                                        flexDirection: 'column',
-                                        overflow: 'hidden'
+                                        paddingHorizontal: 10
                                     }}
                                 >
+                                    
                                     <View
                                         style={{
+                                            marginTop: 30,
                                             flex: 1,
-                                            paddingHorizontal: 10
+                                            position: 'relative',
                                         }}
                                     >
-                                        
                                         <View
                                             style={{
-                                                marginTop: 30,
-                                                flex: 1,
-                                                position: 'relative',
+                                                width: '100%',
+                                                height: 50,
+                                                alignItems: 'center',
+                                                flexDirection: 'row'
                                             }}
                                         >
                                             <View
                                                 style={{
+                                                    width: '40%'
+                                                }}
+                                            >
+                                                <Text 
+                                                    style={{
+                                                        fontSize: 13,
+                                                        color: '#333'
+                                                    }}
+                                                >Tanggal</Text>
+                                            </View>
+                                            <View
+                                                style={{
+                                                    width: '60%',
+                                                    paddingRight: 10,
+                                                    backgroundColor: '#fff',
+                                                    alignItems: 'flex-end'
+                                                }}
+                                            >
+                                                <Ripple
+                                                    onPress={() => this.setState({showDatePicker: true})} 
+                                                    style={[{
+                                                        width: '90%',
+                                                        position: 'relative',
+                                                        justifyContent:"center",
+                                                        height: 40,
+                                                        borderRadius: 10,
+                                                        paddingLeft: 20,
+                                                        overflow: 'hidden',
+                                                        backgroundColor: '#fff'
+                                                    }, Styles.shadow]}
+                                                >
+                                                    <View
+                                                        style={{
+                                                            width: '100%',
+                                                            flexDirection: 'row'
+                                                        }}
+                                                    >
+                                                        <View
+                                                            style={{
+                                                                height: '100%',
+                                                                justifyContent: 'center'
+                                                            }}
+                                                        >
+                                                            <Ionicons name="md-calendar" size={14}/>
+                                                        </View>
+                                                        <View
+                                                            style={{
+                                                                height: '100%',
+                                                                justifyContent: 'center',
+                                                                paddingLeft: 10
+                                                            }}
+                                                        >
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: 13
+                                                                }}
+                                                            >{moment(this.state.tanggalAktivitas).format('DD-MM-YYYY HH:mm:ss')}</Text>
+                                                        </View>
+                                                    </View>
+                                                    {this.state.showDatePicker &&
+                                                        <DateTimePicker
+                                                            value={this.state.tanggalAktivitas}
+                                                            mode="datetime"
+                                                            mode={'date'}
+                                                            is24Hour={true}
+                                                            display="default"
+                                                            onChange={(event, value) => {
+                                                                if (value !== undefined){
+                                                                    this.setState({
+                                                                        showDatePicker: false,
+                                                                        tanggalAktivitas: value
+                                                                    })
+                                                                } else {
+                                                                    this.setState({
+                                                                        showDatePicker: false
+                                                                    })
+                                                                }
+                                                                
+                                                            }}
+                                                        />
+                                                    }
+                                                </Ripple>
+                                            </View>
+                                        </View>
+                                        
+                                        <View
+                                            style={{
+                                                marginTop: 10,
+                                                width: '100%',
+                                                height: 50,
+                                                alignItems: 'center',
+                                                flexDirection: 'row'
+                                            }}
+                                        >
+                                            <Text 
+                                                style={{
+                                                    width: '40%',
+                                                    fontSize: 13,
+                                                    color: '#333'
+                                                }}
+                                            >Indikator kinerja</Text> 
+                                            <View
+                                                style={{
+                                                    width: '60%',
+                                                    paddingLeft: 10,
+                                                    alignItems: 'center'
+                                                }}
+                                            >
+                                                <Ripple
+                                                    onPress={() => {
+                                                        this.setState({
+                                                            slideType: 0
+                                                        })
+                                                        this.sliderUp.show(400, {
+                                                            y: .2
+                                                        })
+                                                    }}
+                                                    rippleColor={'rgba(0,0,0,.4)'}
+                                                    style={[{
+                                                        width: '90%',
+                                                        position: 'relative',
+                                                        alignItems:"center",
+                                                        flexDirection: 'row',
+                                                        height: 40,
+                                                        borderRadius: 10,
+                                                        paddingLeft: 10,
+                                                        overflow: 'hidden',
+                                                        backgroundColor: '#fff'
+                                                    }, shadow]}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            fontSize: 13
+                                                        }}
+                                                    >{this.state.chosenIndikator !== null ? 'Ganti Indikator' : 'Pilih Indikator'}</Text>
+                                                    {this.state.chosenIndikator !== null &&
+                                                        <View
+                                                            style={{
+                                                                flex: 1,
+                                                                alignItems: 'flex-end',
+                                                                paddingRight: 10
+                                                            }}
+                                                        >
+                                                            <Feather name={'edit'} size={18}/>   
+                                                        </View>
+                                                    }
+                                                </Ripple> 
+                                            </View>
+                                        </View>
+                                        {this.state.chosenIndikator !== null &&
+                                            <View
+                                                style={{
+                                                    width: '100%', 
+                                                    backgroundColor: background_color,
+                                                    padding: 10,
+                                                    borderRadius: 10,
+                                                }}
+                                            >
+                                                <Text
+                                                    style={{
+                                                        fontSize: 13,
+                                                        color: '#333',
+                                                        lineHeight: 20
+                                                    }}
+                                                >
+                                                    {this.state.chosenIndikator !== null && this.state.chosenIndikator.value}
+                                                </Text>
+                                            </View>
+                                        }
+                                        <View
+                                            style={{
+                                                marginTop: 10,
+                                                width: '100%',
+                                                height: 50,
+                                                alignItems: 'center',
+                                                flexDirection: 'row'
+                                            }}
+                                        >
+                                            <Text 
+                                                style={{
+                                                    width: '40%',
+                                                    fontSize: 13,
+                                                    color: '#333'
+                                                }}
+                                            >Data pendukung</Text>   
+                                            <View
+                                                style={{
+                                                    width: '60%',
+                                                    paddingRight: 10,
+                                                    alignItems: 'flex-end'
+                                                }}
+                                            >
+                                                <Ripple
+                                                    onPress={() => {
+                                                        this.setState({
+                                                            slideType: 1
+                                                        })
+                                                        this.sliderUp.show(150, {
+                                                            y: .2
+                                                        })
+                                                    }}
+                                                    rippleColor={'rgba(0,0,0,.4)'}
+                                                    style={[{
+                                                        width: '90%',
+                                                        borderRadius: 10,
+                                                        overflow: 'hidden',
+                                                        height: 40,
+                                                        position: 'relative',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'center', 
+                                                        backgroundColor: '#fff',
+                                                        alignItems: 'center'
+                                                    },Styles.shadow]}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            width: '100%',
+                                                            paddingHorizontal: 10,
+                                                            fontSize: 13
+                                                        }}
+                                                    >
+                                                        Masukan Data pendukung
+                                                    </Text>
+                                                </Ripple>
+                                                
+                                            </View>
+                                        </View>
+                                        {this.state.chosenDataPendukung !== null ? 
+                                            <View
+                                                style={{
+                                                    paddingVertical: 10,
+                                                    paddingHorizontal: 10,
+                                                    marginTop: 10,
+                                                    backgroundColor: '#e1f7fa',
+                                                    borderRadius: 10,
                                                     width: '100%',
-                                                    height: 50,
-                                                    alignItems: 'center',
-                                                    flexDirection: 'row'
                                                 }}
                                             >
                                                 <View
                                                     style={{
-                                                        width: '40%'
+                                                        flexDirection:'row',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            width: '40%',
+                                                            color: '#333',
+                                                            fontSize: 13
+                                                        }}
+                                                    >
+                                                        Norm 
+                                                    </Text>
+                                                    <Text
+                                                        style={{
+                                                            width: '60%',
+                                                            color: '#333',
+                                                            fontSize: 13
+                                                        }}
+                                                    >
+                                                        : {this.state.chosenDataPendukung.norm} 
+                                                    </Text>
+                                                </View>
+                                                <View
+                                                    style={{
+                                                        marginTop: 10,
+                                                        flexDirection:'row',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            width: '40%',
+                                                            color: '#333',
+                                                            fontSize: 13
+                                                        }}
+                                                    >
+                                                        Nama Pasien 
+                                                    </Text>
+                                                    <Text
+                                                        style={{
+                                                            width: '60%',
+                                                            color: '#333',
+                                                            fontSize: 13
+                                                        }}
+                                                    >
+                                                        : {this.state.chosenDataPendukung.nama_pasien}
+                                                    </Text>
+                                                </View>
+                                            </View> : null
+                                        }
+                                        <View
+                                            style={{
+                                                marginTop: 20,
+                                                width: '100%',
+                                            }}
+                                        >
+                                            <Text 
+                                                style={{
+                                                    fontWeight: 'bold',
+                                                    width: '100%',
+                                                    fontSize: 13,
+                                                    color: '#333'
+                                                }}
+                                            >Aktivitas</Text>   
+                                            <View
+                                                style={{
+                                                    marginTop: 10,
+                                                    width: '100%',
+                                                    borderRadius: 10,
+                                                    backgroundColor: '#e1f7fa',
+                                                    height: 100
+                                                }}
+                                            >
+                                                <TextInput
+                                                    onSubmitEditing={() => {
+                                                        
+                                                    }}
+                                                    onChangeText={(value) => {
+                                                        this.setState({aktivitas: value})
+                                                    }}
+                                                    multiline={true}
+                                                    style={[Styles.formTextInput, {textAlignVertical: 'top', padding: 10}]}
+                                                    value={this.state.aktivitas}
+                                                    placeholder={"Isi aktivitas yang di lakukan"}
+                                                />
+                                            </View>
+                                        </View>
+                                        <View
+                                            style={{
+                                                marginTop: 10,
+                                                width: '100%'
+                                            }}
+                                        >
+                                            <SwitchSelector
+                                                options={[
+                                                    {
+                                                        label: 'Dalam Pengerjaan',
+                                                        value: 'Dalam Pengerjaan'
+                                                    },
+                                                    {
+                                                        label: 'Selesai',
+                                                        value: 'Selesai'
+                                                    }
+                                                ]}
+                                                textStyle={{
+                                                    fontSize: 12,
+                                                    color: '#333'
+                                                }}
+                                                borderRadius={10}
+                                                buttonColor={'#63b3ed'}
+                                                initial={0}
+                                                onPress={value => this.setState({statusPengerjaan: value})}
+                                            />
+                                        </View>
+                                        <View
+                                            style={{
+                                                marginTop: 20,
+                                                width: '100%',
+                                                alignItems: 'center'
+                                            }}
+                                        >
+                                            {this.state.validateMessage.length > 0 ? 
+                                                <View
+                                                    style={{
+                                                        width: '100%',
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center'
                                                     }}
                                                 >
                                                     <Text 
                                                         style={{
-                                                            fontSize: 13,
-                                                            color: '#333'
+                                                            color: '#ff776e',
+                                                            fontSize: 12,
+                                                            marginRight: 10,
+                                                            paddingVertical: 20
                                                         }}
-                                                    >Tanggal</Text>
-                                                </View>
-                                                <View
-                                                    style={{
-                                                        width: '60%',
-                                                        paddingRight: 10,
-                                                        backgroundColor: '#fff',
-                                                        alignItems: 'flex-end'
-                                                    }}
-                                                >
-                                                    <Ripple
-                                                        onPress={() => this.setState({showDatePicker: true})} 
-                                                        style={[{
-                                                            width: '90%',
-                                                            position: 'relative',
-                                                            justifyContent:"center",
-                                                            height: 40,
-                                                            borderRadius: 10,
-                                                            paddingLeft: 20,
-                                                            overflow: 'hidden',
-                                                            backgroundColor: '#fff'
-                                                        }, Styles.shadow]}
-                                                    >
-                                                        <View
-                                                            style={{
-                                                                width: '100%',
-                                                                flexDirection: 'row'
-                                                            }}
-                                                        >
-                                                            <View
-                                                                style={{
-                                                                    height: '100%',
-                                                                    justifyContent: 'center'
-                                                                }}
-                                                            >
-                                                                <Ionicons name="md-calendar" size={14}/>
-                                                            </View>
-                                                            <View
-                                                                style={{
-                                                                    height: '100%',
-                                                                    justifyContent: 'center',
-                                                                    paddingLeft: 10
-                                                                }}
-                                                            >
-                                                                <Text
-                                                                    style={{
-                                                                        fontSize: 13
-                                                                    }}
-                                                                >{moment(this.state.tanggalAktivitas).format('DD-MM-YYYY HH:mm:ss')}</Text>
-                                                            </View>
-                                                        </View>
-                                                        {this.state.showDatePicker &&
-                                                            <DateTimePicker
-                                                                value={this.state.tanggalAktivitas}
-                                                                mode="datetime"
-                                                                mode={'date'}
-                                                                is24Hour={true}
-                                                                display="default"
-                                                                onChange={(event, value) => {
-                                                                    if (value !== undefined){
-                                                                        this.setState({
-                                                                            showDatePicker: false,
-                                                                            tanggalAktivitas: value
-                                                                        })
-                                                                    } else {
-                                                                        this.setState({
-                                                                            showDatePicker: false
-                                                                        })
-                                                                    }
-                                                                    
-                                                                }}
-                                                            />
-                                                        }
-                                                    </Ripple>
-                                                </View>
-                                            </View>
-                                            
-                                            <View
-                                                style={{
-                                                    marginTop: 10,
-                                                    width: '100%',
-                                                    height: 50,
-                                                    alignItems: 'center',
-                                                    flexDirection: 'row'
-                                                }}
-                                            >
-                                                <Text 
-                                                    style={{
-                                                        width: '40%',
-                                                        fontSize: 13,
-                                                        color: '#333'
-                                                    }}
-                                                >Indikator kinerja</Text> 
-                                                <View
-                                                    style={{
-                                                        width: '60%',
-                                                        paddingLeft: 10,
-                                                        alignItems: 'center'
-                                                    }}
-                                                >
-                                                    <Ripple
-                                                        onPress={() => {
-                                                            this.setState({
-                                                                slideType: 0
-                                                            })
-                                                            this.sliderUp.show(400, {
-                                                                y: .2
-                                                            })
-                                                        }}
-                                                        rippleColor={'rgba(0,0,0,.4)'}
-                                                        style={[{
-                                                            width: '90%',
-                                                            position: 'relative',
-                                                            alignItems:"center",
-                                                            flexDirection: 'row',
-                                                            height: 40,
-                                                            borderRadius: 10,
-                                                            paddingLeft: 10,
-                                                            overflow: 'hidden',
-                                                            backgroundColor: '#fff'
-                                                        }, shadow]}
-                                                    >
-                                                        <Text
-                                                            style={{
-                                                                fontSize: 13
-                                                            }}
-                                                        >{this.state.chosenIndikator !== null ? 'Ganti Indikator' : 'Pilih Indikator'}</Text>
-                                                        {this.state.chosenIndikator !== null &&
-                                                            <View
-                                                                style={{
-                                                                    flex: 1,
-                                                                    alignItems: 'flex-end',
-                                                                    paddingRight: 10
-                                                                }}
-                                                            >
-                                                                <Feather name={'edit'} size={18}/>   
-                                                            </View>
-                                                        }
-                                                    </Ripple> 
-                                                </View>
-                                            </View>
-                                            {this.state.chosenIndikator !== null &&
-                                                <View
-                                                    style={{
-                                                        width: '100%', 
-                                                        backgroundColor: background_color,
-                                                        padding: 10,
-                                                        borderRadius: 10,
-                                                    }}
-                                                >
-                                                    <Text
-                                                        style={{
-                                                            fontSize: 13,
-                                                            color: '#333',
-                                                            lineHeight: 20
-                                                        }}
-                                                    >
-                                                        {this.state.chosenIndikator !== null && this.state.chosenIndikator.value}
-                                                    </Text>
-                                                </View>
-                                            }
-                                            <View
-                                                style={{
-                                                    marginTop: 10,
-                                                    width: '100%',
-                                                    height: 50,
-                                                    alignItems: 'center',
-                                                    flexDirection: 'row'
-                                                }}
-                                            >
-                                                <Text 
-                                                    style={{
-                                                        width: '40%',
-                                                        fontSize: 13,
-                                                        color: '#333'
-                                                    }}
-                                                >Data pendukung</Text>   
-                                                <View
-                                                    style={{
-                                                        width: '60%',
-                                                        paddingRight: 10,
-                                                        alignItems: 'flex-end'
-                                                    }}
-                                                >
-                                                    <Ripple
-                                                        onPress={() => {
-                                                            this.setState({
-                                                                slideType: 1
-                                                            })
-                                                            this.sliderUp.show(150, {
-                                                                y: .2
-                                                            })
-                                                        }}
-                                                        rippleColor={'rgba(0,0,0,.4)'}
-                                                        style={[{
-                                                            width: '90%',
-                                                            borderRadius: 10,
-                                                            overflow: 'hidden',
-                                                            height: 40,
-                                                            position: 'relative',
-                                                            flexDirection: 'row',
-                                                            justifyContent: 'center', 
-                                                            backgroundColor: '#fff',
-                                                            alignItems: 'center'
-                                                        },Styles.shadow]}
-                                                    >
-                                                        <Text
-                                                            style={{
-                                                                width: '100%',
-                                                                paddingHorizontal: 10,
-                                                                fontSize: 13
-                                                            }}
-                                                        >
-                                                            Masukan Data pendukung
-                                                        </Text>
-                                                    </Ripple>
-                                                    
-                                                </View>
-                                            </View>
-                                            {this.state.chosenDataPendukung !== null ? 
-                                                <View
-                                                    style={{
-                                                        paddingVertical: 10,
-                                                        paddingHorizontal: 10,
-                                                        marginTop: 10,
-                                                        backgroundColor: '#e1f7fa',
-                                                        borderRadius: 10,
-                                                        width: '100%',
-                                                    }}
-                                                >
-                                                    <View
-                                                        style={{
-                                                            flexDirection:'row',
-                                                            alignItems: 'center'
-                                                        }}
-                                                    >
-                                                        <Text
-                                                            style={{
-                                                                width: '40%',
-                                                                color: '#333',
-                                                                fontSize: 13
-                                                            }}
-                                                        >
-                                                            Norm 
-                                                        </Text>
-                                                        <Text
-                                                            style={{
-                                                                width: '60%',
-                                                                color: '#333',
-                                                                fontSize: 13
-                                                            }}
-                                                        >
-                                                            : {this.state.chosenDataPendukung.norm} 
-                                                        </Text>
-                                                    </View>
-                                                    <View
-                                                        style={{
-                                                            marginTop: 10,
-                                                            flexDirection:'row',
-                                                            alignItems: 'center'
-                                                        }}
-                                                    >
-                                                        <Text
-                                                            style={{
-                                                                width: '40%',
-                                                                color: '#333',
-                                                                fontSize: 13
-                                                            }}
-                                                        >
-                                                            Nama Pasien 
-                                                        </Text>
-                                                        <Text
-                                                            style={{
-                                                                width: '60%',
-                                                                color: '#333',
-                                                                fontSize: 13
-                                                            }}
-                                                        >
-                                                            : {this.state.chosenDataPendukung.nama_pasien}
-                                                        </Text>
-                                                    </View>
+                                                        >{this.state.validateMessage}</Text>
+                                                    <Icon 
+                                                        type={'font-awesome'}
+                                                        name={'exclamation-circle'}
+                                                        size={12}
+                                                        color={'#ff776e'}
+                                                    />
                                                 </View> : null
                                             }
-                                            <View
+                                            <Ripple
+                                                onPress={() => this.onSubmitAktivitas()}
+                                                rippleColor={'rgba(255,255,255,.6)'}
                                                 style={{
-                                                    marginTop: 20,
                                                     width: '100%',
+                                                    backgroundColor: '#63b3ed',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'center',
+                                                    borderRadius: 10,
+                                                    paddingHorizontal: 20,
+                                                    paddingVertical: 15
                                                 }}
                                             >
-                                                <Text 
+                                                <Text
                                                     style={{
-                                                        fontWeight: 'bold',
-                                                        width: '100%',
-                                                        fontSize: 13,
-                                                        color: '#333'
+                                                        color: '#fff'
                                                     }}
-                                                >Aktivitas</Text>   
-                                                <View
-                                                    style={{
-                                                        marginTop: 10,
-                                                        width: '100%',
-                                                        borderRadius: 10,
-                                                        backgroundColor: '#e1f7fa',
-                                                        height: 100
-                                                    }}
-                                                >
-                                                    <TextInput
-                                                        onSubmitEditing={() => {
-                                                            
-                                                        }}
-                                                        onChangeText={(value) => {
-                                                            this.setState({aktivitas: value})
-                                                        }}
-                                                        multiline={true}
-                                                        style={[Styles.formTextInput, {textAlignVertical: 'top', padding: 10}]}
-                                                        value={this.state.aktivitas}
-                                                        placeholder={"Isi aktivitas yang di lakukan"}
-                                                    />
-                                                </View>
-                                            </View>
-                                            <View
-                                                style={{
-                                                    marginTop: 10,
-                                                    width: '100%'
-                                                }}
-                                            >
-                                                <SwitchSelector
-                                                    options={[
-                                                        {
-                                                            label: 'Dalam Pengerjaan',
-                                                            value: 'Dalam Pengerjaan'
-                                                        },
-                                                        {
-                                                            label: 'Selesai',
-                                                            value: 'Selesai'
-                                                        }
-                                                    ]}
-                                                    textStyle={{
-                                                        fontSize: 12,
-                                                        color: '#333'
-                                                    }}
-                                                    borderRadius={10}
-                                                    buttonColor={'#63b3ed'}
-                                                    initial={0}
-                                                    onPress={value => this.setState({statusPengerjaan: value})}
-                                                />
-                                            </View>
-                                            <View
-                                                style={{
-                                                    marginTop: 20,
-                                                    width: '100%',
-                                                    alignItems: 'center'
-                                                }}
-                                            >
-                                                {this.state.validateMessage.length > 0 ? 
-                                                    <View
-                                                        style={{
-                                                            width: '100%',
-                                                            flexDirection: 'row',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center'
-                                                        }}
-                                                    >
-                                                        <Text 
-                                                            style={{
-                                                                color: '#ff776e',
-                                                                fontSize: 12,
-                                                                marginRight: 10,
-                                                                paddingVertical: 20
-                                                            }}
-                                                            >{this.state.validateMessage}</Text>
-                                                        <Icon 
-                                                            type={'font-awesome'}
-                                                            name={'exclamation-circle'}
-                                                            size={12}
-                                                            color={'#ff776e'}
-                                                        />
-                                                    </View> : null
-                                                }
-                                                <Ripple
-                                                    onPress={() => this.onSubmitAktivitas()}
-                                                    rippleColor={'rgba(255,255,255,.6)'}
-                                                    style={{
-                                                        width: '100%',
-                                                        backgroundColor: '#63b3ed',
-                                                        flexDirection: 'row',
-                                                        justifyContent: 'center',
-                                                        borderRadius: 10,
-                                                        paddingHorizontal: 20,
-                                                        paddingVertical: 15
-                                                    }}
-                                                >
-                                                    <Text
-                                                        style={{
-                                                            color: '#fff'
-                                                        }}
-                                                    >Simpan</Text>
-                                                </Ripple>
-                                            </View>
+                                                >Simpan</Text>
+                                            </Ripple>
                                         </View>
                                     </View>
                                 </View>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
-                    </View>
-                    <SlidingUpPanel 
-                        onBottomReached={() => this.state.confirmStatus === 2 ? this.props.navigation.replace('MainMenu') : {}}
-                        containerStyle={{
-                            zIndex: 50,
-                            // flex: 1
-                        }}
-                        friction={.4}
-                        draggableRange={{ top: this.state.sliderUpContentHeight, bottom: 0 }}
-                        onBackButtonPress={() => {
-                            this.sliderUp.hide(); 
-                        }}
-                        allowDragging={this.state.allowDragging}
-                        ref={c => this.sliderUp = c}>
-                        {this.state.loader !== true ? (this.state.slideType === 0 ? this.renderSelectSlider() : this.renderOpsiDataPendukung()): this.renderLoader() }
-                    </SlidingUpPanel>
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                 </View>
+                <SlidingUpPanel 
+                    onBottomReached={() => this.state.confirmStatus === 2 ? this.props.navigation.replace('MainMenu') : {}}
+                    containerStyle={{
+                        zIndex: 50,
+                        // flex: 1
+                    }}
+                    friction={.4}
+                    draggableRange={{ top: this.state.sliderUpContentHeight, bottom: 0 }}
+                    onBackButtonPress={() => {
+                        this.sliderUp.hide(); 
+                    }}
+                    allowDragging={this.state.allowDragging}
+                    ref={c => this.sliderUp = c}>
+                    {this.state.loader !== true ? (this.state.slideType === 0 ? this.renderSelectSlider() : this.renderOpsiDataPendukung()): this.renderLoader() }
+                </SlidingUpPanel>
+            </LinearGradient>
             
         )
     }
@@ -1058,7 +1048,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(6)
     },
     headerBackground: {

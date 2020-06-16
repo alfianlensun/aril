@@ -33,7 +33,8 @@ import { abortRequest } from '../services/ServiceAuth';
 export default class Login extends Component{
     constructor(props){
         super(props)
-
+        const params = props.route.params
+    
         this.state = {
             loader: false,
             showCamera: false,
@@ -43,6 +44,7 @@ export default class Login extends Component{
             validateTelegram: '',
             validatePassword: '',
             accessRange: [],
+            params: params !== undefined ? params : null,
             realTimeLocation: {
                 latitude: 1.456508,
                 longitude: 124.809054
@@ -382,7 +384,6 @@ export default class Login extends Component{
                 >
                     <Text
                         style={{
-                            height: 20,
                             paddingRight: 5,
                             fontSize: 12,
                             color: '#ff776e'
@@ -480,11 +481,15 @@ export default class Login extends Component{
                                     </View>
                                     <View
                                         style={{
+                                            width: '100%',
                                             marginTop: screenHeightPercent(5),
                                             alignItems: 'center'
                                         }}
                                     >
-                                        <Text style={{color: '#eee'}}>Silahkan login untuk melanjutkan</Text>
+                                        {this.state.params !== null &&
+                                            <Text style={{color: '#eee', fontWeight: 'bold',marginBottom: 10}}>Password berhasil di perbarui !</Text>
+                                        }
+                                        <Text style={{color: '#eee'}}>Silahkan login {this.state.params !== null && 'kembali'} untuk melanjutkan</Text>
                                     </View>
                                     <View
                                         style={{
@@ -637,9 +642,9 @@ export default class Login extends Component{
                                         </TouchableOpacity>
                                         <TouchableOpacity 
                                             style={{
-                                                marginTop: 20
+                                                marginTop: 10
                                             }}
-                                            onPress={() => ToastAndroid.show('Fitur sedang dalam proses pengembangan', 1000)}
+                                            onPress={() => this.props.navigation.navigate('LupaPassword')}
                                         >
                                             <View style={{}}>
                                                 <Text style={{color: '#fff', fontSize: 13}}>Lupa Password ?</Text>
