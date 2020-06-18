@@ -5,11 +5,9 @@ import {
     ImageBackground,
     AppState,
     Vibration,
-    DeviceEventEmitter,
     Text,
     ScrollView,
     RefreshControl,
-    BackHandler,
     ToastAndroid
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../helpers/Layout'
@@ -55,8 +53,7 @@ class MainMenu extends Component{
             "Saya Mengerti"
         )
         this.watchMyPosition()
-        DeviceEventEmitter.removeAllListeners('hardwareBackPress')
-        DeviceEventEmitter.addListener('hardwareBackPress',this.onBackPress)
+        
         getData('AuthUser').then(async (data) => {
             if (data == null){
                 this.props.navigation.replace('login')
@@ -76,30 +73,6 @@ class MainMenu extends Component{
         if (this.watchPosition){
             Geolocation.clearWatch(this.watchPosition)
         }   
-    }
-
-    onBackPress = async () => {
-        if (this.state.back){
-            BackHandler.exitApp()
-        } 
-        if (this.timeoutquit) clearTimeout(this.timeoutquit)
-
-        if (this.props.navigation.canGoBack()){
-            this.props.navigation.goBack()
-        } else {
-            ToastAndroid.show('Tekan lagi untuk keluar aplikasi', 600)
-            this.setState({
-                back: true
-            })
-            
-            this.timeoutquit = setTimeout(() => {
-                this.setState({
-                    back: false
-                })
-            }, 600);
-            
-        }
-        return true
     }
 
     watchMyPosition = () => {

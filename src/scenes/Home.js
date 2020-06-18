@@ -57,6 +57,7 @@ export default class Home extends Component{
         this.setState({
             loaderMenu: true,
         })
+
         getData('AuthUser').then(data => {
             this.getKredensialDokter(data.user_detail.id_sdm_trx_kepegawaian)
             if (this.mounted){
@@ -72,6 +73,30 @@ export default class Home extends Component{
             }
         })   
     }
+
+    // onBackPress = async () => {
+    //     if (this.state.back){
+    //         BackHandler.exitApp()
+    //     } 
+    //     if (this.timeoutquit) clearTimeout(this.timeoutquit)
+
+    //     if (this.props.navigation.canGoBack()){
+    //         this.props.navigation.goBack()
+    //     } else {
+    //         ToastAndroid.show('Tekan lagi untuk keluar aplikasi', 600)
+    //         this.setState({
+    //             back: true
+    //         })
+            
+    //         this.timeoutquit = setTimeout(() => {
+    //             this.setState({
+    //                 back: false
+    //             })
+    //         }, 600);
+            
+    //     }
+    //     return true
+    // }
 
     getKredensialDokter = async (IDPegawai) => {
         try {

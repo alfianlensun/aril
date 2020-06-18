@@ -14,13 +14,20 @@ import moment from 'moment'
 export default class ListPegawaiAbsen extends Component{
     constructor(props){
         super(props)
+        
     }
 
 
     render(){
         return (
             <Ripple
-                onPress={() => console.log('ok')}
+                onPress={() => this.props.navigation.navigate('MonitoringAbsenMap', {
+                    dataunitkerja: {
+                        tanggaldipilih: this.props.tanggaldipilih,
+                        id_user_mobile: this.props.items.id_user_mobile,
+                        ...this.props.params
+                    }
+                })}
                 rippleColor={ripple_color_primary}
                 style={{
                     width: '100%',

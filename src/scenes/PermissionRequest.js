@@ -3,8 +3,6 @@ import {
     View,
     Text,
     StatusBar,
-    Image,
-    BackHandler,
     PermissionsAndroid
 } from 'react-native'
 import Logo from '../../assets/icon/icon.png'

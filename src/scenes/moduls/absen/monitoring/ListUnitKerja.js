@@ -15,17 +15,22 @@ import {Icon} from 'react-native-elements'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import ListCardUnitKerja from '../../../../components/list/ListCardUnitKerja'
 import { getListUnitKerjaSdm } from '../../../../services/ServiceMaster'
-import { shadow, icon_color_secondary, container_background, icon_color_primary, background_color_gradient } from '../../../../themes/Default'
+import { shadow, icon_color_primary, background_color_gradient } from '../../../../themes/Default'
 import { search } from '../../../../helpers/General'
 import LoaderListBed from '../../../../components/loader/LoaderListBed'
 import LinearGradient from 'react-native-linear-gradient'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { searchPegawai } from '../../../../services/ServiceSdm'
+import ListPegawai from '../../../../components/list/ListPegawai'
 
 export default class ListUnitKerja extends Component{
     constructor(props){
         super(props)
         this.state = {
             listunitkerja: [],
-            loader: true
+            listpegawai: [],
+            loader: true,
+            searchType: 0
         }
     }
 
@@ -60,6 +65,29 @@ export default class ListUnitKerja extends Component{
             })
             alert(err.message)
         }
+    }
+
+    searchPegawai = (search) => {
+        try {
+            clearTimeout(this.timeoutSearchPegawai)
+            if (search.length > 0){
+                this.timeoutSearchPegawai = setTimeout(async() => {
+                    this.setState({
+                        loader: true
+                    })
+                    let {response} = await searchPegawai(search)
+                    this.setState({
+                        loader: false,
+                        listpegawai: response
+                    })
+                }, 600)
+            }
+        } catch(err){
+            this.setState({
+                search: false
+            })
+        }
+
     }
 
     render(){
@@ -120,7 +148,44 @@ export default class ListUnitKerja extends Component{
                                 color: '#fff',
                                 
                             }}
-                        >Pilih Unit Kerja</Text>
+                        >Pilih {this.state.searchType === 0 ? 'unit kerja' : 'pegawai'}</Text>
+                    </View>
+                    <View
+                        style={{
+                            width: '100%',
+                            paddingHorizontal: 10,
+                            alignItems: 'flex-end'
+                        }}
+                    >
+                        <Ripple
+                            onPress={() => {
+                                this.setState({
+                                    listpegawai: [],
+                                    renderlistunitkerja: this.state.listunitkerja,
+                                    searchUser: ''
+                                })
+                                this.setState({searchType: this.state.searchType === 0 ? 1 : 0})
+                            }}
+                            style={[{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                paddingVertical: 10,
+                                paddingHorizontal: 20,
+                                borderRadius: 20,
+                                backgroundColor: '#fff'
+                            }, shadow]} 
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 13,
+                                    color: icon_color_primary,
+                                    paddingRight: 10,
+                                }}
+                            >{this.state.searchType === 0 ? 'Cari Pegawai' : 'Cari Unit Kerja'}</Text>
+                            <Ionicons name="md-search" size={14} color={icon_color_primary}/>
+                        </Ripple>
                     </View>
                     <View 
                         style={{
@@ -159,18 +224,25 @@ export default class ListUnitKerja extends Component{
                                 <TextInput
                                     onSubmitEditing={() => console.log('ok')}
                                     onChangeText={(searchUser) => {
-                                        if (searchUser.length > 0){
-                                            const cari = search(this.state.listunitkerja , searchUser)
-                                            this.setState({renderlistunitkerja: cari})
+                                        this.setState({
+                                            searchUser
+                                        })
+                                        if (this.state.searchType === 0){
+                                            if (searchUser.length > 0){
+                                                const cari = search(this.state.listunitkerja , searchUser)
+                                                this.setState({renderlistunitkerja: cari})
+                                            } else {
+                                                this.setState({renderlistunitkerja: this.state.listunitkerja})
+                                            }
                                         } else {
-                                            this.setState({renderlistunitkerja: this.state.listunitkerja})
+                                            this.searchPegawai(searchUser)
                                         }
-                                    }}
+                                    }}s
                                     ref={(input) => { this.searchUser = input }}
                                     style={{flex: 1, color: '#fff'}}
                                     placeholderTextColor={'#fff'}
                                     value={this.state.searchUser}
-                                    placeholder="Cari unit kerja..."
+                                    placeholder={this.state.searchType === 0 ? 'Cari unit kerja...' : 'Cari pegawai'}
                                 />   
                                 <Ripple
                                     style={{
@@ -192,23 +264,41 @@ export default class ListUnitKerja extends Component{
                             >
                                 {this.state.loader ?
                                     <LoaderListBed /> :
-                                    <FlatList
-                                        refreshControl={
-                                            <RefreshControl
-                                                refreshing={this.state.loader}
-                                                onRefresh={() => this.getUnitKerja()}
-                                            />
-                                        }
-                                        showsVerticalScrollIndicator={false}
-                                        data={this.state.renderlistunitkerja}
-                                        renderItem={({ item }) => {
-                                            return <ListCardUnitKerja 
-                                                {...this.props}
-                                                items={item}
-                                            />
-                                        }}
-                                        keyExtractor={item => item.id_unit_kerja.toString()}
-                                    />
+                                    (this.state.searchType === 0 ? 
+                                        <FlatList
+                                            refreshControl={
+                                                <RefreshControl
+                                                    refreshing={this.state.loader}
+                                                    onRefresh={() => this.getUnitKerja()}
+                                                />
+                                            }
+                                            showsVerticalScrollIndicator={false}
+                                            data={this.state.renderlistunitkerja}
+                                            renderItem={({ item }) => {
+                                                return <ListCardUnitKerja 
+                                                    {...this.props}
+                                                    items={item}
+                                                />
+                                            }}
+                                            keyExtractor={item => item.id_unit_kerja.toString()}
+                                        />  : <FlatList
+                                            refreshControl={
+                                                <RefreshControl
+                                                    refreshing={this.state.loader}
+                                                    onRefresh={() => this.searchPegawai(this.state.searchUser)}
+                                                />
+                                            }
+                                            showsVerticalScrollIndicator={false}
+                                            data={this.state.listpegawai}
+                                            renderItem={({ item }) => {
+                                                return <ListPegawai 
+                                                    data={item}
+                                                    {...this.props}
+                                                />
+                                            }}
+                                            keyExtractor={item => item.id_sdm_trx_kepegawaian.toString()}
+                                        />
+                                    )
                                 }
                                 
                             </View>

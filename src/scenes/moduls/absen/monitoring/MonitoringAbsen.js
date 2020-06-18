@@ -254,7 +254,14 @@ export default class MonitoringAbsen extends Component{
                                 }}
                             >
                                 {this.state.loader ? 
-                                    <LoaderListBed />:
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            paddingTop: 20
+                                        }}
+                                    >
+                                        <LoaderListBed />
+                                    </View>:
                                     <FlatList
                                         refreshControl={
                                             <RefreshControl
@@ -269,6 +276,8 @@ export default class MonitoringAbsen extends Component{
                                             return <ListPegawaiAbsen 
                                                 {...this.props}
                                                 items={item}
+                                                tanggaldipilih={this.state.tanggaldipilih}
+                                                params={this.state.params}
                                             />
                                         }}
                                         keyExtractor={item => item.id_sdm_trx_kepegawaian.toString()}

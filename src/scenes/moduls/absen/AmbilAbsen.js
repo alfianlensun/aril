@@ -47,20 +47,24 @@ export default class AmbilAbsen extends Component{
 
     constructor(props){
         super(props)
-        this.state = {userData: null,...initialState}
-        
+        this.state = {userData: null, showStatus: false,...initialState}
+           
     }
 
     async componentDidMount(){
-        this.mounted = true
-        const userData = await getData('AuthUser')   
-        this.setState({
-            userData
-        })
+        try {
+            this.mounted = true
+            const userData = await getData('AuthUser')   
+            this.setState({
+                userData
+            })
 
-        if (this.state.absenType === 0){
-            this.sliderUp.hide()
-            this.sliderUp.hide()
+            if (this.state.absenType === 0){
+                this.sliderUp.hide()
+                this.sliderUp.hide()
+            }
+        } catch(err){
+            alert(err)
         }
     }
 
@@ -86,6 +90,7 @@ export default class AmbilAbsen extends Component{
             this.setState(initialState)
 
             this.setState({
+                showStatus: true,
                 absenType: parentdata.type,
                 userid: parentdata.userdata._id
             })
@@ -679,13 +684,18 @@ export default class AmbilAbsen extends Component{
             <SlidingUpPanel
                 friction={.4}
                 onBottomReached={() => {
-                    
+                    this.setState({
+                        showStatus: false
+                    })  
                 }}
                 draggableRange={{ top: this.state.sliderUpContentHeight, bottom: 0 }}
                 onBackButtonPress={() => {
-                    this.sliderUp.hide() 
-                    this.sliderUp.hide() 
-                    return true
+                    if (this.state.showStatus){
+                        this.sliderUp.hide() 
+                        this.sliderUp.hide()
+                        return true
+                    } 
+                    
                 }}
                 allowDragging={this.state.allowDragging}
                 ref={c => this.sliderUp = c}>

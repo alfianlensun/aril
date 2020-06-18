@@ -1,7 +1,7 @@
 import config from '../Config'
 import {getToken} from '../middlewares/Middleware'
 import moment from 'moment'
-import { GET } from './GeneralService'
+import { GET, POST } from './GeneralService'
 let abort = null
 export async function getAbsensi(idMstPegawai, tanggalAwal, tanggalAkhir)
 {
@@ -72,6 +72,13 @@ export async function getAbsensiMobile(idUser, tanggalAwal, tanggalAkhir)
 export async function getAbsensiMobileByUnitKerja(IdUnitKerja, tanggalAwal, tanggalAkhir)
 {
     return await GET(`${config.ws.nodeURL}/sdm/absensi/mobile/unit-kerja`, IdUnitKerja, tanggalAwal, tanggalAkhir)
+}
+
+export async function searchPegawai(search)
+{
+    return await POST(`${config.ws.nodeURL}/sdm/pegawai/search`, {
+        search
+    })
 }
 
 export async function getAllRequestAbsensi(iduser)

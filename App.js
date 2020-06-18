@@ -65,7 +65,6 @@ import ListUnitKerja from './src/scenes/moduls/absen/monitoring/ListUnitKerja';
 import MonitoringAbsen from './src/scenes/moduls/absen/monitoring/MonitoringAbsen';
 import AbsenDetail from './src/scenes/moduls/absen/AbsenDetail';
 import MonitoringAbsenMap from './src/scenes/moduls/absen/monitoring/MonitoringAbsenMap';
-import { BackHandler } from 'react-native';
 import LupaPassword from './src/scenes/user/LupaPassword';
 import ValidateKodeLupaPassword from './src/scenes/user/ValidateKodeLupaPassword';
 import PasswordBaru from './src/scenes/user/PasswordBaru';
@@ -185,11 +184,11 @@ class App extends Component {
 						animation="fade"
 						initialRouteName={this.state.initialRoute}
 					>
-						<Stack.Screen name="MonitoringAbsenMap" component={MonitoringAbsenMap}/>
 						<Stack.Screen name="AbsenDetail" component={AbsenDetail}/>
 						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen}/>
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
 						<Stack.Screen name="About" component={About} />
+						<Stack.Screen name="MonitoringAbsenMap" component={MonitoringAbsenMap}/>
 						<Stack.Screen name="ListUnitKerja" component={ListUnitKerja} />
 						<Stack.Screen name="VideoCall" component={VideoCall} />
 						<Stack.Screen name="ChatDetail" component={ChatDetail} />
