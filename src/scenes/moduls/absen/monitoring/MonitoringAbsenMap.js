@@ -2,29 +2,28 @@ import React, {Component} from 'react'
 import {
     View,
     Text,
-    StyleSheet,
+    RefreshControl,
     StatusBar,
     Image,
     ToastAndroid,
-    CheckBox,
+    FlatList,
     Switch,
     ActivityIndicator,
     ImageBackground
 } from 'react-native'
-import { icon_color_primary, icon_color_secondary, ripple_color_primary, shadow, shadowxl } from '../../../../themes/Default';
-import Octicons from 'react-native-vector-icons/Octicons'
+import {icon_color_secondary, ripple_color_primary, shadow, icon_color_primary } from '../../../../themes/Default';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import { screenHeightPercent, screenWidthPercent } from '../../../../helpers/Layout';
 import Ripple from 'react-native-material-ripple'
-import { getAbsensiMobileByUnitKerja } from '../../../../services/ServiceSdm';
+import { getAbsensiMobileByUnitKerja, getAbsenTerdaftar, getAllAbsensiUser } from '../../../../services/ServiceSdm';
 import { getData } from '../../../../services/LocalStorage';
 import moment from 'moment'
 import config from '../../../../Config'
 import {Icon} from 'react-native-elements'
 import SlidingUpPanel from 'rn-sliding-up-panel';
-import ToggleSwitch from 'toggle-switch-react-native'
+import ListAbsenMonitoringMobile from '../../../../components/list/ListAbsenMonitoringMobile'
 
 MapboxGL.setAccessToken('pk.eyJ1IjoiYWxmaWFubGVuc3VuIiwiYSI6ImNqbmFhc3RzbjdteDIzcW55dzl0ZWwzdzEifQ.3M-jznSp5U5rwWxO1h01Lw');
 export default class MonitoringAbsenMap extends Component{
@@ -44,14 +43,17 @@ export default class MonitoringAbsenMap extends Component{
             tampilkanAbsenMasuk: true,
             tampilkanAbsenPulang: true,
             sliderType: 0,
-            selectedUser: null
+            selectedUser: null,
+            selectedUserImageAbsen: [],
+            listDetailLoader: false,
+            listRiwayatAbsenDetail: []
         }
     }
 
     async componentDidMount(){
         try {
-            this.sliderUp.hide()
-            this.sliderUp.hide()
+            // this.sliderUp.hide()
+            // this.sliderUp.hide()
             const userDetail = await getData('AuthUser')
             this.setState({
                 userDetail
@@ -109,32 +111,36 @@ export default class MonitoringAbsenMap extends Component{
         }
     }
 
-    showDetail = (item) => {
-        this.setState({
-            sliderType: 1,
-            selectedUser: item
-        })
-        // this.setState({
-        //     sliderType: 1,
-        //     selectedUser: {
-        //         _id: "5eeae685324d027c102555d2", 
-        //         absen_type: 2,
-        //         client_datetime: "2020-06-18T04:00:58.000Z", 
-        //         date_created: "2020-06-18T03:59:01.282Z", 
-        //         flag_active: 1, 
-        //         imagepath: "1592452741_pic.jpg", 
-        //         location: {
-        //             latitude: "1.4534391", 
-        //             longitude: "124.8075152"
-        //         }, 
-        //         server_datetime: "2020-06-18T03:59:01.000Z", 
-        //         user: {
-        //             ID: "5ed707f583fb165ab4e389ac", 
-        //             IdUnitKerja: 208, 
-        //             name: "Alfian Ricky Lensun, A.Md.T"
-        //         }}
-        // })
-        this.sliderUp.show()
+    showDetail = async (item) => {
+        try {
+            this.setState({
+                sliderType: 1,
+                selectedUser: item,
+                listDetailLoader: true
+            })
+    
+            const tanggalAwal = `${moment(new Date()).format('YYYY-MM')}-01`
+            const tanggalAkhir = moment(new Date()).format('YYYY-MM-DD')
+            const absenTerdaftar = await getAbsenTerdaftar(item.user.ID)
+            const absenUserSatuBulanTerakhir = await getAllAbsensiUser(item.user.ID,tanggalAwal, tanggalAkhir)
+            
+
+            this.setState({
+                selectedUserImageAbsen: absenTerdaftar.response,
+                listRiwayatAbsenDetail: absenUserSatuBulanTerakhir.response,
+                listDetailLoader: false
+            }, () => {
+                setTimeout(() => {
+                    this.sliderUp.show()
+                }, 100);
+            })
+            
+        }catch(err){
+            this.setState({
+                listDetailLoader: false
+            })
+            ToastAndroid.show(`Something went wrong : ${err.message !== undefined ? err.message : JSON.stringify(err)}`, 600)
+        }
     }
 
     renderDetail(){
@@ -174,81 +180,95 @@ export default class MonitoringAbsenMap extends Component{
                             paddingLeft: 20
                         }}
                     >
-                        <Text
-                            style={{
-                                color: '#444',
-                                fontSize: 15,
-                                fontWeight: 'bold'
-                            }}
-                        >{this.state.selectedUser.user.name}</Text>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                marginTop: 10,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 12,
-                                    backgroundColor: icon_color_secondary,
-                                    alignSelf: 'flex-start',
-                                    paddingHorizontal: 10,
-                                    paddingVertical: 5,
-                                    color: '#fff',
-                                    borderRadius: 20
-                                }}
-                            >{this.state.selectedUser.absen_type === 1 ? 'Absen Masuk' : 'Absen Pulang'}</Text>
-                            <Text
-                                style={{
-                                    marginLeft: 5,
-                                    fontSize: 12,
-                                    backgroundColor: icon_color_secondary,
-                                    alignSelf: 'flex-start',
-                                    paddingHorizontal: 10,
-                                    paddingVertical: 5,
-                                    color: '#fff',
-                                    borderRadius: 20,
-                                }}
-                            >{moment(this.state.selectedUser.server_datetime).format('HH:mm')}</Text>
-                        </View>
                         <View
                             style={{
                                 width: '100%',
-                                flexDirection: 'row'
+                                paddingTop: 20
                             }}
                         >
-                            <Ripple
+                            <Text
                                 style={{
-                                    borderRadius: 10,
-                                    overflow: 'hidden',
-                                    height: screenWidthPercent(15),
-                                    width: screenWidthPercent(15),
-                                    paddingTop: 10
+                                    fontSize: 12,
+                                    color: '#333'
+                                }}
+                            >Wajah terdaftar</Text>
+                            <View
+                                style={{
+                                    width: '100%',
+                                    paddingVertical: 10,
+                                    flexDirection: 'row',
                                 }}
                             >
-                                <Image 
-                                    onLoadEnd={() => this.setState({loadImage: false})}
-                                    source={{uri: `${config.ws.resources.absen_image}/${this.state.selectedUser.user.ID}/${this.state.selectedUser.imagepath}`}} 
-                                    style={{
-                                        height: screenWidthPercent(15),
-                                        width: screenWidthPercent(15)
-                                    }} 
-                                />
-                            </Ripple>
+                                {this.state.selectedUserImageAbsen.map((item, key) => {
+                                    return (
+                                        <Ripple
+                                            style={{
+                                                marginLeft: key !== 0 ? 10 : 0,
+                                                borderRadius: 10,
+                                                overflow: 'hidden',
+                                                height: screenWidthPercent(15),
+                                                width: screenWidthPercent(15),
+                                            }}
+                                        >
+                                            <Image 
+                                                onLoadEnd={() => this.setState({loadImage: false})}
+                                                source={{uri: `${config.ws.resources.absen_image_terdaftar}/${this.state.selectedUser.user.ID}/${item}`}} 
+                                                style={{
+                                                    height: screenWidthPercent(15),
+                                                    width: screenWidthPercent(15),
+                                                }} 
+                                            />
+                                        </Ripple>
+                                    )
+                                })}
+                            </View>
                         </View>
                     </View>
                 </View>
                 <View
                     style={{
-                        marginTop: 40,
-                        flex: 1
+                        width: '100%',
+                        paddingTop: 20,
+                        paddingRight: 20,
+                        flexDirection: 'row'
                     }}
                 >
                     <Text
                         style={{
-                            fontSize: 13,
+                            flex: 1,
+                            color: '#444',
+                            fontSize: 15,
+                            fontWeight: 'bold'
+                        }}
+                    >{this.state.selectedUser.user.name}</Text>
+                     {/* <Text
+                        style={{
+                            alignSelf: 'flex-end',
+                            color: '#fff',
+                            fontSize: 12,
+                            paddingHorizontal: 10,
+                            paddingVertical: 2,
+                            borderRadius: 20,
+                            backgroundColor: icon_color_secondary
+                        }}>
+                        
+                    </Text> */}
+                </View>
+                <View
+                    style={{
+                        flex: 1,
+                        marginTop: 20
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            backgroundColor: icon_color_secondary,
                             alignSelf: 'flex-start',
-                            color: '#000',
+                            color: '#fff',
+                            paddingHorizontal: 10,
+                            paddingVertical: 5,
+                            borderRadius: 20
                         }}
                     >Riwayat Absen Bulan Ini</Text>
                     <View
@@ -257,60 +277,103 @@ export default class MonitoringAbsenMap extends Component{
                             flex: 1,
                         }}
                     >
-                        <Ripple
-                            style={[{
-                                width: '100%',
-                                backgroundColor: icon_color_secondary,
-                                padding: 10,
-                                borderRadius: 10,
-                                flexDirection: 'row'
-                            }]}
-                        >
-                            <View
-                                style={{
-                                    width: screenWidthPercent(15)
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        height: screenWidthPercent(10),
-                                        width: screenWidthPercent(10),
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: 50,
-                                        backgroundColor: '#eee'
-                                    }}
-                                >
-                                    <Image 
-                                        onLoadEnd={() => this.setState({loadImage: false})}
-                                        source={{uri: `${config.ws.resources.absen_image}/${this.state.selectedUser.user.ID}/${this.state.selectedUser.imagepath}`}} 
-                                        style={{
-                                            width: '90%',
-                                            height: '90%',
-                                            borderRadius: 50
-                                        }} 
+                        <FlatList
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.listDetailLoader}
+                                    onRefresh={() => this.showDetail(this.state.selectedUser)}
+                                />
+                            }
+                            showsVerticalScrollIndicator={false}
+                            data={this.state.listRiwayatAbsenDetail}
+                            renderItem={({ item }) => {
+                                return (
+                                    <ListAbsenMonitoringMobile 
+                                        masuk={item.absen_type === 1 ? true : false}
+                                        uriImage={`${config.ws.resources.absen_image}/${this.state.selectedUser.user.ID}/${item.imagepath}`}
+                                        tanggal={moment(item.server_datetime).format('DD-MM-YYYY')}
+                                        jam={moment(item.server_datetime).format('HH:mm')}
+                                        {...this.props}
                                     />
-                                </View>
-                            </View>
-                            <View
-                                style={{
-                                    flex: 1
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontSize: 14,
-                                        fontWeight: 'bold',
-                                        color: '#fff'
-                                    }}
-                                >Absen Masuk</Text>
-                                <Text
-                                    style={{
-                                        color: '#fff'                                    
-                                    }}
-                                >08:00</Text>
-                            </View>
-                        </Ripple>
+                                    // <Ripple
+                                    //     rippleColor={ripple_color_primary}
+                                    //     style={[{
+                                    //         marginTop: 10,
+                                    //         width: '100%',
+                                    //         backgroundColor: '#fff',
+                                    //         padding: 10,
+                                    //         borderRadius: 10,
+                                    //         flexDirection: 'row',
+                                    //         borderBottomWidth: 1,
+                                    //         borderBottomColor: icon_color_primary
+                                    //     }]}
+                                    // >
+                                    //     <View
+                                    //         style={{
+                                    //             width: screenWidthPercent(15)
+                                    //         }}
+                                    //     >
+                                    //         <View
+                                    //             style={{
+                                    //                 height: screenWidthPercent(10),
+                                    //                 width: screenWidthPercent(10),
+                                    //                 justifyContent: 'center',
+                                    //                 alignItems: 'center',
+                                    //                 borderRadius: 50,
+                                    //                 backgroundColor: '#eee'
+                                    //             }}
+                                    //         >
+                                    //             <Image 
+                                    //                 onLoadEnd={() => this.setState({loadImage: false})}
+                                    //                 source={{uri: ''}} 
+                                    //                 style={{
+                                    //                     width: '90%',
+                                    //                     height: '90%',
+                                    //                     borderRadius: 50
+                                    //                 }} 
+                                    //             />
+                                    //         </View>
+                                    //     </View>
+                                    //     <View
+                                    //         style={{
+                                    //             flex: 1
+                                    //         }}
+                                    //     >
+                                    //         <Text
+                                    //             style={{
+                                    //                 fontSize: 14,
+                                    //                 fontWeight: 'bold',
+                                    //                 color: '#333'
+                                    //             }}
+                                    //         >{item.absen_type === 1 ? 'Absen Masuk' : 'Absen Pulang'}</Text>
+                                    //         <Text
+                                    //             style={{
+                                    //                 marginTop: 5,
+                                    //                 fontSize: 13,
+                                    //                 color: '#333'                                    
+                                    //             }}
+                                    //         >{moment(item.server_datetime).format('DD-MM-YYYY HH:mm')}</Text>
+                                    //     </View>
+                                    // </Ripple>
+                                )
+                            }}
+                            keyExtractor={item => item._id.toString()}
+                        />
+                        {/* <Text
+                            style={{
+                                fontSize: 12,
+                                color: "#333",
+                                backgroundColor: icon_color_secondary,
+                                alignSelf: 'flex-start',
+                                color: '#fff',
+                                paddingHorizontal: 10,
+                                paddingVertical: 5,
+                                borderRadius: 20
+                            }}
+                        >
+                            Hari Ini
+                        </Text> */}
+                        
                     </View>
                 </View>
             </View>

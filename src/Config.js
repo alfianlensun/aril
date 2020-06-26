@@ -7,7 +7,8 @@ export default {
         nodeURL: `${baseurlnode}/api-v1`,
         resources: {
             req_absen: `${baseurlnode}/image/request-absen`,
-            absen_image: `${baseurlnode}/image/absen`
+            absen_image: `${baseurlnode}/image/absen`,
+            absen_image_terdaftar: `${baseurlnode}/image/absen-terdaftar`
         }
     },
     wsOption: {

@@ -68,6 +68,7 @@ import MonitoringAbsenMap from './src/scenes/moduls/absen/monitoring/MonitoringA
 import LupaPassword from './src/scenes/user/LupaPassword';
 import ValidateKodeLupaPassword from './src/scenes/user/ValidateKodeLupaPassword';
 import PasswordBaru from './src/scenes/user/PasswordBaru';
+import MonitoringAbsenList from './src/scenes/moduls/absen/monitoring/MonitoringAbsenList';
 
 
 const store = createStore(AllReducer)
@@ -134,8 +135,6 @@ class App extends Component {
 				// }
 			})
 		}
-
-		
 		
 		this.unsubscribe = messaging().onMessage(async remoteMessage => {
 			
@@ -185,6 +184,7 @@ class App extends Component {
 						initialRouteName={this.state.initialRoute}
 					>
 						<Stack.Screen name="AbsenDetail" component={AbsenDetail}/>
+						<Stack.Screen name="MonitoringAbsenList" component={MonitoringAbsenList}/>
 						<Stack.Screen name="MonitoringAbsen" component={MonitoringAbsen}/>
 						<Stack.Screen name="ListUserChat" component={ListUserChat} />
 						<Stack.Screen name="About" component={About} />

@@ -74,6 +74,16 @@ export async function getAbsensiMobileByUnitKerja(IdUnitKerja, tanggalAwal, tang
     return await GET(`${config.ws.nodeURL}/sdm/absensi/mobile/unit-kerja`, IdUnitKerja, tanggalAwal, tanggalAkhir)
 }
 
+export async function getAbsenTerdaftar(IDUser)
+{
+    return await GET(`${config.ws.nodeURL}/sdm/absensi/wajah-terdaftar`, IDUser)
+}
+
+export async function getAllAbsensiUser(IDUser, tanggalAwal, tanggalAkhir)
+{   
+    return await GET(`${config.ws.nodeURL}/sdm/absensi/all`, IDUser, tanggalAwal, tanggalAkhir)
+}
+
 export async function searchPegawai(search)
 {
     return await POST(`${config.ws.nodeURL}/sdm/pegawai/search`, {

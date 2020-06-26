@@ -75,7 +75,6 @@ export default class DaftarMobileAbsen extends Component{
                         quality: 0.5,
                         base64: true,
                         orientation: 'portrait',
-                        fixOrientation: true,
                         width: 200,
                     });
                     if (this.state.listFoto.length < 3){
@@ -87,8 +86,6 @@ export default class DaftarMobileAbsen extends Component{
                         })
                         this.registerWajah()
                     } 
-
-                    
                 },2000)
             } else {
                 this.timeoutFaceRecog = setTimeout(async () => {
