@@ -93,9 +93,15 @@ class App extends Component {
 		messaging().onNotificationOpenedApp(remoteMessage => {
 			if (remoteMessage.data.route !== undefined && remoteMessage.data.route !== ''){
 				const params = remoteMessage.data.params !== undefined ? JSON.parse(remoteMessage.data.params) : {}
-				this.navigator.navigate(remoteMessage.data.route, {
-					[Object.keys(params)]: params[Object.keys(params)]
-				})
+				if (this.navigator){
+					if (remoteMessage.data.route !== null){
+						this.navigator.navigate(remoteMessage.data.route, {
+							[Object.keys(params)]: params[Object.keys(params)]
+						})
+					}
+					
+				}
+				
 			}
 		})
 	  

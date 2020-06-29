@@ -14,6 +14,7 @@ import {
 import {icon_color_secondary, ripple_color_primary, shadow, icon_color_primary } from '../../../../themes/Default';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
+import Feather from 'react-native-vector-icons/Feather'
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import { screenHeightPercent, screenWidthPercent } from '../../../../helpers/Layout';
 import Ripple from 'react-native-material-ripple'
@@ -30,6 +31,7 @@ export default class MonitoringAbsenMap extends Component{
     constructor(props){
         super(props)
         const params = props.route.params
+        console.log(params)
         this.state = {
             params,
             tanggalDiPilih: params.dataunitkerja.tanggaldipilih,
@@ -52,8 +54,7 @@ export default class MonitoringAbsenMap extends Component{
 
     async componentDidMount(){
         try {
-            // this.sliderUp.hide()
-            // this.sliderUp.hide()
+            
             const userDetail = await getData('AuthUser')
             this.setState({
                 userDetail
@@ -93,7 +94,6 @@ export default class MonitoringAbsenMap extends Component{
                 if (params.dataunitkerja.id_user_mobile !== undefined){ 
                     const listAbsenMasuk = absenmasuk.filter(item => {return item.user.ID === params.dataunitkerja.id_user_mobile})
                     const listAbsenPulang = absenpulang.filter(item => {return item.user.ID === params.dataunitkerja.id_user_mobile})
-                    
                     this.setState({
                         listAbsenMasuk,
                         listAbsenPulang
@@ -143,11 +143,47 @@ export default class MonitoringAbsenMap extends Component{
         }
     }
 
+    showListDetail = async () => {
+        try {
+            this.setState({
+                listDetailLoader: true
+            })
+    
+            const tanggalAwal = `${moment(new Date()).format('YYYY-MM')}-01`
+            const tanggalAkhir = moment(new Date()).format('YYYY-MM-DD')
+            const absenTerdaftar = await getAbsenTerdaftar(this.state.params.dataunitkerja.id_user_mobile)
+            const absenUserSatuBulanTerakhir = await getAllAbsensiUser(this.state.params.dataunitkerja.id_user_mobile,tanggalAwal, tanggalAkhir)
+            if (absenUserSatuBulanTerakhir.response.length > 0){
+                this.setState({
+                    sliderType: 1,
+                    selectedUser: absenUserSatuBulanTerakhir.response[0]
+                })
+            }
+             
+            this.setState({
+                selectedUserImageAbsen: absenTerdaftar.response,
+                listRiwayatAbsenDetail: absenUserSatuBulanTerakhir.response,
+                listDetailLoader: false
+            }, () => {
+                setTimeout(() => {
+                    this.sliderUp.show()
+                }, 100);
+            })
+            
+        }catch(err){
+            this.setState({
+                listDetailLoader: false
+            })
+            ToastAndroid.show(`Something went wrong : ${err.message !== undefined ? err.message : JSON.stringify(err)}`, 600)
+        }
+    }
+
     renderDetail(){
         return (
             <View
                 style={{
-                    flex: 1
+                    flex: 1,
+                    flexDirection: 'column'
                 }}
             >
                 <View
@@ -257,27 +293,30 @@ export default class MonitoringAbsenMap extends Component{
                 <View
                     style={{
                         flex: 1,
+                        position: 'relative',
                         marginTop: 20
                     }}
                 >
                     <Text
                         style={{
+                            width: '100%',
                             fontSize: 12,
-                            backgroundColor: icon_color_secondary,
-                            alignSelf: 'flex-start',
-                            color: '#fff',
-                            paddingHorizontal: 10,
-                            paddingVertical: 5,
+                            color: '#444',
                             borderRadius: 20
                         }}
                     >Riwayat Absen Bulan Ini</Text>
                     <View
                         style={{
                             marginTop: 10,
-                            flex: 1,
+                            position: 'relative',
+                            width: '100%',
+                            height: screenHeightPercent(40)
                         }}
                     >
                         <FlatList
+                            style={{
+                                flex: 1
+                            }}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.listDetailLoader}
@@ -289,91 +328,32 @@ export default class MonitoringAbsenMap extends Component{
                             renderItem={({ item }) => {
                                 return (
                                     <ListAbsenMonitoringMobile 
+                                        onPress={() => {
+                                            if (item.absen_type === 1){
+                                                this.setState({
+                                                    listAbsenMasuk: [item],
+                                                    listAbsenPulang: []
+                                                })
+                                            } else {
+                                                this.setState({
+                                                    listAbsenMasuk: [],
+                                                    listAbsenPulang: [item]
+                                                })
+                                            }
+                                            this.sliderUp.hide()
+                                            this.sliderUp.hide()
+                                        }}
                                         masuk={item.absen_type === 1 ? true : false}
+                                        items={item}
                                         uriImage={`${config.ws.resources.absen_image}/${this.state.selectedUser.user.ID}/${item.imagepath}`}
-                                        tanggal={moment(item.server_datetime).format('DD-MM-YYYY')}
+                                        tanggal={moment(item.server_datetime).format('DD MMMM YYYY')}
                                         jam={moment(item.server_datetime).format('HH:mm')}
                                         {...this.props}
                                     />
-                                    // <Ripple
-                                    //     rippleColor={ripple_color_primary}
-                                    //     style={[{
-                                    //         marginTop: 10,
-                                    //         width: '100%',
-                                    //         backgroundColor: '#fff',
-                                    //         padding: 10,
-                                    //         borderRadius: 10,
-                                    //         flexDirection: 'row',
-                                    //         borderBottomWidth: 1,
-                                    //         borderBottomColor: icon_color_primary
-                                    //     }]}
-                                    // >
-                                    //     <View
-                                    //         style={{
-                                    //             width: screenWidthPercent(15)
-                                    //         }}
-                                    //     >
-                                    //         <View
-                                    //             style={{
-                                    //                 height: screenWidthPercent(10),
-                                    //                 width: screenWidthPercent(10),
-                                    //                 justifyContent: 'center',
-                                    //                 alignItems: 'center',
-                                    //                 borderRadius: 50,
-                                    //                 backgroundColor: '#eee'
-                                    //             }}
-                                    //         >
-                                    //             <Image 
-                                    //                 onLoadEnd={() => this.setState({loadImage: false})}
-                                    //                 source={{uri: ''}} 
-                                    //                 style={{
-                                    //                     width: '90%',
-                                    //                     height: '90%',
-                                    //                     borderRadius: 50
-                                    //                 }} 
-                                    //             />
-                                    //         </View>
-                                    //     </View>
-                                    //     <View
-                                    //         style={{
-                                    //             flex: 1
-                                    //         }}
-                                    //     >
-                                    //         <Text
-                                    //             style={{
-                                    //                 fontSize: 14,
-                                    //                 fontWeight: 'bold',
-                                    //                 color: '#333'
-                                    //             }}
-                                    //         >{item.absen_type === 1 ? 'Absen Masuk' : 'Absen Pulang'}</Text>
-                                    //         <Text
-                                    //             style={{
-                                    //                 marginTop: 5,
-                                    //                 fontSize: 13,
-                                    //                 color: '#333'                                    
-                                    //             }}
-                                    //         >{moment(item.server_datetime).format('DD-MM-YYYY HH:mm')}</Text>
-                                    //     </View>
-                                    // </Ripple>
                                 )
                             }}
                             keyExtractor={item => item._id.toString()}
                         />
-                        {/* <Text
-                            style={{
-                                fontSize: 12,
-                                color: "#333",
-                                backgroundColor: icon_color_secondary,
-                                alignSelf: 'flex-start',
-                                color: '#fff',
-                                paddingHorizontal: 10,
-                                paddingVertical: 5,
-                                borderRadius: 20
-                            }}
-                        >
-                            Hari Ini
-                        </Text> */}
-                        
                     </View>
                 </View>
             </View>
@@ -797,7 +777,11 @@ export default class MonitoringAbsenMap extends Component{
                                 }}
                             >
                                 <Ripple
-                                    onPress={() => this.props.navigation.goBack(null)}
+                                    onPress={() => {
+                                        this.sliderUp.hide()
+                                        this.sliderUp.hide()
+                                        this.props.navigation.goBack(null)
+                                    }}
                                     rippleColor={ripple_color_primary}
                                     style={{
                                         backgroundColor: '#fff',
@@ -870,12 +854,33 @@ export default class MonitoringAbsenMap extends Component{
                             </View>
                         </View>
                     </View>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            right: 0,
+                            bottom: 0,
+                            padding: 20
+                        }}
+                    >
+                        <Ripple
+                            onPress={() => this.showListDetail()}
+                            rippleColor={ripple_color_primary}
+                            style={[{
+                                height: 50,
+                                width: 50,
+                                borderRadius: 25,
+                                backgroundColor: "#fff",
+                                overflow: 'hidden',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }, shadow]}
+                        >
+                            <Feather name="list" size={20} color={'#333'}/>
+                        </Ripple>
+                    </View>
                 </View>
                 <SlidingUpPanel
                     onBottomReached={() => console.log('bottom')}
-                    containerStyle={{
-                        flex: 1,
-                    }}
                     friction={.4}
                     onBackButtonPress={() => {
                         this.sliderUp.hide()

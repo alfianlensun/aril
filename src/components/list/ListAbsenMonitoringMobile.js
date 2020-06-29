@@ -19,7 +19,7 @@ export default class ListAbsenMonitoringMobile extends Component{
     render(){
         return (
             <Ripple
-                onPress={() => {}}
+                onPress={this.props.onPress}
                 rippleColor={'rgba(255,255,255,.3)'}
                 style={{
                     width: '100%',
@@ -75,7 +75,7 @@ export default class ListAbsenMonitoringMobile extends Component{
                                 color: '#fff',
                                 fontWeight: 'bold'
                             }}
-                        >{this.props.masuk ? 'Masuk' : 'Pulang'}</Text>
+                        >{this.props.masuk ? 'Masuk' : 'Pulang'} - {this.props.tanggal}</Text>
                         <Text
                             style={{
                                 marginTop: 5,
