@@ -71,7 +71,7 @@ export default class About extends Component{
                         fontSize: 12,
                         color: '#fff'
                     }}
-                >Version {getVersion()}.01</Text>   
+                >Version {getVersion()}.02</Text>   
             </LinearGradient>
         )
     }

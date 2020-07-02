@@ -12,17 +12,20 @@ import Ripple from 'react-native-material-ripple'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import {getVersion} from 'react-native-device-info'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../themes/Default'
 
 export default function UpdateApp(props){
+    
     return(
-        <View 
+        <LinearGradient
+            start={{x: 0, y: 0}} 
+            end={{x: 2, y: 0}} 
+            colors={background_color_gradient} 
             style={{
                 flex: 1,
-                overflow: 'hidden',
                 position: 'relative',
-                backgroundColor: '#6ab1f7',
-            }}
-        >
+            }}>
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
             <View
                 style={{
@@ -53,7 +56,7 @@ export default function UpdateApp(props){
                         fontSize: 14,
                         fontWeight: 'bold'
                     }}
-                >Versi 1.1.1 telah tersedia</Text>
+                >Versi 2.0.2 telah tersedia</Text>
                 <View
                     style={{
                         marginTop: 20,
@@ -114,7 +117,9 @@ export default function UpdateApp(props){
                     </View>
                 </Ripple>
                 <Ripple
-                    onPress={() => BackHandler.exitApp()}
+                    onPress={() => {
+                        props.navigation.replace(props.route.params.navigateTo)
+                    }}
                     rippleColor={'rgba(255, 255, 255,.5)'}
                     style={{
                         marginTop: 20,
@@ -173,6 +178,6 @@ export default function UpdateApp(props){
                     Apabila pilihan update tidak di temukan di PlayStore, silahkan hapus dan install kembali aplikasi
                 </Text>
             </View>
-        </View>
+        </LinearGradient>
     )
 }

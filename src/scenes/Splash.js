@@ -52,6 +52,14 @@ class Splash extends Component{
             } else {
                 navigateTo = 'Login'
             }
+
+            if (getVersion() !== "2.0.2"){
+                this.props.navigation.replace('UpdateApp', {
+                    navigateTo
+                })
+                return false
+            }
+
             if (checkPermissionLocation){
                 this.props.navigation.replace(navigateTo)
             } else {

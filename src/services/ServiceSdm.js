@@ -1,7 +1,7 @@
 import config from '../Config'
 import {getToken} from '../middlewares/Middleware'
 import moment from 'moment'
-import { GET, POST } from './GeneralService'
+import { GET, POST, DELETE } from './GeneralService'
 let abort = null
 export async function getAbsensi(idMstPegawai, tanggalAwal, tanggalAkhir)
 {
@@ -159,6 +159,10 @@ export async function getFaceRecognitionAbsenRegisterById(id)
     }
 }
 
+export async function getFaceRecognitionAbsenUnRegister(iduser){
+    return await GET(config.ws.nodeURL+'/sdm/absensi/unregister-user', iduser)
+}
+
 export async function getFaceRecognitionAbsenRegister(iduser)
 {
     let headers = {...config.headers}
@@ -191,6 +195,18 @@ export async function getFaceRecognitionAbsenRegister(iduser)
         console.log(err)
         throw new Error(err);
     }
+}
+
+export async function deletefaceRecognitionAbsenRegister(iduser){
+    return await DELETE(config.ws.nodeURL+'/sdm/absensi/register', {
+        iduser
+    })
+}
+
+export async function simpanfaceRecognitionAbsenRegister(iduser){
+    return await POST(config.ws.nodeURL+'/sdm/absensi/register', {
+        iduser
+    })
 }
 
 export async function faceRecognitionAbsenRegister(photo, iduser)
@@ -314,7 +330,13 @@ export async function createAbsensi(photo, iduser, absenType, location)
         console.log(err)
         throw new Error(err);
     }
-   
+}
+export async function testAbsensi(photo, iduser)
+{
+    return await POST(config.ws.nodeURL+'/sdm/absensi/test', {
+        face: photo.base64,
+        iduser
+    })
 }
 
 

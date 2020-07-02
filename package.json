@@ -39,6 +39,7 @@
     "react-native-material-ripple": "^0.9.1",
     "react-native-mock-location-detector": "^1.0.5",
     "react-native-progress": "^4.1.2",
+    "react-native-progress-bar-animated": "^1.0.6",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.7.0",

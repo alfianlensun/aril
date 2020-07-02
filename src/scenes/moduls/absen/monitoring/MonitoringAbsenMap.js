@@ -31,7 +31,6 @@ export default class MonitoringAbsenMap extends Component{
     constructor(props){
         super(props)
         const params = props.route.params
-        console.log(params)
         this.state = {
             params,
             tanggalDiPilih: params.dataunitkerja.tanggaldipilih,
@@ -46,6 +45,7 @@ export default class MonitoringAbsenMap extends Component{
             tampilkanAbsenPulang: true,
             sliderType: 0,
             selectedUser: null,
+            sliderBottomReach: false,
             selectedUserImageAbsen: [],
             listDetailLoader: false,
             listRiwayatAbsenDetail: []
@@ -115,9 +115,11 @@ export default class MonitoringAbsenMap extends Component{
         try {
             this.setState({
                 sliderType: 1,
+                sliderBottomReach: false,
                 selectedUser: item,
                 listDetailLoader: true
             })
+            
     
             const tanggalAwal = `${moment(new Date()).format('YYYY-MM')}-01`
             const tanggalAkhir = moment(new Date()).format('YYYY-MM-DD')
@@ -146,7 +148,8 @@ export default class MonitoringAbsenMap extends Component{
     showListDetail = async () => {
         try {
             this.setState({
-                listDetailLoader: true
+                listDetailLoader: true,
+                sliderBottomReach: false
             })
     
             const tanggalAwal = `${moment(new Date()).format('YYYY-MM')}-01`
@@ -501,6 +504,7 @@ export default class MonitoringAbsenMap extends Component{
     }
 
     render(){
+        console.log(this.state.sliderBottomReach)
         return(
             <View
                 style={{
@@ -834,7 +838,8 @@ export default class MonitoringAbsenMap extends Component{
                                 <Ripple
                                     onPress={() => {
                                         this.setState({
-                                            sliderType: 0
+                                            sliderType: 0,
+                                            sliderBottomReach: false
                                         })
                                         this.sliderUp.show()
                                     }}
@@ -854,33 +859,39 @@ export default class MonitoringAbsenMap extends Component{
                             </View>
                         </View>
                     </View>
-                    <View
-                        style={{
-                            position: 'absolute',
-                            right: 0,
-                            bottom: 0,
-                            padding: 20
-                        }}
-                    >
-                        <Ripple
-                            onPress={() => this.showListDetail()}
-                            rippleColor={ripple_color_primary}
-                            style={[{
-                                height: 50,
-                                width: 50,
-                                borderRadius: 25,
-                                backgroundColor: "#fff",
-                                overflow: 'hidden',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }, shadow]}
+                    {this.state.params.dataunitkerja.id_user_mobile !== undefined && this.state.sliderBottomReach === true &&
+                        <View
+                            style={{
+                                position: 'absolute',
+                                right: 0,
+                                bottom: 0,
+                                padding: 20
+                            }}
                         >
-                            <Feather name="list" size={20} color={'#333'}/>
-                        </Ripple>
-                    </View>
+                            <Ripple
+                                onPress={() => this.showListDetail()}
+                                rippleColor={ripple_color_primary}
+                                style={[{
+                                    height: 50,
+                                    width: 50,
+                                    borderRadius: 25,
+                                    backgroundColor: "#fff",
+                                    overflow: 'hidden',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }, shadow]}
+                            >
+                                <Feather name="list" size={20} color={'#333'}/>
+                            </Ripple>
+                        </View>
+                    }
                 </View>
                 <SlidingUpPanel
-                    onBottomReached={() => console.log('bottom')}
+                    onBottomReached={() => {
+                        this.setState({
+                            sliderBottomReach: true
+                        })
+                    }}
                     friction={.4}
                     onBackButtonPress={() => {
                         this.sliderUp.hide()

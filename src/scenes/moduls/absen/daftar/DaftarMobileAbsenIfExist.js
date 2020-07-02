@@ -5,6 +5,7 @@ import {
     StyleSheet,
     StatusBar,
     Image,
+    Modal,
     FlatList,
     RefreshControl,
     TextInput
@@ -19,6 +20,8 @@ import ListSetting from '../../../../components/list/ListSetting'
 import ListSettingOpsi from '../../../../components/list/ListSettingOpsi'
 import ListRequestAbsen from '../../../../components/list/ListRequestAbsen'
 import moment from 'moment'
+import LinearGradient from 'react-native-linear-gradient'
+import { background_color_gradient } from '../../../../themes/Default'
 
 export default class DaftarMobileAbsenIfExist extends Component{
     constructor(props){
@@ -121,15 +124,15 @@ export default class DaftarMobileAbsenIfExist extends Component{
 
     render(){
         return (
-            <View 
+            <LinearGradient
+                start={{x: 0, y: 0}} 
+                end={{x: 2, y: 0}} 
+                colors={background_color_gradient} 
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
                     position: 'relative',
-                    backgroundColor: '#e1f7fa',
-                }}
-            >
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                }}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <View style={Styles.header}></View>
                 <View
                     style={{
@@ -155,14 +158,15 @@ export default class DaftarMobileAbsenIfExist extends Component{
                         <Icon 
                             type={'ionicons'}
                             name={'arrow-back'}
-                            color={'#444'}
+                            color={'#fff'}
                             size={24}
                         />
                     </Ripple>
                     <Text
                         style={{
                             marginLeft: 10,
-                            fontSize: 16
+                            fontSize: 16,
+                            color: '#fff'
                         }}
                     >Absen Mobile</Text>
                 </View>
@@ -196,7 +200,7 @@ export default class DaftarMobileAbsenIfExist extends Component{
                         {this.state.detailrequest !== null && this.renderButton()}
                     </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
@@ -210,7 +214,6 @@ const Styles = new StyleSheet.create({
         justifyContent: 'center' 
     },
     header: {
-        backgroundColor: '#e1f7fa',
         height: screenHeightPercent(5)
     },
     headerBackground: {

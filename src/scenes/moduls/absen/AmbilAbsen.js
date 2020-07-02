@@ -186,7 +186,7 @@ export default class AmbilAbsen extends Component{
                     })
                 } else {
                     this.setState({
-                        scanFaceMessage: 'Wajah tidak cocok...',
+                        scanFaceMessage: 'Wajah tidak cocok... Apabila dalam beberapa kali percobaan masih tidak cocok, silahkan lakukan pendaftaran absensi mobile kembali, atau hubungi SIMRS lewat NABILA',
                         errorCheck: true,
                         fetch: false
                     })
@@ -299,6 +299,7 @@ export default class AmbilAbsen extends Component{
                                     style={{
                                         marginTop: 20,
                                         fontSize: 14,
+                                        lineHeight: 20,
                                         textAlign: 'center'
                                     }}
                                 >{this.state.scanFaceMessage}</Text>

@@ -31,6 +31,5 @@ export const shadowxl = {
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
-
     elevation: 12,
 }

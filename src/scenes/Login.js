@@ -12,7 +12,8 @@ import {
     Image,
     ActivityIndicator,
     PermissionsAndroid,
-    ToastAndroid
+    ToastAndroid,
+    BackHandler
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../helpers/Layout'
 import Ripple from 'react-native-material-ripple';
@@ -72,6 +73,10 @@ export default class Login extends Component{
         this.mounted = true
         try {
             this.sliderUp.hide()
+            BackHandler.removeEventListener('hardwareBackPress')
+            BackHandler.addEventListener('hardwareBackPress', () => {
+                BackHandler.exitApp()
+            })
             // const Permission = await requestPermissionLocation()
             // const PushNotifPermission = await requestUserPermission()
             // const token = await getPushNotificationToken()

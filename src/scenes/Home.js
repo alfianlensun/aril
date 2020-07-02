@@ -101,7 +101,6 @@ export default class Home extends Component{
     getKredensialDokter = async (IDPegawai) => {
         try {
             const {response} = await getKredensialDokterById(IDPegawai)
-        
             this.setState({
                 kredensial: response !== undefined ? response : []
             })
@@ -154,8 +153,7 @@ export default class Home extends Component{
                             }
                         })
                         break;
-                
-                    default:
+                        default:
                         listmenu = response.listmenu.map(item => {
                             return {
                                 icon: <Icon name={item.icon} type={item.icon_type} size={25} color={'#fff'}/>,

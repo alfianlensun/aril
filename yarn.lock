@@ -5691,7 +5691,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5927,6 +5927,13 @@ react-native-mock-location-detector@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-mock-location-detector/-/react-native-mock-location-detector-1.0.5.tgz#90493708dbea88a95fad9bf794880c70b46b0a69"
   integrity sha512-/B8mrJlJA2yMMUjATxpDmanL75BVz2gZfUO+47o59gWkZUtwqtqN+fsWwQR21quZxiMrm2sZ7NHHd33s4hMo7Q==
+
+react-native-progress-bar-animated@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-progress-bar-animated/-/react-native-progress-bar-animated-1.0.6.tgz#18de003ababb8222c84299ef2f20d0eab549dc19"
+  integrity sha512-UPAAwxtBVV+sPwhgVd78SA7QybPshV5CydaV0GJyM+eZ89ikkZQSasAUAgIQwVVCW1Tj6XNrgizimXM9JdczeA==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-progress@^4.1.2:
   version "4.1.2"

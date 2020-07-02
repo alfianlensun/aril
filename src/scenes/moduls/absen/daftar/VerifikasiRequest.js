@@ -7,7 +7,8 @@ import {
     Image,
     FlatList,
     RefreshControl,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native'
 import {screenHeightPercent, screenWidthPercent} from '../../../../helpers/Layout'
 import { getData, clearData } from '../../../../services/LocalStorage'
@@ -26,7 +27,8 @@ export default class VerifikasiRequest extends Component{
         const params = props.route.params
         this.state = {
             userdetail: null,
-            loader: false,
+            loaderterima: false,
+            loadertolak: false,
             dataRequest: null,
             params
         }
@@ -52,12 +54,25 @@ export default class VerifikasiRequest extends Component{
 
     validateRequest = async (validType) => {
         try {
+            this.setState({
+                loaderterima: validType === 1 ? true : false,
+                loadertolak: validType === 2 ? true : false,
+            })
+            
             const {reqStat} = await validasiRequestAbsensi(this.state.dataRequest._id,this.state.params.user_id, validType)
+
+            this.setState({
+                loaderterima: false,
+                loadertolak: false
+            })
             if (reqStat.code === 200){
                 this.props.navigation.goBack(null)
             }
         } catch(err){
-            console.log(err)
+            this.setState({
+                loaderterima: false,
+                loadertolak: false,
+            })
         }
     }
 
@@ -223,7 +238,10 @@ export default class VerifikasiRequest extends Component{
                                         alignItems: 'center'
 
                                     }}>
-                                        <Text style={{color: '#fff',marginRight: 10}}>Valid</Text>
+                                        <Text style={{color: '#fff',marginRight: 10}}>Terima Permintaan</Text>
+                                        {this.state.loaderterima &&
+                                            <ActivityIndicator size={16} color={'#fff'}/>
+                                        }
                                     </View>
                                 </Ripple> 
                                 <Ripple
@@ -245,7 +263,10 @@ export default class VerifikasiRequest extends Component{
                                         alignItems: 'center'
 
                                     }}>
-                                        <Text style={{color: '#fff',marginRight: 10}}>Tidak Valid</Text>
+                                        <Text style={{color: '#fff',marginRight: 10}}>Tolak Permintaan</Text>
+                                        {this.state.loadertolak &&
+                                            <ActivityIndicator size={16} color={'#fff'}/>
+                                        }
                                     </View>
                                 </Ripple> 
                             </View>

@@ -120,3 +120,36 @@ export async function POST_TOKEN_OFF(url, data){
         throw new Error(err);
     }
 }
+
+export async function DELETE(url, data){
+    try {
+        let headers = {...config.headers}
+        const token = await getToken()
+        headers.Authorization = 'Bearer '+token
+        let response = new Promise( async (resolve, reject) => {
+            setTimeout(() => {
+                reject()
+            }, config.wsOption.timeout);
+
+            abort = new AbortController()
+            const signal = abort.signal;
+            const fetchData =  await fetch(url, {
+                method : 'DELETE',
+                signal: signal,
+                headers: headers,
+                body: JSON.stringify(data)
+            }) 
+            let responseStatus = await fetchData.status
+            if (responseStatus === 200){
+                abort = null
+                resolve(fetchData.json())
+            } else {
+                abort = null
+                reject(responseStatus)
+            }
+        }) 
+        return response
+    } catch (err){
+        throw new Error(err);
+    }
+}
